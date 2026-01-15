@@ -5,8 +5,8 @@
   "author": {
     "name": "BryanHoo"
   },
-  "homepage": "https://github.com/BryanHoo/superpowers",
-  "repository": "https://github.com/BryanHoo/superpowers",
+  "homepage": "https://github.com/BryanHoo/superpowers-ccg",
+  "repository": "https://github.com/BryanHoo/superpowers-ccg",
   "license": "MIT",
   "keywords": ["skills", "tdd", "debugging", "multi-model", "codex", "gemini", "collaboration", "workflows"]
 }

@@ -29,10 +29,10 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 
 ```bash
 # 添加 marketplace
-/plugin marketplace add BryanHoo/superpowers
+/plugin marketplace add BryanHoo/superpowers-ccg
 
 # 安装插件
-/plugin install superpowers-ccg@BryanHoo-superpowers
+/plugin install superpowers-ccg@BryanHoo-superpowers-ccg
 ```
 
 安装完成后，`codeagent-wrapper` 会自动配置到 `~/.claude/bin/` 目录，无需手动复制。
@@ -40,7 +40,7 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 **或直接从 GitHub 安装**
 
 ```bash
-/plugin install BryanHoo/superpowers
+/plugin install BryanHoo/superpowers-ccg
 ```
 
 ### 2. 安装外部模型 CLI（可选）
@@ -218,7 +218,7 @@ MIT License - 详见 LICENSE 文件
 
 ## 支持
 
-- **Issues**: https://github.com/BryanHoo/superpowers/issues
+- **Issues**: https://github.com/BryanHoo/superpowers-ccg/issues
 
 ## 致谢
 
