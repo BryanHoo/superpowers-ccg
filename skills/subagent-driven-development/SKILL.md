@@ -244,21 +244,38 @@ Done!
 
 **Related skill:** superpowers:multi-model-core
 
-When dispatching tasks to implementer subagents, choose the best execution method based on task characteristics:
+When dispatching tasks to implementer subagents, apply semantic routing to determine the optimal execution method.
 
-**Routing decision:**
+**1. Apply Semantic Routing Decision:**
 
-1. Check the task's `Model hint` annotation
-2. Comprehensively evaluate task characteristics (file types, directories, keywords)
-3. Decide on execution method:
-   - **Claude subagent** - General tasks or requiring complete context
-   - **Codex** - Clear backend tasks
-   - **Gemini** - Clear frontend tasks
-   - **Cross-validation** - Critical tasks requiring dual-model verification
+For each task before dispatch, analyze using `multi-model-core/routing-decision.md`:
 
-**Dispatch with external model:**
+- **Collect task information:**
+  - File types and paths from task specification
+  - Task description and implementation requirements
+  - Overall architecture context
 
-For clear frontend or backend tasks, directly invoke external models:
+- **Determine dispatch strategy:**
+  - Clear backend task (API, database, server logic) → CODEX
+  - Clear frontend task (UI, components, styles) → GEMINI
+  - Full-stack integration or critical task → CROSS_VALIDATION
+  - General task requiring complete context → CLAUDE subagent
+
+**2. Check for Model Hint:**
+
+If the task includes a `Model hint` annotation from the plan:
+- Use explicit hints as guidance
+- Validate hint against semantic analysis
+- For `auto` or missing hint: rely on semantic analysis
+
+**3. Notify user:**
+```
+我将使用 [model/subagent] 来实现 [task name]
+```
+
+**4. Dispatch to external model (for clear domain tasks):**
+
+> **IMPORTANT**: All prompts sent to external models via codeagent-wrapper must be in English.
 
 ```bash
 # Backend task → Codex
@@ -290,13 +307,13 @@ codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
 EOF
 ```
 
-**Cross-validation for critical tasks:**
+**5. For CROSS_VALIDATION (critical tasks):**
 
-For critical tasks (such as frontend-backend integration), use cross-validation:
+For tasks requiring multi-perspective validation:
 
 1. Have Codex and Gemini analyze the task separately
 2. Integrate recommendations from both
 3. Claude subagent executes final implementation
 4. Two-stage review proceeds as normal
 
-**Note:** External model invocation is optional enhancement; Claude subagent is always a reliable fallback.
+**Note:** External model invocation is an optimization; Claude subagent is always available as fallback and can handle any task with full context.
