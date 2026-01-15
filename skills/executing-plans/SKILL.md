@@ -79,21 +79,40 @@ After all tasks complete and verified:
 
 **Related skill:** superpowers:multi-model-core
 
-When executing plans, automatically route to the most suitable model based on task characteristics:
+When executing plan tasks, apply semantic routing to determine the optimal execution model.
 
-**Routing logic:**
+**1. Apply Semantic Routing Decision:**
 
-1. Check if the task has a `Model hint` annotation
-2. If annotated and not `auto`, route according to the annotation
-3. If `auto` or no annotation, comprehensively evaluate:
-   - File type (`.go`, `.py` → Codex; `.tsx`, `.vue` → Gemini)
-   - Directory structure (`server/`, `api/` → Codex; `components/`, `pages/` → Gemini)
-   - Task keywords (API, database → Codex; UI, styles → Gemini)
+For each task, analyze using `multi-model-core/routing-decision.md`:
 
-**Execution with external model:**
+- **Collect task information:**
+  - File paths and extensions involved
+  - Task description and objectives
+  - Tech stack context from the plan
+
+- **Determine routing:**
+  - Backend task (API, database, algorithms) → CODEX
+  - Frontend task (UI, components, styles) → GEMINI
+  - Full-stack task or integration → CROSS_VALIDATION
+  - Simple config/docs → CLAUDE
+
+**2. Check for Model Hint:**
+
+If the plan includes a `Model hint` annotation:
+- Respect explicit hints (`codex`, `gemini`, `cross-validation`)
+- For `auto` or no hint: proceed with semantic analysis
+
+**3. Notify user:**
+```
+我将使用 [model] 来执行 [task description]
+```
+
+**4. Execute with external model:**
+
+> **IMPORTANT**: All prompts sent to external models (Codex/Gemini) via codeagent-wrapper must be in English.
 
 ```bash
-# Call corresponding model based on routing result
+# Route to appropriate model based on analysis
 codeagent-wrapper --backend <codex|gemini> - "$PWD" <<'EOF'
 ## Task Background
 [Context extracted from plan]
@@ -106,12 +125,12 @@ codeagent-wrapper --backend <codex|gemini> - "$PWD" <<'EOF'
 EOF
 ```
 
-**Cross-validation tasks:**
+**5. For CROSS_VALIDATION tasks:**
 
-For tasks annotated as `cross-validation`, or tasks that Claude determines require cross-validation:
+When task spans both domains or requires multi-perspective validation:
 
-1. Call Codex and Gemini in parallel
+1. Invoke Codex and Gemini in parallel
 2. Integrate results from both
-3. Execute after resolving divergences
+3. Resolve any divergences before proceeding
 
 **Fallback:** If external models are not available, Claude executes the task directly.
