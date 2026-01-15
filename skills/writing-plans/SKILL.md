@@ -98,9 +98,9 @@ git commit -m "feat: add specific feature"
 
 **Related skill:** superpowers:multi-model-core
 
-When writing plans, annotate each task with a recommended execution model to facilitate automatic routing during execution:
+When writing plans, you can optionally annotate tasks with model hints to guide execution. However, these hints are **suggestions only** - actual execution uses semantic analysis.
 
-**Task annotation format:**
+**Task annotation format (optional):**
 
 ```markdown
 ### Task N: [Component Name]
@@ -111,13 +111,31 @@ When writing plans, annotate each task with a recommended execution model to fac
 ...
 ```
 
-**Routing hints:**
-- `auto` - Automatically determine based on file type and task content during execution (default)
-- `codex` - Explicit backend tasks (API, database, algorithms)
-- `gemini` - Explicit frontend tasks (components, styles, interactions)
-- `cross-validation` - Critical tasks requiring dual-model verification
+**Routing hint meanings:**
 
-**Example:**
+- `auto` - Executor determines routing through semantic analysis (default)
+- `codex` - Suggests backend focus (API, database, algorithms)
+- `gemini` - Suggests frontend focus (components, styles, interactions)
+- `cross-validation` - Suggests critical task needing dual-model verification
+
+**How execution handles hints:**
+
+During plan execution (via `executing-plans` or `subagent-driven-development`):
+
+1. Executor reads the `Model hint` if present
+2. **Applies semantic routing** using `multi-model-core/routing-decision.md`:
+   - Collects task information (files, description, tech stack)
+   - Analyzes task domain, complexity, and uncertainty
+   - Makes routing decision based on semantic understanding
+   - Uses hint as **guidance**, not strict rule
+
+3. Routes task to optimal model:
+   - Frontend → GEMINI
+   - Backend → CODEX
+   - Full-stack/uncertain → CROSS_VALIDATION
+   - Simple → CLAUDE
+
+**Example with hints:**
 
 ```markdown
 ### Task 1: Create API endpoint
@@ -145,7 +163,13 @@ When writing plans, annotate each task with a recommended execution model to fac
 ...
 ```
 
-**Note:** Model hints are optional. During execution, Claude will comprehensively determine the optimal routing.
+**Important notes:**
+
+- Model hints are **optional** - executor can always succeed without them
+- Hints are **suggestions** - executor may route differently based on semantic analysis
+- Missing or `auto` hint → Executor performs full semantic analysis
+- Plan author doesn't need to understand routing logic deeply
+- Focus on clear task descriptions and file paths; routing is handled automatically
 
 ## Execution Handoff
 
