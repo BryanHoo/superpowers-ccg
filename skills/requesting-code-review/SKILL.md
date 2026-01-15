@@ -108,16 +108,31 @@ See template at: requesting-code-review/code-reviewer.md
 
 **Related skill:** superpowers:multi-model-core
 
-For code changes involving both frontend and backend, use dual-model cross-validation review:
+For code reviews requiring specialized domain expertise, apply semantic routing to determine review strategy.
 
-**When to trigger:**
-- Changes involve both frontend and backend code
-- Code review for critical features
-- Complex changes requiring multi-perspective verification
+**1. Apply Semantic Routing Decision:**
 
-**How to use:**
+Before requesting external model review, analyze using `multi-model-core/routing-decision.md`:
 
-> **IMPORTANT**: All prompts sent to external models (Codex/Gemini) via codeagent-wrapper must be in English, regardless of your configured output language.
+- **Collect change information:**
+  - Files changed (extensions, directories)
+  - Nature of changes (new feature, bug fix, refactor)
+  - Technical domains affected (frontend, backend, or both)
+
+- **Determine review strategy:**
+  - Backend changes only (API, database, algorithms) → CODEX
+  - Frontend changes only (UI, components, styles) → GEMINI
+  - Full-stack changes or architectural impact → CROSS_VALIDATION
+  - Simple changes or documentation → CLAUDE subagent
+
+**2. Notify user:**
+```
+我将使用 [model] 来评审这些代码更改
+```
+
+**3. Invoke external model(s):**
+
+> **IMPORTANT**: All prompts sent to external models (Codex/Gemini) via codeagent-wrapper must be in English.
 
 ```bash
 # Get change scope
@@ -125,7 +140,7 @@ BASE_SHA=$(git rev-parse HEAD~1)
 HEAD_SHA=$(git rev-parse HEAD)
 DIFF=$(git diff $BASE_SHA $HEAD_SHA)
 
-# Codex review (backend perspective)
+# Backend review → Codex
 codeagent-wrapper --backend codex - "$PWD" <<EOF
 ## Code Review Request
 
@@ -145,7 +160,7 @@ $DIFF
 - Strengths: [Things done well]
 EOF
 
-# Gemini review (frontend perspective)
+# Frontend review → Gemini
 codeagent-wrapper --backend gemini - "$PWD" <<EOF
 ## Code Review Request
 
@@ -164,23 +179,22 @@ $DIFF
 - Minor: [Suggested improvements]
 - Strengths: [Things done well]
 EOF
+
+# For CROSS_VALIDATION → Invoke both in parallel
 ```
 
-**Result integration:**
+**4. Result integration:**
 
 ```markdown
-## Dual-Model Code Review Report
+## Code Review Report
 
-### Codex Review (Backend Perspective)
-[Codex review results]
-
-### Gemini Review (Frontend Perspective)
-[Gemini review results]
+### [Model] Review Results
+[Review findings]
 
 ### Comprehensive Assessment
-- **Critical issues**: [Combined Critical issues from both]
-- **Important issues**: [Combined Important issues from both]
-- **Overall assessment**: [Comprehensive evaluation]
+- **Critical issues**: [Must-fix items]
+- **Important issues**: [Should-fix items]
+- **Overall assessment**: [Integrated evaluation]
 ```
 
-**Fallback:** If external models are not available, use Claude subagent for review.
+**Fallback:** If external models are not available, use Claude subagent (superpowers:code-reviewer) for review.
