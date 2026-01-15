@@ -66,11 +66,11 @@ Core module providing automatic routing and cross-validation:
 
 > **Important Note**: Inter-model communication must use English. All prompts and task descriptions sent to Codex/Gemini must be in English, ensuring standardization and efficiency of multi-model collaboration. User interactions still follow the user's language configuration.
 
-**Routing Rules:**
+**Routing Mechanism:**
 
-- Based on file types (`.tsx` → Gemini, `.go` → Codex)
-- Based on directory structure (`components/` → Gemini, `server/` → Codex)
-- Based on task keywords (UI/styles → Gemini, API/database → Codex)
+- **Semantic Analysis** - Claude analyzes task description, file types, and tech stack to intelligently determine which model to route to
+- **Decision Factors** - Task nature (UI/logic/data), technical domain (frontend/backend), complexity (single/cross-domain)
+- **Routing Targets** - Gemini (frontend), Codex (backend), Cross-validation (full-stack/uncertain), Claude (simple tasks)
 
 **Cross-Validation Triggers:**
 

@@ -66,11 +66,11 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 
 > **重要提示**：模型间通信必须使用英语。所有发送给 Codex/Gemini 的提示词、任务描述必须使用英语，这确保了多模型协作的标准化和高效性。与用户的交互仍然遵循用户的语言配置。
 
-**路由规则：**
+**路由机制：**
 
-- 根据文件类型（`.tsx` → Gemini，`.go` → Codex）
-- 根据目录结构（`components/` → Gemini，`server/` → Codex）
-- 根据任务关键词（UI/样式 → Gemini，API/数据库 → Codex）
+- **语义分析** - Claude 分析任务描述、文件类型和技术栈，智能判断应该路由到哪个模型
+- **决策因素** - 任务本质（UI/逻辑/数据）、技术领域（前端/后端）、复杂度（单一/跨域）
+- **路由目标** - Gemini（前端）、Codex（后端）、交叉验证（全栈/不确定）、Claude（简单任务）
 
 **交叉验证触发：**
 
