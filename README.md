@@ -86,9 +86,9 @@ npm install -g @google/gemini-cli
 ### 4. 验证安装
 
 ```bash
-# 检查 superpowers 命令
+# 检查 superpowers-ccg 命令
 /help
-# 应该看到 /superpowers:brainstorm 等命令
+# 应该看到 /superpowers-ccg:brainstorm-ccg 等命令
 
 # 检查 codeagent-wrapper
 ~/.claude/bin/codeagent-wrapper --version
