@@ -142,21 +142,38 @@ This is non-negotiable.
 
 **Related skill:** superpowers:multi-model-core
 
-For critical features or complex changes, use dual-model cross-validation:
+For critical features or complex changes, semantic routing can guide cross-validation strategy.
 
-**When to trigger:**
-- Completion verification for critical features
-- Integration verification involving frontend and backend
-- Final confirmation for high-risk changes
+**1. Apply Semantic Routing Decision:**
 
-**How to use:**
+When considering cross-model verification, analyze using `multi-model-core/routing-decision.md`:
 
-Before claiming completion, for critical changes:
+- **Collect verification context:**
+  - What domains are affected by the changes (frontend, backend, or both)
+  - Criticality level of the changes
+  - Complexity and integration points
+
+- **Determine verification strategy:**
+  - Backend-only critical changes → CODEX verification
+  - Frontend-only critical changes → GEMINI verification
+  - Full-stack or architectural changes → CROSS_VALIDATION
+  - Standard changes → CLAUDE verification (with evidence from test output)
+
+**2. CRITICAL - Evidence always required:**
+
+Cross-model verification is **additional** to, not a replacement for:
+- Running actual test commands
+- Checking actual build output
+- Verifying actual command results
+
+**Never claim success based solely on model confirmation without running verification commands.**
+
+**3. For CROSS_VALIDATION of critical changes:**
+
+> **IMPORTANT**: All prompts sent to external models via codeagent-wrapper must be in English.
 
 ```bash
-# Get dual-model confirmation in parallel
-
-# Codex verification (backend perspective)
+# Backend verification → Codex
 codeagent-wrapper --backend codex - "$PWD" <<'EOF'
 ## Verification Request
 
@@ -174,7 +191,7 @@ codeagent-wrapper --backend codex - "$PWD" <<'EOF'
 - Issues found (if any)
 EOF
 
-# Gemini verification (frontend perspective)
+# Frontend verification → Gemini
 codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
 ## Verification Request
 
@@ -193,23 +210,20 @@ codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
 EOF
 ```
 
-**Result integration:**
+**4. Result integration:**
 
 ```markdown
-## Cross-Validation Confirmation
+## Verification Results
 
-### Codex Verification (Backend)
-- Conclusion: [pass/fail]
-- Issues: [if any]
+### Evidence from Commands
+[Actual test output, build results, etc.]
 
-### Gemini Verification (Frontend)
-- Conclusion: [pass/fail]
-- Issues: [if any]
+### Cross-Validation Confirmation (if applicable)
+- [Model] verification: [pass/fail]
+- Issues found: [list any issues]
 
-### Final Recommendation
-[Can only claim completion if both pass]
+### Final Determination
+[Can only claim completion if BOTH evidence AND cross-validation pass]
 ```
 
-**Important:** Cross-validation is an additional safeguard and cannot replace basic verification steps (running tests, checking output).
-
-**Fallback:** If external models are not available, ensure Claude's verification is more rigorous.
+**Fallback:** If external models are not available, ensure Claude's verification is more rigorous with comprehensive evidence gathering.
