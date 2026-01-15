@@ -57,21 +57,34 @@ Start by understanding the current project context, then ask questions one at a 
 
 **Related skill:** superpowers:multi-model-core
 
-**When to trigger:** Claude intelligently triggers multi-model validation in the following situations:
-- Design involves frontend-backend architecture decisions
-- Need to evaluate multiple technical approaches
-- Critical design requires multi-perspective validation
+During the "Exploring approaches" phase, when design decisions require specialized expertise or multi-perspective validation:
 
-**How to use:**
+**1. Apply Semantic Routing Decision:**
+
+Before invoking external models, analyze the design using `multi-model-core/routing-decision.md`:
+
+- **Collect task information:**
+  - Design scope (frontend-only, backend-only, or full-stack)
+  - Technical domains involved (UI, API, database, etc.)
+  - Complexity and uncertainty level
+
+- **Determine routing:**
+  - Frontend-focused design → GEMINI
+  - Backend-focused design → CODEX
+  - Full-stack or architectural design → CROSS_VALIDATION
+  - Simple design clarification → CLAUDE
+
+**2. Notify user:**
+```
+我将使用 [model] 来评估这个设计方案
+```
+
+**3. Invoke external model(s):**
 
 > **IMPORTANT**: All prompts sent to external models (Codex/Gemini) via codeagent-wrapper must be in English, regardless of your configured output language.
 
-During the "Exploring approaches" phase, for designs involving frontend and backend:
-
 ```bash
-# Parallel invocation for specialized perspectives
-
-# Codex (backend architecture perspective)
+# For backend design → Codex
 codeagent-wrapper --backend codex - "$PWD" <<'EOF'
 ## Design Proposal
 [Design description]
@@ -87,7 +100,7 @@ codeagent-wrapper --backend codex - "$PWD" <<'EOF'
 - Improvement suggestions
 EOF
 
-# Gemini (frontend architecture perspective)
+# For frontend design → Gemini
 codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
 ## Design Proposal
 [Design description]
@@ -102,23 +115,22 @@ codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
 - Design assessment (strengths/risks)
 - Improvement suggestions
 EOF
+
+# For full-stack/architectural design → Both models in parallel
 ```
 
-**Result integration:**
+**4. Result integration:**
 
 ```markdown
-## Multi-Model Design Assessment
+## Design Assessment Results
 
-### Codex Assessment (Backend Perspective)
-[Codex assessment results]
-
-### Gemini Assessment (Frontend Perspective)
-[Gemini assessment results]
+### [Model] Perspective
+[Assessment results]
 
 ### Comprehensive Recommendation
-- **Points of Agreement**: [Design points both agree on]
-- **Trade-offs Required**: [Areas with differing opinions]
-- **Final Recommendation**: [Claude's integrated recommended approach]
+- **Key Insights**: [Critical findings]
+- **Trade-offs**: [Design considerations]
+- **Final Recommendation**: [Claude's integrated approach]
 ```
 
 **Fallback:** If codeagent-wrapper is not available, continue with Claude's independent assessment.
