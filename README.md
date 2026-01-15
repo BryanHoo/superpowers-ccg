@@ -23,16 +23,22 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 
 ## 安装
 
-### 1. 安装 Superpowers 插件
+### 1. 安装 Superpowers-CCG 插件
 
 **Claude Code（通过 Plugin Marketplace）**
 
 ```bash
 # 注册 marketplace
-/plugin marketplace add obra/superpowers-marketplace
+/plugin marketplace add BryanHoo/superpowers-marketplace
 
 # 安装插件
-/plugin install superpowers@superpowers-marketplace
+/plugin install superpowers-ccg@superpowers-marketplace
+```
+
+**或直接从 GitHub 安装**
+
+```bash
+/plugin install BryanHoo/superpowers
 ```
 
 ### 2. 安装 codeagent-wrapper（多模型支持）
@@ -210,7 +216,7 @@ Skills 直接存放在此仓库中。贡献方式：
 通过更新插件来更新 skills：
 
 ```bash
-/plugin update superpowers
+/plugin update superpowers-ccg
 ```
 
 ## 架构
@@ -236,10 +242,9 @@ MIT License - 详见 LICENSE 文件
 
 ## 支持
 
-- **Issues**: https://github.com/obra/superpowers/issues
-- **Marketplace**: https://github.com/obra/superpowers-marketplace
+- **Issues**: https://github.com/BryanHoo/superpowers/issues
 
 ## 致谢
 
 - [obra/superpowers](https://github.com/obra/superpowers) - 原始 Superpowers 项目
-- [ccg-workflow](https://github.com/anthropics/ccg-workflow) - codeagent-wrapper
+- [cexll/myclaude](https://github.com/cexll/myclaude) - codeagent-wrapper
