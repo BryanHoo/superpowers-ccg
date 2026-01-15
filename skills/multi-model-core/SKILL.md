@@ -58,6 +58,8 @@ During skill execution, consider invoking external models in the following situa
 
 This module uses **semantic analysis** instead of hardcoded scoring algorithms to determine optimal model routing. Claude analyzes task characteristics using reasoning to make intelligent, context-aware routing decisions.
 
+**When to Use**: Before executing implementation tasks, debugging, generating tests, or code reviews.
+
 **Decision Framework**: See `routing-decision.md` for the complete semantic routing framework.
 
 **Standard Information Collection**:
@@ -69,6 +71,8 @@ This module uses **semantic analysis** instead of hardcoded scoring algorithms t
 1. **Analyze Task Essence** - What problem is primarily being solved? (UI feature, performance, architecture, debugging)
 2. **Evaluate Technical Domain** - Does it lean frontend (UI/interaction) or backend (logic/data)?
 3. **Assess Complexity** - Does it span multiple domains? Is the root cause uncertain?
+
+**Decision Logic**: Prefer specialized models (GEMINI/CODEX) for single-domain tasks, use CROSS_VALIDATION for multi-domain or uncertain tasks, default to CLAUDE for simple non-technical tasks. When in doubt, choose CROSS_VALIDATION.
 
 **Routing Decisions**:
 - **GEMINI** - Frontend expert for UI, components, styles, interactions
