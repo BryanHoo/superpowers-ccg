@@ -14,6 +14,40 @@ description: 多模型调用核心模块 - 提供 Codex/Gemini 自动路由和�
 - **交叉验证** - 复杂场景双模型验证
 - **无缝集成** - 其他 skills 按需引用
 
+## 前置条件
+
+使用多模型功能前，需要安装 codeagent-wrapper：
+
+**方式一：通过 ccg-workflow 安装（推荐）**
+
+```bash
+npx ccg-workflow
+```
+
+**方式二：手动安装**
+
+```bash
+# 创建目录
+mkdir -p ~/.claude/bin
+
+# 下载对应平台的二进制（以 macOS ARM64 为例）
+curl -L https://github.com/anthropics/ccg-workflow/releases/latest/download/codeagent-wrapper-darwin-arm64 \
+  -o ~/.claude/bin/codeagent-wrapper
+
+# 添加执行权限
+chmod +x ~/.claude/bin/codeagent-wrapper
+```
+
+**验证安装：**
+
+```bash
+~/.claude/bin/codeagent-wrapper --help
+```
+
+**外部模型 CLI（可选）：**
+- Codex CLI: `npm install -g @openai/codex`
+- Gemini CLI: `npm install -g @google/gemini-cli`
+
 ## 使用方式
 
 ### 1. 判断是否需要外部模型
