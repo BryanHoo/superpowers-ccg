@@ -1,11 +1,56 @@
 #!/usr/bin/env bash
-# SessionStart hook for superpowers plugin
+# SessionStart hook for superpowers-ccg plugin
 
 set -euo pipefail
 
 # Determine plugin root directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+# Auto-setup codeagent-wrapper
+setup_codeagent_wrapper() {
+    local bin_dir="${HOME}/.claude/bin"
+    local wrapper_name="codeagent-wrapper"
+    local target="${bin_dir}/${wrapper_name}"
+
+    # Detect platform
+    local os arch binary_name
+    case "$(uname -s)" in
+        Darwin) os="darwin" ;;
+        Linux) os="linux" ;;
+        MINGW*|MSYS*|CYGWIN*) os="windows" ;;
+        *) return 0 ;;
+    esac
+
+    case "$(uname -m)" in
+        x86_64|amd64) arch="amd64" ;;
+        arm64|aarch64) arch="arm64" ;;
+        *) return 0 ;;
+    esac
+
+    if [ "$os" = "windows" ]; then
+        binary_name="${wrapper_name}-${os}-${arch}.exe"
+    else
+        binary_name="${wrapper_name}-${os}-${arch}"
+    fi
+
+    local source="${PLUGIN_ROOT}/bin/${binary_name}"
+
+    # Check if source exists
+    [ -f "$source" ] || return 0
+
+    # Create bin directory if needed
+    mkdir -p "$bin_dir"
+
+    # Copy if not exists or outdated
+    if [ ! -f "$target" ] || [ "$source" -nt "$target" ]; then
+        cp "$source" "$target"
+        chmod +x "$target"
+    fi
+}
+
+# Run codeagent-wrapper setup (silent, non-blocking)
+setup_codeagent_wrapper 2>/dev/null || true
 
 # Check if legacy skills directory exists and build warning
 warning_message=""

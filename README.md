@@ -28,12 +28,14 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 **Claude Code（通过 Plugin Marketplace）**
 
 ```bash
-# 注册 marketplace
-/plugin marketplace add BryanHoo/superpowers-marketplace
+# 添加 marketplace
+/plugin marketplace add BryanHoo/superpowers
 
 # 安装插件
-/plugin install superpowers-ccg@superpowers-marketplace
+/plugin install superpowers-ccg@BryanHoo-superpowers
 ```
+
+安装完成后，`codeagent-wrapper` 会自动配置到 `~/.claude/bin/` 目录，无需手动复制。
 
 **或直接从 GitHub 安装**
 
@@ -41,33 +43,7 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 /plugin install BryanHoo/superpowers
 ```
 
-### 2. 安装 codeagent-wrapper（多模型支持）
-
-codeagent-wrapper 是调用 Codex 和 Gemini 的核心组件。
-
-```bash
-# 创建目录
-mkdir -p ~/.claude/bin
-
-# 复制对应平台的二进制（以 macOS ARM64 为例）
-cp bin/codeagent-wrapper-darwin-arm64 ~/.claude/bin/codeagent-wrapper
-
-# 添加执行权限
-chmod +x ~/.claude/bin/codeagent-wrapper
-
-# 验证安装
-~/.claude/bin/codeagent-wrapper --help
-```
-
-**平台二进制列表：**
-- macOS Intel: `bin/codeagent-wrapper-darwin-amd64`
-- macOS Apple Silicon: `bin/codeagent-wrapper-darwin-arm64`
-- Linux x64: `bin/codeagent-wrapper-linux-amd64`
-- Linux ARM64: `bin/codeagent-wrapper-linux-arm64`
-- Windows x64: `bin/codeagent-wrapper-windows-amd64.exe`
-- Windows ARM64: `bin/codeagent-wrapper-windows-arm64.exe`
-
-### 3. 安装外部模型 CLI（可选）
+### 2. 安装外部模型 CLI（可选）
 
 多模型功能需要对应的 CLI 工具：
 
@@ -83,14 +59,14 @@ npm install -g @openai/codex
 npm install -g @google/gemini-cli
 ```
 
-### 4. 验证安装
+### 3. 验证安装
 
 ```bash
 # 检查 superpowers-ccg 命令
 /help
 # 应该看到 /superpowers-ccg:brainstorm-ccg 等命令
 
-# 检查 codeagent-wrapper
+# 检查 codeagent-wrapper（自动安装）
 ~/.claude/bin/codeagent-wrapper --version
 
 # 测试多模型调用（可选）
