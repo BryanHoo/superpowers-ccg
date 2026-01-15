@@ -39,23 +39,12 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 
 codeagent-wrapper 是调用 Codex 和 Gemini 的核心组件。
 
-**方式一：通过 ccg-workflow 安装（推荐）**
-
-```bash
-npx ccg-workflow
-```
-
-这会自动安装 codeagent-wrapper 到 `~/.claude/bin/`。
-
-**方式二：手动安装**
-
 ```bash
 # 创建目录
 mkdir -p ~/.claude/bin
 
-# 下载对应平台的二进制（以 macOS ARM64 为例）
-curl -L https://github.com/anthropics/ccg-workflow/releases/latest/download/codeagent-wrapper-darwin-arm64 \
-  -o ~/.claude/bin/codeagent-wrapper
+# 复制对应平台的二进制（以 macOS ARM64 为例）
+cp bin/codeagent-wrapper-darwin-arm64 ~/.claude/bin/codeagent-wrapper
 
 # 添加执行权限
 chmod +x ~/.claude/bin/codeagent-wrapper
@@ -65,12 +54,12 @@ chmod +x ~/.claude/bin/codeagent-wrapper
 ```
 
 **平台二进制列表：**
-- macOS Intel: `codeagent-wrapper-darwin-amd64`
-- macOS Apple Silicon: `codeagent-wrapper-darwin-arm64`
-- Linux x64: `codeagent-wrapper-linux-amd64`
-- Linux ARM64: `codeagent-wrapper-linux-arm64`
-- Windows x64: `codeagent-wrapper-windows-amd64.exe`
-- Windows ARM64: `codeagent-wrapper-windows-arm64.exe`
+- macOS Intel: `bin/codeagent-wrapper-darwin-amd64`
+- macOS Apple Silicon: `bin/codeagent-wrapper-darwin-arm64`
+- Linux x64: `bin/codeagent-wrapper-linux-amd64`
+- Linux ARM64: `bin/codeagent-wrapper-linux-arm64`
+- Windows x64: `bin/codeagent-wrapper-windows-amd64.exe`
+- Windows ARM64: `bin/codeagent-wrapper-windows-arm64.exe`
 
 ### 3. 安装外部模型 CLI（可选）
 

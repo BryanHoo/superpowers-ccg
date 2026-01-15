@@ -18,31 +18,27 @@ description: 多模型调用核心模块 - 提供 Codex/Gemini 自动路由和�
 
 使用多模型功能前，需要安装 codeagent-wrapper：
 
-**方式一：通过 ccg-workflow 安装（推荐）**
-
-```bash
-npx ccg-workflow
-```
-
-**方式二：手动安装**
-
 ```bash
 # 创建目录
 mkdir -p ~/.claude/bin
 
-# 下载对应平台的二进制（以 macOS ARM64 为例）
-curl -L https://github.com/anthropics/ccg-workflow/releases/latest/download/codeagent-wrapper-darwin-arm64 \
-  -o ~/.claude/bin/codeagent-wrapper
+# 复制对应平台的二进制（以 macOS ARM64 为例）
+cp bin/codeagent-wrapper-darwin-arm64 ~/.claude/bin/codeagent-wrapper
 
 # 添加执行权限
 chmod +x ~/.claude/bin/codeagent-wrapper
-```
 
-**验证安装：**
-
-```bash
+# 验证安装
 ~/.claude/bin/codeagent-wrapper --help
 ```
+
+**平台二进制列表：**
+- macOS Intel: `bin/codeagent-wrapper-darwin-amd64`
+- macOS Apple Silicon: `bin/codeagent-wrapper-darwin-arm64`
+- Linux x64: `bin/codeagent-wrapper-linux-amd64`
+- Linux ARM64: `bin/codeagent-wrapper-linux-arm64`
+- Windows x64: `bin/codeagent-wrapper-windows-amd64.exe`
+- Windows ARM64: `bin/codeagent-wrapper-windows-arm64.exe`
 
 **外部模型 CLI（可选）：**
 - Codex CLI: `npm install -g @openai/codex`
