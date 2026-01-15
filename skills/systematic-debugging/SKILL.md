@@ -290,21 +290,34 @@ These techniques are part of systematic debugging and available in this director
 
 ## Multi-Model Cross-Validation
 
-**When to trigger:** Claude intelligently triggers cross-validation in the following situations:
-- Full-stack issues (frontend-backend interaction related)
-- High uncertainty (multiple possible causes)
-- Complex bugs (difficult to locate)
+**When to use:** During Phase 1 (Root Cause Investigation) or Phase 2 (Pattern Analysis), when diagnostic complexity requires specialized expertise.
 
-**How to use:**
+**1. Apply Semantic Routing Decision:**
+
+Before invoking external models, analyze the debugging scenario using `multi-model-core/routing-decision.md`:
+
+- **Collect diagnostic information:**
+  - What component(s) are exhibiting the issue (frontend, backend, or both)?
+  - Is the root cause clearly isolated to one domain?
+  - How many possible causes exist?
+
+- **Determine routing:**
+  - Clear backend issue (API, database, server logic) → CODEX
+  - Clear frontend issue (UI, rendering, client state) → GEMINI
+  - Full-stack issue or uncertain root cause → CROSS_VALIDATION
+  - Simple environment/config issue → CLAUDE
+
+**2. Notify user:**
+```
+我将使用 [model] 来诊断这个问题
+```
+
+**3. Invoke external model(s):**
 
 > **IMPORTANT**: All prompts sent to external models (Codex/Gemini) via codeagent-wrapper must be in English, regardless of your configured output language.
 
-During Phase 1 (Root Cause Investigation) or Phase 2 (Pattern Analysis), if the issue involves frontend-backend or has high uncertainty:
-
 ```bash
-# Parallel invocation of Codex and Gemini for cross-validation diagnosis
-
-# Codex (backend perspective)
+# Backend perspective → Codex
 codeagent-wrapper --backend codex - "$PWD" <<'EOF'
 ## Problem Description
 [Problem description]
@@ -320,7 +333,7 @@ codeagent-wrapper --backend codex - "$PWD" <<'EOF'
 - Recommended verification steps
 EOF
 
-# Gemini (frontend perspective)
+# Frontend perspective → Gemini
 codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
 ## Problem Description
 [Problem description]
@@ -335,27 +348,31 @@ codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
 - Possible root causes (ranked by likelihood)
 - Recommended verification steps
 EOF
+
+# For CROSS_VALIDATION → Invoke both in parallel
 ```
 
-**Result integration:**
+**4. Result integration:**
 
 ```markdown
 ## Cross-Validation Diagnosis Results
 
-### Codex Analysis (Backend Perspective)
-[Codex analysis results]
-
-### Gemini Analysis (Frontend Perspective)
-[Gemini analysis results]
+### [Model] Analysis
+[Analysis results with root cause hypotheses]
 
 ### Comprehensive Conclusion
-- **Points of Agreement**: [Consistent findings from both]
-- **Points of Divergence**: [Areas where they disagree]
+- **Points of Agreement**: [Consistent findings]
+- **Points of Divergence**: [Areas of disagreement]
 - **Final Determination**: [Claude's integrated root cause determination]
 - **Verification Plan**: [Next verification steps]
 ```
 
 **Fallback:** If codeagent-wrapper is not available, continue with Claude's independent analysis.
+
+**Related skills:**
+- **superpowers:test-driven-development** - For creating failing test case (Phase 4, Step 1)
+- **superpowers:verification-before-completion** - Verify fix worked before claiming success
+- **superpowers:multi-model-core** - For semantic routing and cross-validation
 
 ## Real-World Impact
 
