@@ -15,6 +15,7 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 设计确认后，agent 会制定详细的实施计划，强调 TDD、YAGNI 和 DRY 原则。
 
 执行阶段，agent 会根据任务特征**自动路由**到最适合的模型：
+
 - **前端任务**（组件、样式、交互）→ Gemini
 - **后端任务**（API、数据库、算法）→ Codex
 - **全栈/复杂问题** → 双模型交叉验证
@@ -36,60 +37,6 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 ```
 
 安装完成后，`codeagent-wrapper` 会自动配置到 `~/.claude/bin/` 目录，无需手动复制。
-
-**或直接从 GitHub 安装**
-
-```bash
-/plugin install BryanHoo/superpowers-ccg
-```
-
-### 2. 安装外部模型 CLI（可选）
-
-多模型功能需要对应的 CLI 工具：
-
-**Codex CLI（后端任务）**
-```bash
-# 参考 OpenAI Codex CLI 安装文档
-npm install -g @openai/codex
-```
-
-**Gemini CLI（前端任务）**
-```bash
-# 参考 Google Gemini CLI 安装文档
-npm install -g @google/gemini-cli
-```
-
-### 3. 验证安装
-
-```bash
-# 检查 superpowers-ccg 命令
-/help
-# 应该看到 /superpowers-ccg:brainstorm-ccg 等命令
-
-# 检查 codeagent-wrapper（自动安装）
-~/.claude/bin/codeagent-wrapper --version
-
-# 测试多模型调用（可选）
-~/.claude/bin/codeagent-wrapper --backend codex - "$PWD" <<< "echo hello"
-```
-
-## Codex / OpenCode 安装
-
-### Codex
-
-```
-Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.codex/INSTALL.md
-```
-
-**详细文档:** [docs/README.codex.md](docs/README.codex.md)
-
-### OpenCode
-
-```
-Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
-```
-
-**详细文档:** [docs/README.opencode.md](docs/README.opencode.md)
 
 ## 基本工作流
 
@@ -116,11 +63,13 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 核心模块，提供自动路由和交叉验证能力：
 
 **路由规则：**
+
 - 根据文件类型（`.tsx` → Gemini，`.go` → Codex）
 - 根据目录结构（`components/` → Gemini，`server/` → Codex）
 - 根据任务关键词（UI/样式 → Gemini，API/数据库 → Codex）
 
 **交叉验证触发：**
+
 - 全栈问题（前后端交互）
 - 高不确定性（多种可能原因）
 - 设计决策（架构选择）
@@ -128,27 +77,30 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 
 ### 增强的 Skills
 
-| Skill | 多模型能力 |
-|-------|-----------|
-| systematic-debugging | 交叉验证诊断 |
-| brainstorming | 多模型设计评估 |
-| writing-plans | 任务路由标注 |
-| executing-plans | 自动路由执行 |
-| subagent-driven-development | 多模型任务分发 |
-| requesting-code-review | 双模型代码审查 |
-| test-driven-development | 测试生成路由 |
-| verification-before-completion | 交叉验证确认 |
+| Skill                          | 多模型能力     |
+| ------------------------------ | -------------- |
+| systematic-debugging           | 交叉验证诊断   |
+| brainstorming                  | 多模型设计评估 |
+| writing-plans                  | 任务路由标注   |
+| executing-plans                | 自动路由执行   |
+| subagent-driven-development    | 多模型任务分发 |
+| requesting-code-review         | 双模型代码审查 |
+| test-driven-development        | 测试生成路由   |
+| verification-before-completion | 交叉验证确认   |
 
 ## Skills 库
 
 ### 测试
+
 - **test-driven-development** - RED-GREEN-REFACTOR 循环（包含测试反模式参考）
 
 ### 调试
+
 - **systematic-debugging** - 4 阶段根因分析流程（包含 root-cause-tracing、defense-in-depth、condition-based-waiting 技术）
 - **verification-before-completion** - 确保问题真正修复
 
 ### 协作
+
 - **brainstorming** - 苏格拉底式设计提炼
 - **writing-plans** - 详细实施计划
 - **executing-plans** - 分批执行带检查点
@@ -160,9 +112,11 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 - **subagent-driven-development** - 快速迭代带两阶段审查
 
 ### 多模型
+
 - **multi-model-core** - 多模型调用核心（路由规则、交叉验证、提示词模板）
 
 ### 元技能
+
 - **writing-skills** - 按最佳实践创建新 skills
 - **using-superpowers** - skills 系统介绍
 
@@ -223,4 +177,5 @@ MIT License - 详见 LICENSE 文件
 ## 致谢
 
 - [obra/superpowers](https://github.com/obra/superpowers) - 原始 Superpowers 项目
+- [fengshao1227/ccg-workflow](https://github.com/fengshao1227/ccg-workflow) - CCG 工作流
 - [cexll/myclaude](https://github.com/cexll/myclaude) - codeagent-wrapper
