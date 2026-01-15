@@ -54,25 +54,31 @@ During skill execution, consider invoking external models in the following situa
 - Need professional domain design suggestions
 - Need multi-perspective validation of solutions or diagnostics
 
-### 2. Routing Rules
+### 2. Routing Decision Process
 
-Consider the following factors to determine routing target:
+This module uses **semantic analysis** instead of hardcoded scoring algorithms to determine optimal model routing. Claude analyzes task characteristics using reasoning to make intelligent, context-aware routing decisions.
 
-| Factor | Gemini (Frontend) | Codex (Backend) |
-|------|---------------|-----------------|
-| **File Types** | `.tsx`, `.vue`, `.css`, `.scss`, `.html`, `.svelte` | `.go`, `.py`, `.java`, `.rs`, `.sql`, `.sh` |
-| **Directories** | `components/`, `pages/`, `styles/`, `ui/`, `frontend/` | `server/`, `api/`, `services/`, `backend/`, `cmd/` |
-| **Keywords** | UI, styles, components, layout, animation, responsive, interaction | API, database, algorithms, performance, concurrency, security, architecture |
+**Decision Framework**: See `routing-decision.md` for the complete semantic routing framework.
 
-**Decision Matrix**:
-```
-                Strong Frontend    Weak Frontend
-               ┌──────────────┬──────────────┐
-Strong Backend │Cross-Validate│    Codex     │
-               ├──────────────┼──────────────┤
-Weak Backend   │    Gemini    │    Claude    │
-               └──────────────┴──────────────┘
-```
+**Standard Information Collection**:
+1. **Task Description** - What is the user requesting? What problem needs solving?
+2. **File Information** - Which files are involved? What extensions and directories?
+3. **Tech Stack** - Inferred from project files (package.json, go.mod, etc.)
+
+**Analysis Process**:
+1. **Analyze Task Essence** - What problem is primarily being solved? (UI feature, performance, architecture, debugging)
+2. **Evaluate Technical Domain** - Does it lean frontend (UI/interaction) or backend (logic/data)?
+3. **Assess Complexity** - Does it span multiple domains? Is the root cause uncertain?
+
+**Routing Decisions**:
+- **GEMINI** - Frontend expert for UI, components, styles, interactions
+- **CODEX** - Backend expert for APIs, databases, algorithms, performance
+- **CROSS_VALIDATION** - Both models for full-stack tasks or high uncertainty
+- **CLAUDE** - Simple tasks (docs, configs, trivial edits)
+
+**Reference Knowledge**: The `routing-rules.md` file contains categorization patterns (file extensions, directory structures, keywords) that can be referenced as guidance, but these are **reference knowledge only**, not strict rules. Semantic understanding and task context should guide the final decision.
+
+**User Notification**: After making a routing decision, Claude will briefly notify the user which model is being used (e.g., "我将使用 Codex 来优化数据库查询性能").
 
 ### 3. Cross-Validation Triggers
 
