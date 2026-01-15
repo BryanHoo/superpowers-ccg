@@ -108,77 +108,79 @@ See template at: requesting-code-review/code-reviewer.md
 
 **Related skill:** superpowers:multi-model-core
 
-对于涉及前后端的代码变更，可以使用双模型交叉审查：
+For code changes involving both frontend and backend, use dual-model cross-validation review:
 
 **When to trigger:**
-- 变更同时涉及前端和后端代码
-- 关键功能的代码审查
-- 需要多视角验证的复杂变更
+- Changes involve both frontend and backend code
+- Code review for critical features
+- Complex changes requiring multi-perspective verification
 
 **How to use:**
 
+> **IMPORTANT**: All prompts sent to external models (Codex/Gemini) via codeagent-wrapper must be in English, regardless of your configured output language.
+
 ```bash
-# 获取变更范围
+# Get change scope
 BASE_SHA=$(git rev-parse HEAD~1)
 HEAD_SHA=$(git rev-parse HEAD)
 DIFF=$(git diff $BASE_SHA $HEAD_SHA)
 
-# Codex 审查（后端视角）
+# Codex review (backend perspective)
 codeagent-wrapper --backend codex - "$PWD" <<EOF
-## 代码审查请求
+## Code Review Request
 
-### 变更范围
+### Change Scope
 $DIFF
 
-### 请从后端角度审查
-1. API 设计和实现是否正确
-2. 数据处理和验证是否完善
-3. 性能和安全性考虑
-4. 错误处理是否充分
+### Please review from backend perspective
+1. Are API design and implementation correct
+2. Is data processing and validation comprehensive
+3. Performance and security considerations
+4. Is error handling sufficient
 
-### 输出格式
-- Critical: [必须修复的问题]
-- Important: [应该修复的问题]
-- Minor: [建议改进的地方]
-- Strengths: [做得好的地方]
+### Output Format
+- Critical: [Issues that must be fixed]
+- Important: [Issues that should be fixed]
+- Minor: [Suggested improvements]
+- Strengths: [Things done well]
 EOF
 
-# Gemini 审查（前端视角）
+# Gemini review (frontend perspective)
 codeagent-wrapper --backend gemini - "$PWD" <<EOF
-## 代码审查请求
+## Code Review Request
 
-### 变更范围
+### Change Scope
 $DIFF
 
-### 请从前端角度审查
-1. 组件设计和结构是否合理
-2. 用户体验和交互是否流畅
-3. 样式和响应式是否完善
-4. 可访问性是否考虑
+### Please review from frontend perspective
+1. Are component design and structure reasonable
+2. Is user experience and interaction smooth
+3. Are styles and responsiveness complete
+4. Is accessibility considered
 
-### 输出格式
-- Critical: [必须修复的问题]
-- Important: [应该修复的问题]
-- Minor: [建议改进的地方]
-- Strengths: [做得好的地方]
+### Output Format
+- Critical: [Issues that must be fixed]
+- Important: [Issues that should be fixed]
+- Minor: [Suggested improvements]
+- Strengths: [Things done well]
 EOF
 ```
 
 **Result integration:**
 
 ```markdown
-## 双模型代码审查报告
+## Dual-Model Code Review Report
 
-### Codex 审查（后端视角）
-[Codex 的审查结果]
+### Codex Review (Backend Perspective)
+[Codex review results]
 
-### Gemini 审查（前端视角）
-[Gemini 的审查结果]
+### Gemini Review (Frontend Perspective)
+[Gemini review results]
 
-### 综合评估
-- **Critical issues**: [合并两方的 Critical 问题]
-- **Important issues**: [合并两方的 Important 问题]
-- **Overall assessment**: [综合评价]
+### Comprehensive Assessment
+- **Critical issues**: [Combined Critical issues from both]
+- **Important issues**: [Combined Important issues from both]
+- **Overall assessment**: [Comprehensive evaluation]
 ```
 
-**Fallback:** 如果外部模型不可用，使用 Claude subagent 进行审查。
+**Fallback:** If external models are not available, use Claude subagent for review.

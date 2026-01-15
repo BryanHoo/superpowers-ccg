@@ -1,38 +1,38 @@
 ---
 name: multi-model-core
-description: 多模型调用核心模块 - 提供 Codex/Gemini 自动路由和交叉验证能力
+description: Multi-Model Core Module - Provides automatic routing and cross-validation for Codex/Gemini
 ---
 
-# 多模型调用核心模块
+# Multi-Model Core Module
 
-## 概述
+## Overview
 
-本模块为 superpowers skills 提供多模型调用能力，通过 codeagent-wrapper 调用 Codex（后端专家）和 Gemini（前端专家）。
+This module provides multi-model invocation capabilities for superpowers skills, calling Codex (backend expert) and Gemini (frontend expert) through codeagent-wrapper.
 
-**核心特性**：
-- **自动路由** - 根据任务特征智能选择模型
-- **交叉验证** - 复杂场景双模型验证
-- **无缝集成** - 其他 skills 按需引用
+**Core Features**:
+- **Automatic Routing** - Intelligently selects models based on task characteristics
+- **Cross-Validation** - Dual-model verification for complex scenarios
+- **Seamless Integration** - Other skills can reference on demand
 
-## 前置条件
+## Prerequisites
 
-使用多模型功能前，需要安装 codeagent-wrapper：
+Before using multi-model features, you need to install codeagent-wrapper:
 
 ```bash
-# 创建目录
+# Create directory
 mkdir -p ~/.claude/bin
 
-# 复制对应平台的二进制（以 macOS ARM64 为例）
+# Copy the binary for your platform (example for macOS ARM64)
 cp bin/codeagent-wrapper-darwin-arm64 ~/.claude/bin/codeagent-wrapper
 
-# 添加执行权限
+# Add execute permission
 chmod +x ~/.claude/bin/codeagent-wrapper
 
-# 验证安装
+# Verify installation
 ~/.claude/bin/codeagent-wrapper --help
 ```
 
-**平台二进制列表：**
+**Platform Binaries:**
 - macOS Intel: `bin/codeagent-wrapper-darwin-amd64`
 - macOS Apple Silicon: `bin/codeagent-wrapper-darwin-arm64`
 - Linux x64: `bin/codeagent-wrapper-linux-amd64`
@@ -40,157 +40,162 @@ chmod +x ~/.claude/bin/codeagent-wrapper
 - Windows x64: `bin/codeagent-wrapper-windows-amd64.exe`
 - Windows ARM64: `bin/codeagent-wrapper-windows-arm64.exe`
 
-**外部模型 CLI（可选）：**
+**External Model CLIs (Optional):**
 - Codex CLI: `npm install -g @openai/codex`
 - Gemini CLI: `npm install -g @google/gemini-cli`
 
-## 使用方式
+## How to Use
 
-### 1. 判断是否需要外部模型
+### 1. Determine If External Models Are Needed
 
-在 skill 执行过程中，遇到以下情况时考虑调用外部模型：
+During skill execution, consider invoking external models in the following situations:
 
-- 需要深度分析特定技术栈代码
-- 需要专业领域的设计建议
-- 需要多角度验证方案或诊断
+- Need deep analysis of specific tech stack code
+- Need professional domain design suggestions
+- Need multi-perspective validation of solutions or diagnostics
 
-### 2. 路由判断
+### 2. Routing Rules
 
-综合以下因素判断路由目标：
+Consider the following factors to determine routing target:
 
-| 因素 | Gemini（前端） | Codex（后端） |
-|------|---------------|---------------|
-| **文件类型** | `.tsx`, `.vue`, `.css`, `.scss`, `.html`, `.svelte` | `.go`, `.py`, `.java`, `.rs`, `.sql`, `.sh` |
-| **目录** | `components/`, `pages/`, `styles/`, `ui/`, `frontend/` | `server/`, `api/`, `services/`, `backend/`, `cmd/` |
-| **关键词** | UI, 样式, 组件, 布局, 动画, 响应式, 交互 | API, 数据库, 算法, 性能, 并发, 安全, 架构 |
+| Factor | Gemini (Frontend) | Codex (Backend) |
+|------|---------------|-----------------|
+| **File Types** | `.tsx`, `.vue`, `.css`, `.scss`, `.html`, `.svelte` | `.go`, `.py`, `.java`, `.rs`, `.sql`, `.sh` |
+| **Directories** | `components/`, `pages/`, `styles/`, `ui/`, `frontend/` | `server/`, `api/`, `services/`, `backend/`, `cmd/` |
+| **Keywords** | UI, styles, components, layout, animation, responsive, interaction | API, database, algorithms, performance, concurrency, security, architecture |
 
-**决策矩阵**：
+**Decision Matrix**:
 ```
-                前端特征强    前端特征弱
-               ┌────────────┬────────────┐
-后端特征强     │  交叉验证   │   Codex    │
-               ├────────────┼────────────┤
-后端特征弱     │   Gemini   │   Claude   │
-               └────────────┴────────────┘
+                Strong Frontend    Weak Frontend
+               ┌──────────────┬──────────────┐
+Strong Backend │Cross-Validate│    Codex     │
+               ├──────────────┼──────────────┤
+Weak Backend   │    Gemini    │    Claude    │
+               └──────────────┴──────────────┘
 ```
 
-### 3. 交叉验证触发
+### 3. Cross-Validation Triggers
 
-以下情况智能触发交叉验证：
+Intelligently trigger cross-validation in the following situations:
 
-1. **全栈问题** - 同时涉及前端和后端
-2. **高不确定性** - 多种可能原因，难以确定
-3. **设计决策** - 需要评估多种架构方案
-4. **复杂 bug** - 难以定位，需要多角度分析
-5. **关键修改** - 影响核心功能的变更
+1. **Full-Stack Issues** - Involves both frontend and backend
+2. **High Uncertainty** - Multiple possible causes, difficult to determine
+3. **Design Decisions** - Need to evaluate multiple architecture options
+4. **Complex Bugs** - Difficult to locate, requires multi-perspective analysis
+5. **Critical Changes** - Modifications affecting core functionality
 
-### 4. 调用执行
+### 4. Invocation Execution
 
-#### 单模型调用
+#### Single Model Invocation
 
 ```bash
 codeagent-wrapper --backend <codex|gemini> - "$PWD" <<'EOF'
-# 任务背景
-[提供必要的上下文]
+# Task Background
+[Provide necessary context]
 
-# 具体任务
-[清晰描述需要完成的任务]
+# Specific Task
+[Clearly describe the task to be completed]
 
-# 期望输出
-[说明期望的输出格式]
+# Expected Output
+[Specify the expected output format]
 EOF
 ```
 
-#### 交叉验证调用
+#### Cross-Validation Invocation
 
-并行调用两个模型，分别从不同视角分析：
+Invoke both models in parallel, analyzing from different perspectives:
 
-**Codex 任务**（后端视角）：
+**Codex Task** (Backend Perspective):
 ```bash
 codeagent-wrapper --backend codex - "$PWD" <<'EOF'
-请从后端/逻辑角度分析：
-[具体问题描述]
+Please analyze from backend/logic perspective:
+[Specific problem description]
 
-重点关注：
-- API 设计和实现
-- 数据流和状态管理
-- 性能和安全性
+Focus on:
+- API design and implementation
+- Data flow and state management
+- Performance and security
 EOF
 ```
 
-**Gemini 任务**（前端视角）：
+**Gemini Task** (Frontend Perspective):
 ```bash
 codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
-请从前端/UI 角度分析：
-[具体问题描述]
+Please analyze from frontend/UI perspective:
+[Specific problem description]
 
-重点关注：
-- 组件结构和渲染
-- 用户交互和体验
-- 样式和响应式设计
+Focus on:
+- Component structure and rendering
+- User interaction and experience
+- Styling and responsive design
 EOF
 ```
 
-### 5. 结果整合
+### 5. Result Integration
 
-#### 单模型结果
+#### Single Model Result
 
-直接采纳模型输出，Claude 验证合理性后继续流程。
+Directly adopt the model output, Claude validates reasonableness before continuing the workflow.
 
-#### 交叉验证结果
+#### Cross-Validation Result
 
 ```markdown
-## 交叉验证结果
+## Cross-Validation Results
 
-### Codex 分析（后端视角）
-[Codex 的分析结果]
+### Codex Analysis (Backend Perspective)
+[Codex's analysis results]
 
-### Gemini 分析（前端视角）
-[Gemini 的分析结果]
+### Gemini Analysis (Frontend Perspective)
+[Gemini's analysis results]
 
-### 综合结论
-- **一致点**: [两者一致的结论]
-- **分歧点**: [存在分歧的地方]
-- **最终建议**: [Claude 综合判断后的建议]
+### Comprehensive Conclusion
+- **Points of Agreement**: [Consistent conclusions from both]
+- **Points of Divergence**: [Areas where there are differences]
+- **Final Recommendation**: [Claude's recommendation after comprehensive evaluation]
 ```
 
-## 降级处理
+## Fallback Handling
 
-如果 codeagent-wrapper 不可用或调用失败：
+If codeagent-wrapper is not available or invocation fails:
 
-1. 记录调用失败原因
-2. 回退到 Claude 独立处理
-3. 在输出中说明未使用外部模型
+1. Record the failure reason
+2. Fall back to Claude handling independently
+3. Note in the output that external models were not used
 
-## 注意事项
+## Important Notes
 
-1. **超时控制** - 外部调用默认超时 7200 秒，可通过 `CODEX_TIMEOUT` 环境变量调整
-2. **结果验证** - Claude 应验证外部模型返回结果的合理性
-3. **隐私考虑** - 敏感代码谨慎发送给外部模型
-4. **成本意识** - 避免不必要的外部调用，简单任务 Claude 直接处理
+1. **Language Standards** - **Inter-model communication must use English**
+   - Prompts, task descriptions, and code comments sent to Codex/Gemini must be in English
+   - This ensures standardization and efficiency of multi-model collaboration
+   - User interactions still follow the user's language configuration (e.g., Chinese configuration in CLAUDE.md)
+   - Example: Even if the user has configured Chinese output, English prompts must still be used when calling external models
+2. **Timeout Control** - External invocations have a default timeout of 7200 seconds, adjustable via `CODEX_TIMEOUT` environment variable
+3. **Result Validation** - Claude should validate the reasonableness of results returned by external models
+4. **Privacy Consideration** - Be cautious when sending sensitive code to external models
+5. **Cost Awareness** - Avoid unnecessary external invocations, Claude handles simple tasks directly
 
-## 与其他 Skills 的集成
+## Integration with Other Skills
 
-本模块被以下 skills 引用：
+This module is referenced by the following skills:
 
-| Skill | 应用场景 |
-|-------|---------|
-| `systematic-debugging` | 根因分析时双模型交叉诊断 |
-| `brainstorming` | 方案评估时多视角验证 |
-| `writing-plans` | 技术方案设计时专业模型辅助 |
-| `executing-plans` | 实施阶段按任务类型路由 |
-| `subagent-driven-development` | 子任务按前后端分发 |
-| `requesting-code-review` | 双模型交叉审查 |
-| `test-driven-development` | 测试生成按技术栈路由 |
-| `verification-before-completion` | 验证阶段交叉确认 |
+| Skill | Usage Scenario |
+|-------|----------------|
+| `systematic-debugging` | Dual-model cross-diagnosis during root cause analysis |
+| `brainstorming` | Multi-perspective validation during solution evaluation |
+| `writing-plans` | Professional model assistance during technical proposal design |
+| `executing-plans` | Routing by task type during implementation phase |
+| `subagent-driven-development` | Distributing subtasks by frontend/backend |
+| `requesting-code-review` | Dual-model cross-review |
+| `test-driven-development` | Test generation routing by tech stack |
+| `verification-before-completion` | Cross-confirmation during verification phase |
 
-## 快速参考
+## Quick Reference
 
 ```
-需要外部模型？
+Need external model?
      │
-     ├─ 前端任务 → Gemini
-     ├─ 后端任务 → Codex
-     ├─ 全栈/复杂 → 交叉验证
-     └─ 简单任务 → Claude 直接处理
+     ├─ Frontend task → Gemini
+     ├─ Backend task → Codex
+     ├─ Full-stack/Complex → Cross-validation
+     └─ Simple task → Claude handles directly
 ```

@@ -57,66 +57,68 @@ Start by understanding the current project context, then ask questions one at a 
 
 **Related skill:** superpowers:multi-model-core
 
-**When to trigger:** Claude 智能判断以下情况时触发多模型验证：
-- 设计涉及前后端架构决策
-- 需要评估多种技术方案
-- 关键设计需要多视角验证
+**When to trigger:** Claude intelligently triggers multi-model validation in the following situations:
+- Design involves frontend-backend architecture decisions
+- Need to evaluate multiple technical approaches
+- Critical design requires multi-perspective validation
 
 **How to use:**
 
-在 "Exploring approaches" 阶段，对于涉及前后端的设计方案：
+> **IMPORTANT**: All prompts sent to external models (Codex/Gemini) via codeagent-wrapper must be in English, regardless of your configured output language.
+
+During the "Exploring approaches" phase, for designs involving frontend and backend:
 
 ```bash
-# 并行获取专业视角
+# Parallel invocation for specialized perspectives
 
-# Codex（后端架构视角）
+# Codex (backend architecture perspective)
 codeagent-wrapper --backend codex - "$PWD" <<'EOF'
-## 设计方案
-[方案描述]
+## Design Proposal
+[Design description]
 
-## 请从后端架构角度评估
-1. 架构合理性和可扩展性
-2. 数据模型和 API 设计
-3. 性能和安全考虑
-4. 技术选型建议
+## Please evaluate from backend architecture perspective
+1. Architecture rationality and scalability
+2. Data model and API design
+3. Performance and security considerations
+4. Tech stack recommendations
 
-## 期望输出
-- 方案评估（优势/风险）
-- 改进建议
+## Expected Output
+- Design assessment (strengths/risks)
+- Improvement suggestions
 EOF
 
-# Gemini（前端架构视角）
+# Gemini (frontend architecture perspective)
 codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
-## 设计方案
-[方案描述]
+## Design Proposal
+[Design description]
 
-## 请从前端架构角度评估
-1. 组件结构和状态管理
-2. 用户体验和交互设计
-3. 性能和可访问性
-4. 技术选型建议
+## Please evaluate from frontend architecture perspective
+1. Component structure and state management
+2. User experience and interaction design
+3. Performance and accessibility
+4. Tech stack recommendations
 
-## 期望输出
-- 方案评估（优势/风险）
-- 改进建议
+## Expected Output
+- Design assessment (strengths/risks)
+- Improvement suggestions
 EOF
 ```
 
 **Result integration:**
 
 ```markdown
-## 多模型设计评估
+## Multi-Model Design Assessment
 
-### Codex 评估（后端视角）
-[Codex 的评估结果]
+### Codex Assessment (Backend Perspective)
+[Codex assessment results]
 
-### Gemini 评估（前端视角）
-[Gemini 的评估结果]
+### Gemini Assessment (Frontend Perspective)
+[Gemini assessment results]
 
-### 综合建议
-- **一致认可**: [两者都认可的设计点]
-- **需要权衡**: [存在不同意见的地方]
-- **最终方案**: [Claude 综合后的推荐方案]
+### Comprehensive Recommendation
+- **Points of Agreement**: [Design points both agree on]
+- **Trade-offs Required**: [Areas with differing opinions]
+- **Final Recommendation**: [Claude's integrated recommended approach]
 ```
 
-**Fallback:** 如果 codeagent-wrapper 不可用，继续使用 Claude 独立评估。
+**Fallback:** If codeagent-wrapper is not available, continue with Claude's independent assessment.

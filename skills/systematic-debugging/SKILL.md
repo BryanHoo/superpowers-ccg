@@ -290,70 +290,72 @@ These techniques are part of systematic debugging and available in this director
 
 ## Multi-Model Cross-Validation
 
-**When to trigger:** Claude 智能判断以下情况时触发交叉验证：
-- 全栈问题（前后端交互相关）
-- 高不确定性（多种可能原因）
-- 复杂 bug（难以定位）
+**When to trigger:** Claude intelligently triggers cross-validation in the following situations:
+- Full-stack issues (frontend-backend interaction related)
+- High uncertainty (multiple possible causes)
+- Complex bugs (difficult to locate)
 
 **How to use:**
 
-在 Phase 1（根因调查）或 Phase 2（模式分析）阶段，如果问题涉及前后端或存在高不确定性：
+> **IMPORTANT**: All prompts sent to external models (Codex/Gemini) via codeagent-wrapper must be in English, regardless of your configured output language.
+
+During Phase 1 (Root Cause Investigation) or Phase 2 (Pattern Analysis), if the issue involves frontend-backend or has high uncertainty:
 
 ```bash
-# 并行调用 Codex 和 Gemini 进行交叉诊断
+# Parallel invocation of Codex and Gemini for cross-validation diagnosis
 
-# Codex（后端视角）
+# Codex (backend perspective)
 codeagent-wrapper --backend codex - "$PWD" <<'EOF'
-## 问题描述
-[问题描述]
+## Problem Description
+[Problem description]
 
-## 请从后端/逻辑角度分析
-1. API 实现是否正确？
-2. 数据流是否正常？
-3. 是否有性能或安全问题？
-4. 错误处理是否完善？
+## Please analyze from backend/logic perspective
+1. Is the API implementation correct?
+2. Is the data flow normal?
+3. Are there performance or security issues?
+4. Is error handling adequate?
 
-## 期望输出
-- 可能的根因（按可能性排序）
-- 建议的验证步骤
+## Expected Output
+- Possible root causes (ranked by likelihood)
+- Recommended verification steps
 EOF
 
-# Gemini（前端视角）
+# Gemini (frontend perspective)
 codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
-## 问题描述
-[问题描述]
+## Problem Description
+[Problem description]
 
-## 请从前端/UI 角度分析
-1. 组件渲染是否正确？
-2. 状态管理是否正常？
-3. 用户交互是否有问题？
-4. 是否有兼容性问题？
+## Please analyze from frontend/UI perspective
+1. Is component rendering correct?
+2. Is state management working properly?
+3. Are there issues with user interaction?
+4. Are there compatibility issues?
 
-## 期望输出
-- 可能的根因（按可能性排序）
-- 建议的验证步骤
+## Expected Output
+- Possible root causes (ranked by likelihood)
+- Recommended verification steps
 EOF
 ```
 
 **Result integration:**
 
 ```markdown
-## 交叉验证诊断结果
+## Cross-Validation Diagnosis Results
 
-### Codex 分析（后端视角）
-[Codex 的分析结果]
+### Codex Analysis (Backend Perspective)
+[Codex analysis results]
 
-### Gemini 分析（前端视角）
-[Gemini 的分析结果]
+### Gemini Analysis (Frontend Perspective)
+[Gemini analysis results]
 
-### 综合结论
-- **一致点**: [两者一致的发现]
-- **分歧点**: [存在分歧的地方]
-- **最终判断**: [Claude 综合后的根因判断]
-- **验证计划**: [下一步验证步骤]
+### Comprehensive Conclusion
+- **Points of Agreement**: [Consistent findings from both]
+- **Points of Divergence**: [Areas where they disagree]
+- **Final Determination**: [Claude's integrated root cause determination]
+- **Verification Plan**: [Next verification steps]
 ```
 
-**Fallback:** 如果 codeagent-wrapper 不可用，继续使用 Claude 独立分析。
+**Fallback:** If codeagent-wrapper is not available, continue with Claude's independent analysis.
 
 ## Real-World Impact
 

@@ -1,250 +1,250 @@
-# 交叉验证机制
+# Cross-Validation Mechanism
 
-## 触发条件
+## Trigger Conditions
 
-### 1. 全栈问题
+### 1. Full-Stack Issues
 
-**定义**：任务同时涉及前端和后端代码或逻辑。
+**Definition**: Tasks involving both frontend and backend code or logic simultaneously.
 
-**识别信号**：
-- 涉及的文件同时包含前端和后端扩展名
-- 问题描述涉及前后端交互（如 "API 调用后页面不更新"）
-- 修改需要同时调整前后端代码
+**Identification Signals**:
+- Files involved include both frontend and backend extensions
+- Problem description involves frontend-backend interaction (e.g., "page doesn't update after API call")
+- Modifications require adjusting both frontend and backend code
 
-**示例**：
-- "登录后页面白屏" - 可能是 API 问题或前端渲染问题
-- "表单提交失败" - 可能是前端验证、API 处理或数据库问题
-- "数据显示不正确" - 可能是 API 返回格式或前端解析问题
+**Examples**:
+- "White screen after login" - could be an API issue or frontend rendering problem
+- "Form submission fails" - could be frontend validation, API processing, or database issue
+- "Data displays incorrectly" - could be API return format or frontend parsing problem
 
-### 2. 高不确定性
+### 2. High Uncertainty
 
-**定义**：问题有多种可能原因，难以确定根因。
+**Definition**: Problems with multiple possible causes, difficult to determine root cause.
 
-**识别信号**：
-- 错误信息模糊或缺失
-- 问题间歇性出现
-- 初步分析后仍有多个可能原因
+**Identification Signals**:
+- Error messages are vague or missing
+- Problem appears intermittently
+- Multiple possible causes remain after preliminary analysis
 
-**示例**：
-- "有时候页面加载很慢" - 可能是前端渲染、API 响应或网络问题
-- "偶尔出现数据丢失" - 可能是前端状态、API 处理或数据库事务问题
+**Examples**:
+- "Page loads slowly sometimes" - could be frontend rendering, API response, or network issue
+- "Data loss occurs occasionally" - could be frontend state, API processing, or database transaction issue
 
-### 3. 设计决策
+### 3. Design Decisions
 
-**定义**：需要评估多种架构或技术方案。
+**Definition**: Need to evaluate multiple architecture or technical solutions.
 
-**识别信号**：
-- 任务涉及新功能设计
-- 需要选择技术栈或架构模式
-- 方案有多种可行选项
+**Identification Signals**:
+- Task involves new feature design
+- Need to choose tech stack or architecture pattern
+- Multiple viable options exist for the solution
 
-**示例**：
-- "设计实时通知系统" - 需要评估 WebSocket/SSE + UI 展示方案
-- "优化搜索功能" - 需要评估后端搜索引擎 + 前端交互体验
+**Examples**:
+- "Design real-time notification system" - need to evaluate WebSocket/SSE + UI display solutions
+- "Optimize search functionality" - need to evaluate backend search engine + frontend interaction experience
 
-### 4. 复杂 Bug
+### 4. Complex Bugs
 
-**定义**：难以定位的问题，需要多角度分析。
+**Definition**: Hard-to-locate problems requiring multi-angle analysis.
 
-**识别信号**：
-- 常规调试方法无效
-- 问题涉及多个系统组件
-- 复现条件复杂
+**Identification Signals**:
+- Conventional debugging methods ineffective
+- Problem involves multiple system components
+- Complex reproduction conditions
 
-**示例**：
-- "特定用户无法完成支付" - 需要检查用户状态、支付 API、前端流程
-- "移动端特定操作崩溃" - 需要检查前端兼容性和后端数据处理
+**Examples**:
+- "Specific users cannot complete payment" - need to check user state, payment API, frontend flow
+- "Mobile crashes on specific operations" - need to check frontend compatibility and backend data processing
 
-### 5. 关键路径修改
+### 5. Critical Path Modifications
 
-**定义**：影响核心功能的代码变更。
+**Definition**: Code changes affecting core functionality.
 
-**识别信号**：
-- 修改涉及认证、支付、数据安全等核心模块
-- 变更影响多个下游功能
-- 修改不可轻易回滚
+**Identification Signals**:
+- Modifications involve core modules like authentication, payment, data security
+- Changes affect multiple downstream features
+- Modifications cannot be easily rolled back
 
-**示例**：
-- "重构用户认证流程" - 影响前端登录 UI 和后端认证逻辑
-- "升级数据库 schema" - 影响后端模型和前端数据展示
+**Examples**:
+- "Refactor user authentication flow" - affects frontend login UI and backend authentication logic
+- "Upgrade database schema" - affects backend models and frontend data display
 
-## 验证流程
+## Validation Flow
 
-### 阶段 1：并行调用
+### Phase 1: Parallel Invocation
 
-同时向 Codex 和 Gemini 发送任务，各自从专业视角分析。
+Send tasks to both Codex and Gemini simultaneously, each analyzing from their professional perspective.
 
-**Codex 任务模板**：
+**Codex Task Template**:
 ```
-## 背景
-[问题/任务描述]
+## Background
+[Problem/task description]
 
-## 请从后端/逻辑角度分析
+## Please analyze from backend/logic perspective
 
-重点关注：
-1. API 设计和实现是否正确
-2. 数据流和状态管理是否合理
-3. 性能瓶颈和优化空间
-4. 安全性考虑
-5. 错误处理和边界情况
+Focus on:
+1. Whether API design and implementation are correct
+2. Whether data flow and state management are reasonable
+3. Performance bottlenecks and optimization opportunities
+4. Security considerations
+5. Error handling and edge cases
 
-## 期望输出
-- 分析结论
-- 发现的问题（如有）
-- 建议的解决方案
-```
-
-**Gemini 任务模板**：
-```
-## 背景
-[问题/任务描述]
-
-## 请从前端/UI 角度分析
-
-重点关注：
-1. 组件结构和渲染逻辑是否正确
-2. 用户交互和体验是否流畅
-3. 状态管理是否合理
-4. 样式和响应式设计
-5. 可访问性和兼容性
-
-## 期望输出
-- 分析结论
-- 发现的问题（如有）
-- 建议的解决方案
+## Expected Output
+- Analysis conclusion
+- Issues found (if any)
+- Suggested solutions
 ```
 
-### 阶段 2：结果对比
+**Gemini Task Template**:
+```
+## Background
+[Problem/task description]
 
-收集两个模型的输出后，进行对比分析：
+## Please analyze from frontend/UI perspective
+
+Focus on:
+1. Whether component structure and rendering logic are correct
+2. Whether user interaction and experience are smooth
+3. Whether state management is reasonable
+4. Styling and responsive design
+5. Accessibility and compatibility
+
+## Expected Output
+- Analysis conclusion
+- Issues found (if any)
+- Suggested solutions
+```
+
+### Phase 2: Result Comparison
+
+After collecting outputs from both models, perform comparative analysis:
 
 ```
 ┌─────────────────────────────────────────┐
-│           结果对比分析                   │
+│         Result Comparison Analysis      │
 ├─────────────────────────────────────────┤
 │                                         │
-│  Codex 结论        Gemini 结论          │
+│  Codex Conclusion   Gemini Conclusion   │
 │      │                 │                │
 │      └────────┬────────┘                │
 │               │                         │
-│         对比分析                         │
+│      Comparative Analysis               │
 │               │                         │
 │      ┌────────┴────────┐                │
 │      │                 │                │
-│   一致点            分歧点               │
+│  Agreement        Divergence            │
 │      │                 │                │
 │      ▼                 ▼                │
-│   直接采纳        Claude 仲裁           │
+│  Direct Adoption   Claude Arbitration   │
 │                                         │
 └─────────────────────────────────────────┘
 ```
 
-### 阶段 3：综合结论
+### Phase 3: Comprehensive Conclusion
 
-**一致情况**：
-- 两个模型结论一致 → 直接采纳
-- 记录一致结论，继续流程
+**Agreement Case**:
+- Both models agree → direct adoption
+- Record consensus conclusion, continue flow
 
-**分歧情况**：
-- 两个模型结论不同 → Claude 仲裁
-- 分析分歧原因
-- 结合两方观点给出最终结论
-- 必要时进行额外验证
+**Divergence Case**:
+- Models disagree → Claude arbitration
+- Analyze reasons for divergence
+- Combine both viewpoints to provide final conclusion
+- Perform additional verification if necessary
 
-## 输出格式
+## Output Format
 
-### 标准交叉验证报告
+### Standard Cross-Validation Report
 
 ```markdown
-## 交叉验证报告
+## Cross-Validation Report
 
-### 验证背景
-- **触发原因**: [全栈问题/高不确定性/设计决策/复杂bug/关键修改]
-- **验证范围**: [涉及的文件/模块]
+### Validation Background
+- **Trigger Reason**: [Full-stack issue/High uncertainty/Design decision/Complex bug/Critical modification]
+- **Validation Scope**: [Files/modules involved]
 
-### Codex 分析（后端视角）
+### Codex Analysis (Backend Perspective)
 
-#### 分析结论
-[Codex 的主要结论]
+#### Analysis Conclusion
+[Codex's main conclusion]
 
-#### 发现的问题
-1. [问题1]
-2. [问题2]
+#### Issues Found
+1. [Issue 1]
+2. [Issue 2]
 
-#### 建议方案
-[Codex 建议的解决方案]
+#### Suggested Solution
+[Codex's suggested solution]
 
-### Gemini 分析（前端视角）
+### Gemini Analysis (Frontend Perspective)
 
-#### 分析结论
-[Gemini 的主要结论]
+#### Analysis Conclusion
+[Gemini's main conclusion]
 
-#### 发现的问题
-1. [问题1]
-2. [问题2]
+#### Issues Found
+1. [Issue 1]
+2. [Issue 2]
 
-#### 建议方案
-[Gemini 建议的解决方案]
+#### Suggested Solution
+[Gemini's suggested solution]
 
-### 综合结论
+### Comprehensive Conclusion
 
-#### 一致点
-- [两者一致的发现1]
-- [两者一致的发现2]
+#### Points of Agreement
+- [Consensus finding 1]
+- [Consensus finding 2]
 
-#### 分歧点
-| 方面 | Codex 观点 | Gemini 观点 | 仲裁结论 |
-|------|-----------|-------------|---------|
-| [方面1] | [观点] | [观点] | [结论] |
+#### Points of Divergence
+| Aspect | Codex View | Gemini View | Arbitration Conclusion |
+|--------|-----------|-------------|------------------------|
+| [Aspect 1] | [View] | [View] | [Conclusion] |
 
-#### 最终建议
-[Claude 综合两方分析后的最终建议]
+#### Final Recommendation
+[Claude's final recommendation after synthesizing both analyses]
 
-#### 后续行动
-1. [行动1]
-2. [行动2]
+#### Follow-up Actions
+1. [Action 1]
+2. [Action 2]
 ```
 
-## 质量保证
+## Quality Assurance
 
-### 验证结果的可信度评估
+### Validation Result Credibility Assessment
 
-| 情况 | 可信度 | 处理方式 |
-|------|--------|---------|
-| 两者一致，证据充分 | 高 | 直接采纳 |
-| 两者一致，证据不足 | 中 | 补充验证 |
-| 两者分歧，各有道理 | 中 | Claude 仲裁 |
-| 两者分歧，一方明显错误 | 低（错误方） | 采纳正确方 |
-| 两者都不确定 | 低 | 需要更多信息 |
+| Situation | Credibility | Handling |
+|-----------|-------------|----------|
+| Both agree, sufficient evidence | High | Direct adoption |
+| Both agree, insufficient evidence | Medium | Supplementary verification |
+| Divergence, both reasonable | Medium | Claude arbitration |
+| Divergence, one clearly wrong | Low (wrong side) | Adopt correct side |
+| Both uncertain | Low | Need more information |
 
-### 常见分歧处理
+### Common Divergence Handling
 
-1. **技术选型分歧**
-   - 评估各方案的优缺点
-   - 结合项目实际情况选择
+1. **Technology Selection Divergence**
+   - Evaluate pros and cons of each solution
+   - Choose based on actual project situation
 
-2. **问题定位分歧**
-   - 两个方向都进行验证
-   - 用证据确定真正原因
+2. **Problem Location Divergence**
+   - Verify in both directions
+   - Determine true cause with evidence
 
-3. **方案优先级分歧**
-   - 评估影响范围和实施成本
-   - 选择性价比最高的方案
+3. **Solution Priority Divergence**
+   - Evaluate impact scope and implementation cost
+   - Choose solution with best cost-benefit ratio
 
-## 性能考虑
+## Performance Considerations
 
-### 并行调用优化
+### Parallel Invocation Optimization
 
-- 两个模型调用应并行执行，减少等待时间
-- 使用 `&` 后台执行或并行工具
+- Both model calls should execute in parallel to reduce wait time
+- Use `&` background execution or parallel tools
 
-### 超时处理
+### Timeout Handling
 
-- 单个模型调用超时：使用已完成的结果 + Claude 补充
-- 两个都超时：回退到 Claude 独立分析
+- Single model call timeout: use completed result + Claude supplement
+- Both timeout: fallback to Claude independent analysis
 
-### 成本控制
+### Cost Control
 
-- 只在必要时触发交叉验证
-- 简单问题不需要双模型验证
-- 记录验证历史，避免重复验证相同问题
+- Only trigger cross-validation when necessary
+- Simple problems don't need dual-model verification
+- Record validation history to avoid duplicate verification of same issues

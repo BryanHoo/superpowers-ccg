@@ -98,7 +98,7 @@ git commit -m "feat: add specific feature"
 
 **Related skill:** superpowers:multi-model-core
 
-在编写计划时，为每个任务标注推荐的执行模型，便于后续执行时自动路由：
+When writing plans, annotate each task with a recommended execution model to facilitate automatic routing during execution:
 
 **Task annotation format:**
 
@@ -112,10 +112,10 @@ git commit -m "feat: add specific feature"
 ```
 
 **Routing hints:**
-- `auto` - 执行时根据文件类型和任务内容自动判断（默认）
-- `codex` - 明确的后端任务（API、数据库、算法）
-- `gemini` - 明确的前端任务（组件、样式、交互）
-- `cross-validation` - 需要双模型验证的关键任务
+- `auto` - Automatically determine based on file type and task content during execution (default)
+- `codex` - Explicit backend tasks (API, database, algorithms)
+- `gemini` - Explicit frontend tasks (components, styles, interactions)
+- `cross-validation` - Critical tasks requiring dual-model verification
 
 **Example:**
 
@@ -145,7 +145,7 @@ git commit -m "feat: add specific feature"
 ...
 ```
 
-**Note:** Model hints 是可选的，执行时 Claude 会综合判断最佳路由。
+**Note:** Model hints are optional. During execution, Claude will comprehensively determine the optimal routing.
 
 ## Execution Handoff
 

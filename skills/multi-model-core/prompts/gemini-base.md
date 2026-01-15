@@ -1,246 +1,248 @@
-# Gemini 基础提示词模板
+# Gemini Base Prompt Template
 
-## 通用分析模板
+> **IMPORTANT**: All prompts sent to Gemini must be in English. This ensures standardized and efficient multi-model collaboration.
+
+## General Analysis Template
 
 ```
-## 任务背景
+## Task Background
 {task_context}
 
-## 分析要求
-请从前端/用户体验角度进行分析。
+## Analysis Requirements
+Please analyze from a frontend/user experience perspective.
 
-## 重点关注
-1. **组件结构** - 组件划分、复用性、组合方式
-2. **用户体验** - 交互流畅性、反馈及时性、易用性
-3. **视觉设计** - 布局合理性、样式一致性、响应式适配
-4. **性能** - 渲染性能、加载速度、资源优化
-5. **可访问性** - 键盘导航、屏幕阅读器支持、颜色对比度
+## Focus Areas
+1. **Component Structure** - Component division, reusability, composition patterns
+2. **User Experience** - Interaction fluidity, timely feedback, usability
+3. **Visual Design** - Layout reasonableness, style consistency, responsive adaptation
+4. **Performance** - Rendering performance, load speed, resource optimization
+5. **Accessibility** - Keyboard navigation, screen reader support, color contrast
 
-## 输出格式
-### 分析结论
-[主要发现和结论]
+## Output Format
+### Analysis Conclusion
+[Main findings and conclusions]
 
-### 问题清单
-1. [问题描述] - [影响程度: 高/中/低]
+### Issue List
+1. [Issue description] - [Impact Level: High/Medium/Low]
 2. ...
 
-### 建议方案
-[具体的改进建议]
+### Recommended Solutions
+[Specific improvement suggestions]
 ```
 
-## 调试分析模板
+## Debugging Analysis Template
 
 ```
-## 问题描述
+## Problem Description
 {bug_description}
 
-## 相关代码
+## Related Code
 {code_context}
 
-## 用户反馈/错误表现
+## User Feedback/Error Manifestation
 {user_feedback}
 
-## 请分析
-1. 问题的表现是什么？
-2. 可能的原因有哪些？
-3. 如何复现问题？
-4. 如何修复？
+## Please Analyze
+1. What is the manifestation of the problem?
+2. What are the possible causes?
+3. How to reproduce the problem?
+4. How to fix it?
 
-## 输出格式
-### 问题定位
-[问题出现在哪个组件/模块]
+## Output Format
+### Problem Location
+[Which component/module the problem appears in]
 
-### 可能原因
-1. [原因1] - [可能性: 高/中/低]
-2. [原因2] - [可能性: 高/中/低]
+### Possible Causes
+1. [Cause 1] - [Likelihood: High/Medium/Low]
+2. [Cause 2] - [Likelihood: High/Medium/Low]
 
-### 复现步骤
-1. [步骤1]
-2. [步骤2]
-3. [预期结果 vs 实际结果]
+### Reproduction Steps
+1. [Step 1]
+2. [Step 2]
+3. [Expected result vs Actual result]
 
-### 修复方案
+### Fix Solution
 ```diff
-- [原代码]
-+ [修复后代码]
+- [Original code]
++ [Fixed code]
 ```
 
-### 用户体验改进
-[修复后如何提升用户体验]
+### User Experience Improvement
+[How user experience improves after the fix]
 ```
 
-## 代码审查模板
+## Code Review Template
 
 ```
-## 审查范围
+## Review Scope
 {files_to_review}
 
-## 变更摘要
+## Change Summary
 {change_summary}
 
-## 请从以下角度审查
+## Please Review From the Following Perspectives
 
-### 1. 组件设计
-- 组件职责是否单一？
-- 是否易于复用？
-- Props 设计是否合理？
+### 1. Component Design
+- Is component responsibility single?
+- Is it easy to reuse?
+- Is Props design reasonable?
 
-### 2. 用户体验
-- 交互是否流畅？
-- 加载状态是否处理？
-- 错误状态是否友好？
+### 2. User Experience
+- Is interaction smooth?
+- Is loading state handled?
+- Is error state user-friendly?
 
-### 3. 样式质量
-- 是否符合设计规范？
-- 响应式是否完善？
-- 是否有样式冲突？
+### 3. Style Quality
+- Does it comply with design standards?
+- Is responsive design comprehensive?
+- Are there any style conflicts?
 
-### 4. 性能
-- 是否有不必要的重渲染？
-- 是否正确使用 memo/useMemo？
-- 资源加载是否优化？
+### 4. Performance
+- Are there any unnecessary re-renders?
+- Is memo/useMemo used correctly?
+- Is resource loading optimized?
 
-### 5. 可访问性
-- 语义化 HTML？
-- ARIA 属性？
-- 键盘可操作？
+### 5. Accessibility
+- Semantic HTML?
+- ARIA attributes?
+- Keyboard operable?
 
-## 输出格式
-### 审查结论
-[总体评价: 通过/需修改/需重写]
+## Output Format
+### Review Conclusion
+[Overall assessment: Approved/Needs Changes/Needs Rewrite]
 
-### 问题清单
-| 文件 | 行号 | 问题 | 类型 | 建议 |
-|------|------|------|------|------|
-| ... | ... | ... | UX/性能/可访问性 | ... |
+### Issue List
+| File | Line | Issue | Type | Suggestion |
+|------|------|-------|------|------------|
+| ... | ... | ... | UX/Performance/Accessibility | ... |
 
-### 优点
-[代码中做得好的地方]
+### Strengths
+[Areas where the code excels]
 
-### 改进建议
-[具体的改进建议]
+### Improvement Suggestions
+[Specific improvement suggestions]
 ```
 
-## UI 设计评估模板
+## UI Design Evaluation Template
 
 ```
-## 设计方案
+## Design Proposal
 {design_proposal}
 
-## 设计约束
+## Design Constraints
 {constraints}
 
-## 请评估
+## Please Evaluate
 
-### 1. 视觉层次
-- 信息层次是否清晰？
-- 重点是否突出？
-- 视觉引导是否合理？
+### 1. Visual Hierarchy
+- Is information hierarchy clear?
+- Are key points highlighted?
+- Is visual guidance reasonable?
 
-### 2. 交互设计
-- 操作流程是否顺畅？
-- 反馈是否及时？
-- 是否符合用户心智模型？
+### 2. Interaction Design
+- Is the operation flow smooth?
+- Is feedback timely?
+- Does it align with user mental models?
 
-### 3. 响应式设计
-- 各断点适配是否合理？
-- 触摸设备体验？
-- 内容优先级？
+### 3. Responsive Design
+- Is adaptation at each breakpoint reasonable?
+- Touch device experience?
+- Content priority?
 
-### 4. 一致性
-- 是否符合设计系统？
-- 组件使用是否一致？
-- 交互模式是否统一？
+### 4. Consistency
+- Does it comply with the design system?
+- Is component usage consistent?
+- Are interaction patterns unified?
 
-## 输出格式
-### 评估结论
-[总体评价]
+## Output Format
+### Evaluation Conclusion
+[Overall assessment]
 
-### 优势
-1. [优势1]
-2. [优势2]
+### Strengths
+1. [Strength 1]
+2. [Strength 2]
 
-### 问题
-1. [问题1] - [改进建议]
-2. [问题2] - [改进建议]
+### Issues
+1. [Issue 1] - [Improvement suggestion]
+2. [Issue 2] - [Improvement suggestion]
 
-### 设计建议
-[具体的设计改进建议，可包含草图描述]
+### Design Suggestions
+[Specific design improvement suggestions, may include sketch descriptions]
 ```
 
-## 组件开发模板
+## Component Development Template
 
 ```
-## 组件需求
+## Component Requirements
 {component_requirements}
 
-## 设计稿/原型
+## Design Mockup/Prototype
 {design_reference}
 
-## 技术栈
-- 框架: {framework}
-- 样式方案: {styling}
-- 状态管理: {state_management}
+## Tech Stack
+- Framework: {framework}
+- Styling approach: {styling}
+- State management: {state_management}
 
-## 请实现
+## Please Implement
 
-### 要求
-1. 组件结构清晰，职责单一
-2. Props 类型完整，有默认值
-3. 样式支持自定义和主题
-4. 处理加载、错误、空状态
-5. 支持键盘操作和屏幕阅读器
+### Requirements
+1. Clear component structure, single responsibility
+2. Complete Props types with default values
+3. Styles support customization and theming
+4. Handle loading, error, and empty states
+5. Support keyboard operation and screen readers
 
-## 输出格式
-### 组件代码
+## Output Format
+### Component Code
 ```{framework}
-// 组件实现
+// Component implementation
 ```
 
-### 使用示例
+### Usage Example
 ```{framework}
-// 使用示例
+// Usage example
 ```
 
-### Props 文档
-| Prop | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
+### Props Documentation
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
 | ... | ... | ... | ... |
 
-### 可访问性说明
-[组件的可访问性特性]
+### Accessibility Notes
+[Accessibility features of the component]
 ```
 
-## 测试生成模板
+## Test Generation Template
 
 ```
-## 待测组件
+## Component to Test
 {component_code}
 
-## 测试要求
-- 测试框架: {test_framework}
-- 覆盖目标: {coverage_target}
+## Test Requirements
+- Test framework: {test_framework}
+- Coverage target: {coverage_target}
 
-## 请生成测试用例
+## Please Generate Test Cases
 
-### 覆盖范围
-1. 渲染测试 - 组件正确渲染
-2. 交互测试 - 用户操作响应
-3. 状态测试 - 状态变化正确
-4. 边界测试 - 异常输入处理
-5. 可访问性测试 - a11y 合规
+### Coverage Scope
+1. Rendering tests - Component renders correctly
+2. Interaction tests - User action responses
+3. State tests - State changes correctly
+4. Boundary tests - Exceptional input handling
+5. Accessibility tests - a11y compliance
 
-## 输出格式
-### 测试用例
+## Output Format
+### Test Cases
 ```{language}
-// 测试代码
+// Test code
 ```
 
-### 测试说明
-| 测试名称 | 测试目的 | 用户场景 |
-|---------|---------|---------|
+### Test Description
+| Test Name | Test Purpose | User Scenario |
+|-----------|--------------|---------------|
 | ... | ... | ... |
 
-### 覆盖分析
-[测试覆盖的场景和建议补充的测试]
+### Coverage Analysis
+[Scenarios covered by tests and recommended additional tests]
 ```

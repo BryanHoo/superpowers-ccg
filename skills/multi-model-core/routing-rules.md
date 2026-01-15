@@ -1,161 +1,161 @@
-# 路由规则详细定义
+# Detailed Routing Rules
 
-## 文件类型路由表
+## File Type Routing Table
 
-### Gemini（前端专家）
+### Gemini (Frontend Expert)
 
-| 扩展名 | 说明 | 置信度 |
-|--------|------|--------|
-| `.tsx` | React TypeScript 组件 | 高 |
-| `.jsx` | React JavaScript 组件 | 高 |
-| `.vue` | Vue 单文件组件 | 高 |
-| `.svelte` | Svelte 组件 | 高 |
-| `.astro` | Astro 组件 | 高 |
-| `.css` | 样式表 | 高 |
-| `.scss` | Sass 样式 | 高 |
-| `.less` | Less 样式 | 高 |
-| `.html` | HTML 模板 | 中 |
-| `.ejs` | EJS 模板 | 中 |
-| `.hbs` | Handlebars 模板 | 中 |
+| Extension | Description | Confidence |
+|-----------|-------------|------------|
+| `.tsx` | React TypeScript components | High |
+| `.jsx` | React JavaScript components | High |
+| `.vue` | Vue single-file components | High |
+| `.svelte` | Svelte components | High |
+| `.astro` | Astro components | High |
+| `.css` | Stylesheets | High |
+| `.scss` | Sass styles | High |
+| `.less` | Less styles | High |
+| `.html` | HTML templates | Medium |
+| `.ejs` | EJS templates | Medium |
+| `.hbs` | Handlebars templates | Medium |
 
-### Codex（后端专家）
+### Codex (Backend Expert)
 
-| 扩展名 | 说明 | 置信度 |
-|--------|------|--------|
-| `.go` | Go 源码 | 高 |
-| `.py` | Python 源码 | 高 |
-| `.java` | Java 源码 | 高 |
-| `.rs` | Rust 源码 | 高 |
-| `.rb` | Ruby 源码 | 高 |
-| `.php` | PHP 源码 | 高 |
-| `.sql` | SQL 脚本 | 高 |
-| `.sh` | Shell 脚本 | 高 |
-| `.c` | C 源码 | 高 |
-| `.cpp` | C++ 源码 | 高 |
-| `.cs` | C# 源码 | 高 |
+| Extension | Description | Confidence |
+|-----------|-------------|------------|
+| `.go` | Go source code | High |
+| `.py` | Python source code | High |
+| `.java` | Java source code | High |
+| `.rs` | Rust source code | High |
+| `.rb` | Ruby source code | High |
+| `.php` | PHP source code | High |
+| `.sql` | SQL scripts | High |
+| `.sh` | Shell scripts | High |
+| `.c` | C source code | High |
+| `.cpp` | C++ source code | High |
+| `.cs` | C# source code | High |
 
-### 需要上下文判断
+### Context-Dependent
 
-| 扩展名 | 说明 | 判断依据 |
-|--------|------|---------|
-| `.ts` | TypeScript | 看目录和内容：组件→Gemini，服务→Codex |
-| `.js` | JavaScript | 看目录和内容：前端→Gemini，Node.js→Codex |
-| `.json` | JSON 配置 | 看用途：package.json→上下文，API→Codex |
-| `.yaml` | YAML 配置 | 看用途：CI/CD→Codex，前端配置→Gemini |
-| `.md` | Markdown | 看内容：API 文档→Codex，组件文档→Gemini |
+| Extension | Description | Decision Criteria |
+|-----------|-------------|-------------------|
+| `.ts` | TypeScript | Check directory and content: components→Gemini, services→Codex |
+| `.js` | JavaScript | Check directory and content: frontend→Gemini, Node.js→Codex |
+| `.json` | JSON config | Check purpose: package.json→context, API→Codex |
+| `.yaml` | YAML config | Check purpose: CI/CD→Codex, frontend config→Gemini |
+| `.md` | Markdown | Check content: API docs→Codex, component docs→Gemini |
 
-## 目录结构路由表
+## Directory Structure Routing Table
 
-### Gemini 目录模式
+### Gemini Directory Patterns
 
 ```
-*/components/*      # React/Vue 组件目录
-*/pages/*           # 页面目录
-*/views/*           # 视图目录
-*/layouts/*         # 布局目录
-*/styles/*          # 样式目录
-*/css/*             # CSS 目录
-*/ui/*              # UI 组件目录
-*/frontend/*        # 前端目录
-*/web/*             # Web 目录
-*/client/*          # 客户端目录
-*/app/*             # 应用目录（需结合内容判断）
-*/public/*          # 静态资源目录
-*/assets/*          # 资源目录
+*/components/*      # React/Vue component directories
+*/pages/*           # Page directories
+*/views/*           # View directories
+*/layouts/*         # Layout directories
+*/styles/*          # Style directories
+*/css/*             # CSS directories
+*/ui/*              # UI component directories
+*/frontend/*        # Frontend directories
+*/web/*             # Web directories
+*/client/*          # Client directories
+*/app/*             # App directories (need content context)
+*/public/*          # Static asset directories
+*/assets/*          # Asset directories
 */hooks/*           # React Hooks
 */contexts/*        # React Context
-*/stores/*          # 前端状态管理（如 Zustand）
+*/stores/*          # Frontend state management (e.g., Zustand)
 ```
 
-### Codex 目录模式
+### Codex Directory Patterns
 
 ```
-*/server/*          # 服务端目录
-*/api/*             # API 目录
-*/services/*        # 服务目录
-*/backend/*         # 后端目录
-*/cmd/*             # Go 命令目录
-*/internal/*        # Go 内部包
-*/pkg/*             # Go 公共包
-*/lib/*             # 库目录
-*/utils/*           # 工具目录（需结合内容判断）
-*/middleware/*      # 中间件目录
-*/handlers/*        # 处理器目录
-*/controllers/*     # 控制器目录
-*/models/*          # 数据模型目录
-*/repositories/*    # 数据仓库目录
-*/database/*        # 数据库目录
-*/migrations/*      # 数据库迁移
-*/scripts/*         # 脚本目录
-*/tests/*           # 测试目录（需结合内容判断）
+*/server/*          # Server-side directories
+*/api/*             # API directories
+*/services/*        # Service directories
+*/backend/*         # Backend directories
+*/cmd/*             # Go command directories
+*/internal/*        # Go internal packages
+*/pkg/*             # Go public packages
+*/lib/*             # Library directories
+*/utils/*           # Utility directories (need content context)
+*/middleware/*      # Middleware directories
+*/handlers/*        # Handler directories
+*/controllers/*     # Controller directories
+*/models/*          # Data model directories
+*/repositories/*    # Repository directories
+*/database/*        # Database directories
+*/migrations/*      # Database migrations
+*/scripts/*         # Script directories
+*/tests/*           # Test directories (need content context)
 ```
 
-## 关键词路由表
+## Keyword Routing Table
 
-### Gemini 关键词
+### Gemini Keywords
 
-**高置信度**：
-- UI、界面、用户界面
-- 样式、CSS、Tailwind、styled-components
-- 组件、Component、Widget
-- 布局、Layout、Grid、Flex
-- 动画、Animation、Transition、Motion
-- 响应式、Responsive、Mobile-first
-- 交互、Interaction、Click、Hover
-- 用户体验、UX、可用性
+**High Confidence**:
+- UI, interface, user interface
+- styles, CSS, Tailwind, styled-components
+- component, Component, Widget
+- layout, Layout, Grid, Flex
+- animation, Animation, Transition, Motion
+- responsive, Responsive, Mobile-first
+- interaction, Interaction, Click, Hover
+- user experience, UX, usability
 
-**中置信度**：
-- 表单、Form、Input、Validation（前端验证）
-- 状态管理、State、Redux、Zustand、Pinia
-- 路由、Router、Navigation（前端路由）
-- 渲染、Render、Virtual DOM
-- Hook、Effect、Ref
+**Medium Confidence**:
+- form, Form, Input, Validation (frontend validation)
+- state management, State, Redux, Zustand, Pinia
+- routing, Router, Navigation (frontend routing)
+- rendering, Render, Virtual DOM
+- Hook, Effect, Ref
 
-### Codex 关键词
+### Codex Keywords
 
-**高置信度**：
-- API、REST、GraphQL、gRPC
-- 数据库、Database、SQL、ORM
-- 算法、Algorithm、排序、搜索
-- 性能、Performance、优化、Benchmark
-- 并发、Concurrent、Goroutine、Thread
-- 安全、Security、认证、授权、JWT
-- 后端、Backend、Server
-- 服务、Service、Microservice
+**High Confidence**:
+- API, REST, GraphQL, gRPC
+- database, Database, SQL, ORM
+- algorithm, Algorithm, sorting, searching
+- performance, Performance, optimization, Benchmark
+- concurrency, Concurrent, Goroutine, Thread
+- security, Security, authentication, authorization, JWT
+- backend, Backend, Server
+- service, Service, Microservice
 
-**中置信度**：
-- 架构、Architecture、设计模式
-- 缓存、Cache、Redis、Memcached
-- 消息队列、Queue、Kafka、RabbitMQ
-- 日志、Logging、监控、Metrics
-- 部署、Deploy、Docker、Kubernetes
-- 测试、Test、单元测试、集成测试
+**Medium Confidence**:
+- architecture, Architecture, design pattern
+- cache, Cache, Redis, Memcached
+- message queue, Queue, Kafka, RabbitMQ
+- logging, Logging, monitoring, Metrics
+- deployment, Deploy, Docker, Kubernetes
+- testing, Test, unit test, integration test
 
-## 综合判断算法
+## Comprehensive Decision Algorithm
 
 ```
 function routeDecision(task):
     frontendScore = 0
     backendScore = 0
 
-    # 文件类型评分
+    # File type scoring
     for file in task.files:
         if file.ext in GEMINI_EXTENSIONS:
             frontendScore += 2
         elif file.ext in CODEX_EXTENSIONS:
             backendScore += 2
         elif file.ext in AMBIGUOUS_EXTENSIONS:
-            # 需要进一步分析
+            # Requires further analysis
             pass
 
-    # 目录评分
+    # Directory scoring
     for dir in task.directories:
         if matchesPattern(dir, GEMINI_PATTERNS):
             frontendScore += 1.5
         elif matchesPattern(dir, CODEX_PATTERNS):
             backendScore += 1.5
 
-    # 关键词评分
+    # Keyword scoring
     for keyword in task.keywords:
         if keyword in GEMINI_HIGH_KEYWORDS:
             frontendScore += 1.5
@@ -166,7 +166,7 @@ function routeDecision(task):
         elif keyword in CODEX_MED_KEYWORDS:
             backendScore += 0.8
 
-    # 决策
+    # Decision
     if frontendScore > 3 and backendScore > 3:
         return "CROSS_VALIDATION"
     elif frontendScore > backendScore + 1:
@@ -174,26 +174,26 @@ function routeDecision(task):
     elif backendScore > frontendScore + 1:
         return "CODEX"
     else:
-        return "CLAUDE"  # 特征不明显，Claude 直接处理
+        return "CLAUDE"  # Features unclear, Claude handles directly
 ```
 
-## 特殊场景处理
+## Special Scenario Handling
 
-### 全栈项目
+### Full-Stack Projects
 
-当项目同时包含前后端代码时：
-1. 根据当前任务涉及的具体文件判断
-2. 如果任务跨越前后端，触发交叉验证
+When a project contains both frontend and backend code:
+1. Determine based on the specific files involved in the current task
+2. If the task spans frontend and backend, trigger cross-validation
 
 ### Monorepo
 
-对于 monorepo 项目：
-1. 识别 `packages/`、`apps/` 等目录结构
-2. 根据子包名称和内容判断路由
+For monorepo projects:
+1. Identify directory structures like `packages/`, `apps/`
+2. Route based on sub-package name and content
 
-### 混合技术栈
+### Mixed Tech Stack
 
-如 Next.js（前后端一体）：
+For frameworks like Next.js (frontend + backend):
 1. `pages/api/*` → Codex
-2. `pages/*.tsx`、`components/*` → Gemini
-3. 涉及两者 → 交叉验证
+2. `pages/*.tsx`, `components/*` → Gemini
+3. Involves both → Cross-validation

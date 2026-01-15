@@ -142,74 +142,74 @@ This is non-negotiable.
 
 **Related skill:** superpowers:multi-model-core
 
-对于关键功能或复杂变更，可以使用双模型交叉确认：
+For critical features or complex changes, use dual-model cross-validation:
 
 **When to trigger:**
-- 关键功能的完成验证
-- 涉及前后端的集成验证
-- 高风险变更的最终确认
+- Completion verification for critical features
+- Integration verification involving frontend and backend
+- Final confirmation for high-risk changes
 
 **How to use:**
 
-在声明完成之前，对于关键变更：
+Before claiming completion, for critical changes:
 
 ```bash
-# 并行获取双模型确认
+# Get dual-model confirmation in parallel
 
-# Codex 验证（后端视角）
+# Codex verification (backend perspective)
 codeagent-wrapper --backend codex - "$PWD" <<'EOF'
-## 验证请求
+## Verification Request
 
-### 变更摘要
-[变更描述]
+### Change Summary
+[Change description]
 
-### 请验证
-1. 后端逻辑是否正确实现
-2. API 是否符合预期
-3. 是否有遗漏的边界情况
-4. 是否有潜在的性能或安全问题
+### Please Verify
+1. Is backend logic correctly implemented?
+2. Does the API meet expectations?
+3. Are there any missed boundary conditions?
+4. Are there potential performance or security issues?
 
-### 期望输出
-- 验证结论（通过/不通过）
-- 发现的问题（如有）
+### Expected Output
+- Verification conclusion (pass/fail)
+- Issues found (if any)
 EOF
 
-# Gemini 验证（前端视角）
+# Gemini verification (frontend perspective)
 codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
-## 验证请求
+## Verification Request
 
-### 变更摘要
-[变更描述]
+### Change Summary
+[Change description]
 
-### 请验证
-1. 前端实现是否正确
-2. 用户体验是否符合预期
-3. 是否有遗漏的交互场景
-4. 是否有可访问性问题
+### Please Verify
+1. Is frontend implementation correct?
+2. Does user experience meet expectations?
+3. Are there any missed interaction scenarios?
+4. Are there accessibility issues?
 
-### 期望输出
-- 验证结论（通过/不通过）
-- 发现的问题（如有）
+### Expected Output
+- Verification conclusion (pass/fail)
+- Issues found (if any)
 EOF
 ```
 
 **Result integration:**
 
 ```markdown
-## 交叉验证确认
+## Cross-Validation Confirmation
 
-### Codex 验证（后端）
-- 结论: [通过/不通过]
-- 问题: [如有]
+### Codex Verification (Backend)
+- Conclusion: [pass/fail]
+- Issues: [if any]
 
-### Gemini 验证（前端）
-- 结论: [通过/不通过]
-- 问题: [如有]
+### Gemini Verification (Frontend)
+- Conclusion: [pass/fail]
+- Issues: [if any]
 
-### 最终结论
-[只有两方都通过才能声明完成]
+### Final Recommendation
+[Can only claim completion if both pass]
 ```
 
-**Important:** 交叉验证是额外保障，不能替代基本的验证步骤（运行测试、检查输出）。
+**Important:** Cross-validation is an additional safeguard and cannot replace basic verification steps (running tests, checking output).
 
-**Fallback:** 如果外部模型不可用，确保 Claude 的验证更加严格。
+**Fallback:** If external models are not available, ensure Claude's verification is more rigorous.

@@ -79,39 +79,39 @@ After all tasks complete and verified:
 
 **Related skill:** superpowers:multi-model-core
 
-执行计划时，根据任务特征自动路由到最适合的模型：
+When executing plans, automatically route to the most suitable model based on task characteristics:
 
 **Routing logic:**
 
-1. 检查任务是否有 `Model hint` 标注
-2. 如果有标注且不是 `auto`，按标注路由
-3. 如果是 `auto` 或无标注，综合判断：
-   - 文件类型（`.go`, `.py` → Codex; `.tsx`, `.vue` → Gemini）
-   - 目录结构（`server/`, `api/` → Codex; `components/`, `pages/` → Gemini）
-   - 任务关键词（API、数据库 → Codex; UI、样式 → Gemini）
+1. Check if the task has a `Model hint` annotation
+2. If annotated and not `auto`, route according to the annotation
+3. If `auto` or no annotation, comprehensively evaluate:
+   - File type (`.go`, `.py` → Codex; `.tsx`, `.vue` → Gemini)
+   - Directory structure (`server/`, `api/` → Codex; `components/`, `pages/` → Gemini)
+   - Task keywords (API, database → Codex; UI, styles → Gemini)
 
 **Execution with external model:**
 
 ```bash
-# 根据路由结果调用对应模型
+# Call corresponding model based on routing result
 codeagent-wrapper --backend <codex|gemini> - "$PWD" <<'EOF'
-## 任务背景
-[从计划中提取的上下文]
+## Task Background
+[Context extracted from plan]
 
-## 具体任务
-[任务的详细步骤]
+## Specific Task
+[Detailed steps of the task]
 
-## 验证要求
-[期望的验证命令和输出]
+## Verification Requirements
+[Expected verification commands and output]
 EOF
 ```
 
 **Cross-validation tasks:**
 
-对于标注为 `cross-validation` 的任务，或 Claude 判断需要交叉验证的任务：
+For tasks annotated as `cross-validation`, or tasks that Claude determines require cross-validation:
 
-1. 并行调用 Codex 和 Gemini
-2. 整合两方结果
-3. 解决分歧后执行
+1. Call Codex and Gemini in parallel
+2. Integrate results from both
+3. Execute after resolving divergences
 
-**Fallback:** 如果外部模型不可用，Claude 直接执行任务。
+**Fallback:** If external models are not available, Claude executes the task directly.

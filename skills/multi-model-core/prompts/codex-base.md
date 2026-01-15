@@ -1,193 +1,195 @@
-# Codex 基础提示词模板
+# Codex Base Prompt Template
 
-## 通用分析模板
+> **IMPORTANT**: All prompts sent to Codex must be in English. This ensures standardized and efficient multi-model collaboration.
+
+## General Analysis Template
 
 ```
-## 任务背景
+## Task Background
 {task_context}
 
-## 分析要求
-请从后端/系统架构角度进行分析。
+## Analysis Requirements
+Please analyze from a backend/system architecture perspective.
 
-## 重点关注
-1. **代码逻辑** - 算法正确性、边界条件处理
-2. **数据流** - 数据如何在系统中流转
-3. **性能** - 时间复杂度、空间复杂度、潜在瓶颈
-4. **安全性** - 输入验证、权限控制、数据保护
-5. **可维护性** - 代码结构、错误处理、日志记录
+## Focus Areas
+1. **Code Logic** - Algorithm correctness, boundary condition handling
+2. **Data Flow** - How data flows through the system
+3. **Performance** - Time complexity, space complexity, potential bottlenecks
+4. **Security** - Input validation, access control, data protection
+5. **Maintainability** - Code structure, error handling, logging
 
-## 输出格式
-### 分析结论
-[主要发现和结论]
+## Output Format
+### Analysis Conclusion
+[Main findings and conclusions]
 
-### 问题清单
-1. [问题描述] - [严重程度: 高/中/低]
+### Issue List
+1. [Issue description] - [Severity: High/Medium/Low]
 2. ...
 
-### 建议方案
-[具体的改进建议]
+### Recommended Solutions
+[Specific improvement suggestions]
 ```
 
-## 调试分析模板
+## Debugging Analysis Template
 
 ```
-## 问题描述
+## Problem Description
 {bug_description}
 
-## 相关代码
+## Related Code
 {code_context}
 
-## 错误信息
+## Error Message
 {error_message}
 
-## 请分析
-1. 问题的根本原因是什么？
-2. 为什么会出现这个问题？
-3. 如何修复？
-4. 如何防止类似问题再次发生？
+## Please Analyze
+1. What is the root cause of the problem?
+2. Why does this problem occur?
+3. How to fix it?
+4. How to prevent similar issues from happening again?
 
-## 输出格式
-### 根因分析
-[问题的根本原因]
+## Output Format
+### Root Cause Analysis
+[Root cause of the problem]
 
-### 原因链
-1. [直接原因]
-2. [间接原因]
-3. [根本原因]
+### Causation Chain
+1. [Direct cause]
+2. [Indirect cause]
+3. [Root cause]
 
-### 修复方案
+### Fix Solution
 ```diff
-- [原代码]
-+ [修复后代码]
+- [Original code]
++ [Fixed code]
 ```
 
-### 预防措施
-[防止类似问题的建议]
+### Prevention Measures
+[Suggestions to prevent similar issues]
 ```
 
-## 代码审查模板
+## Code Review Template
 
 ```
-## 审查范围
+## Review Scope
 {files_to_review}
 
-## 变更摘要
+## Change Summary
 {change_summary}
 
-## 请从以下角度审查
+## Please Review From the Following Perspectives
 
-### 1. 正确性
-- 逻辑是否正确？
-- 边界条件是否处理？
-- 错误处理是否完善？
+### 1. Correctness
+- Is the logic correct?
+- Are boundary conditions handled?
+- Is error handling comprehensive?
 
-### 2. 性能
-- 是否有性能问题？
-- 数据库查询是否优化？
-- 是否有不必要的计算？
+### 2. Performance
+- Are there any performance issues?
+- Are database queries optimized?
+- Are there any unnecessary computations?
 
-### 3. 安全性
-- 是否有安全漏洞？
-- 输入是否验证？
-- 敏感数据是否保护？
+### 3. Security
+- Are there any security vulnerabilities?
+- Is input validated?
+- Is sensitive data protected?
 
-### 4. 可维护性
-- 代码是否清晰？
-- 命名是否合理？
-- 是否符合项目规范？
+### 4. Maintainability
+- Is the code clear?
+- Is naming reasonable?
+- Does it comply with project standards?
 
-## 输出格式
-### 审查结论
-[总体评价: 通过/需修改/需重写]
+## Output Format
+### Review Conclusion
+[Overall assessment: Approved/Needs Changes/Needs Rewrite]
 
-### 问题清单
-| 文件 | 行号 | 问题 | 严重程度 | 建议 |
-|------|------|------|---------|------|
+### Issue List
+| File | Line | Issue | Severity | Suggestion |
+|------|------|-------|----------|------------|
 | ... | ... | ... | ... | ... |
 
-### 优点
-[代码中做得好的地方]
+### Strengths
+[Areas where the code excels]
 
-### 改进建议
-[具体的改进建议]
+### Improvement Suggestions
+[Specific improvement suggestions]
 ```
 
-## 设计评估模板
+## Design Evaluation Template
 
 ```
-## 设计方案
+## Design Proposal
 {design_proposal}
 
-## 技术约束
+## Technical Constraints
 {constraints}
 
-## 请评估
+## Please Evaluate
 
-### 1. 架构合理性
-- 组件划分是否合理？
-- 依赖关系是否清晰？
-- 是否符合设计原则？
+### 1. Architecture Reasonableness
+- Is component division reasonable?
+- Are dependencies clear?
+- Does it follow design principles?
 
-### 2. 可扩展性
-- 是否易于扩展？
-- 是否支持未来需求？
-- 是否过度设计？
+### 2. Scalability
+- Is it easy to extend?
+- Does it support future requirements?
+- Is it over-designed?
 
-### 3. 可靠性
-- 故障处理机制？
-- 数据一致性保证？
-- 监控和告警？
+### 3. Reliability
+- Failure handling mechanisms?
+- Data consistency guarantees?
+- Monitoring and alerts?
 
-### 4. 实施可行性
-- 技术难点？
-- 依赖风险？
-- 实施建议？
+### 4. Implementation Feasibility
+- Technical challenges?
+- Dependency risks?
+- Implementation suggestions?
 
-## 输出格式
-### 评估结论
-[总体评价]
+## Output Format
+### Evaluation Conclusion
+[Overall assessment]
 
-### 优势
-1. [优势1]
-2. [优势2]
+### Strengths
+1. [Strength 1]
+2. [Strength 2]
 
-### 风险
-1. [风险1] - [缓解措施]
-2. [风险2] - [缓解措施]
+### Risks
+1. [Risk 1] - [Mitigation measures]
+2. [Risk 2] - [Mitigation measures]
 
-### 改进建议
-[具体建议]
+### Improvement Suggestions
+[Specific suggestions]
 ```
 
-## 测试生成模板
+## Test Generation Template
 
 ```
-## 待测代码
+## Code to Test
 {code_to_test}
 
-## 测试要求
-- 测试框架: {test_framework}
-- 覆盖目标: {coverage_target}
+## Test Requirements
+- Test framework: {test_framework}
+- Coverage target: {coverage_target}
 
-## 请生成测试用例
+## Please Generate Test Cases
 
-### 覆盖范围
-1. 正常路径测试
-2. 边界条件测试
-3. 错误处理测试
-4. 性能测试（如适用）
+### Coverage Scope
+1. Normal path testing
+2. Boundary condition testing
+3. Error handling testing
+4. Performance testing (if applicable)
 
-## 输出格式
-### 测试用例
+## Output Format
+### Test Cases
 ```{language}
-// 测试代码
+// Test code
 ```
 
-### 测试说明
-| 测试名称 | 测试目的 | 预期结果 |
-|---------|---------|---------|
+### Test Description
+| Test Name | Test Purpose | Expected Result |
+|-----------|--------------|-----------------|
 | ... | ... | ... |
 
-### 覆盖分析
-[测试覆盖的场景和未覆盖的场景]
+### Coverage Analysis
+[Scenarios covered by tests and scenarios not covered]
 ```
