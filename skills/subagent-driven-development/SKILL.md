@@ -232,9 +232,71 @@ Done!
 - **superpowers:writing-plans** - Creates the plan this skill executes
 - **superpowers:requesting-code-review** - Code review template for reviewer subagents
 - **superpowers:finishing-a-development-branch** - Complete development after all tasks
+- **superpowers:multi-model-core** - Multi-model routing for task execution
 
 **Subagents should use:**
 - **superpowers:test-driven-development** - Subagents follow TDD for each task
 
 **Alternative workflow:**
 - **superpowers:executing-plans** - Use for parallel session instead of same-session execution
+
+## Multi-Model Task Dispatch
+
+**Related skill:** superpowers:multi-model-core
+
+在分发任务给 implementer subagent 时，根据任务特征选择最佳执行方式：
+
+**Routing decision:**
+
+1. 检查任务的 `Model hint` 标注
+2. 综合判断任务特征（文件类型、目录、关键词）
+3. 决定执行方式：
+   - **Claude subagent** - 通用任务或需要完整上下文
+   - **Codex** - 明确的后端任务
+   - **Gemini** - 明确的前端任务
+   - **Cross-validation** - 关键任务需要双模型验证
+
+**Dispatch with external model:**
+
+对于明确的前端或后端任务，可以直接调用外部模型：
+
+```bash
+# 后端任务 → Codex
+codeagent-wrapper --backend codex - "$PWD" <<'EOF'
+## 任务
+[任务完整描述]
+
+## 上下文
+[相关代码和依赖]
+
+## 要求
+- 遵循 TDD（先写测试）
+- 完成后提交代码
+- 输出实现摘要
+EOF
+
+# 前端任务 → Gemini
+codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
+## 任务
+[任务完整描述]
+
+## 上下文
+[相关代码和依赖]
+
+## 要求
+- 遵循 TDD（先写测试）
+- 完成后提交代码
+- 输出实现摘要
+EOF
+```
+
+**Cross-validation for critical tasks:**
+
+对于关键任务（如前后端集成），使用交叉验证：
+
+1. 分别让 Codex 和 Gemini 分析任务
+2. 整合两方建议
+3. 由 Claude subagent 执行最终实现
+4. 两阶段 review 照常进行
+
+**Note:** 外部模型调用是可选增强，Claude subagent 始终是可靠的 fallback。

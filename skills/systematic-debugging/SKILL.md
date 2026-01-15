@@ -286,6 +286,74 @@ These techniques are part of systematic debugging and available in this director
 **Related skills:**
 - **superpowers:test-driven-development** - For creating failing test case (Phase 4, Step 1)
 - **superpowers:verification-before-completion** - Verify fix worked before claiming success
+- **superpowers:multi-model-core** - For multi-model cross-validation diagnosis
+
+## Multi-Model Cross-Validation
+
+**When to trigger:** Claude 智能判断以下情况时触发交叉验证：
+- 全栈问题（前后端交互相关）
+- 高不确定性（多种可能原因）
+- 复杂 bug（难以定位）
+
+**How to use:**
+
+在 Phase 1（根因调查）或 Phase 2（模式分析）阶段，如果问题涉及前后端或存在高不确定性：
+
+```bash
+# 并行调用 Codex 和 Gemini 进行交叉诊断
+
+# Codex（后端视角）
+codeagent-wrapper --backend codex - "$PWD" <<'EOF'
+## 问题描述
+[问题描述]
+
+## 请从后端/逻辑角度分析
+1. API 实现是否正确？
+2. 数据流是否正常？
+3. 是否有性能或安全问题？
+4. 错误处理是否完善？
+
+## 期望输出
+- 可能的根因（按可能性排序）
+- 建议的验证步骤
+EOF
+
+# Gemini（前端视角）
+codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
+## 问题描述
+[问题描述]
+
+## 请从前端/UI 角度分析
+1. 组件渲染是否正确？
+2. 状态管理是否正常？
+3. 用户交互是否有问题？
+4. 是否有兼容性问题？
+
+## 期望输出
+- 可能的根因（按可能性排序）
+- 建议的验证步骤
+EOF
+```
+
+**Result integration:**
+
+```markdown
+## 交叉验证诊断结果
+
+### Codex 分析（后端视角）
+[Codex 的分析结果]
+
+### Gemini 分析（前端视角）
+[Gemini 的分析结果]
+
+### 综合结论
+- **一致点**: [两者一致的发现]
+- **分歧点**: [存在分歧的地方]
+- **最终判断**: [Claude 综合后的根因判断]
+- **验证计划**: [下一步验证步骤]
+```
+
+**Fallback:** 如果 codeagent-wrapper 不可用，继续使用 Claude 独立分析。
 
 ## Real-World Impact
 

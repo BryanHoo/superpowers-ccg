@@ -361,6 +361,63 @@ When adding mocks or test utilities, read @testing-anti-patterns.md to avoid com
 - Adding test-only methods to production classes
 - Mocking without understanding dependencies
 
+## Multi-Model Test Generation
+
+**Related skill:** superpowers:multi-model-core
+
+对于需要生成测试的场景，可以根据技术栈路由到专业模型：
+
+**When to use:**
+- 需要为现有代码补充测试
+- 复杂功能的测试设计
+- 需要专业领域知识的测试
+
+**Routing logic:**
+- 后端代码测试（Go, Python, Java 等）→ Codex
+- 前端组件测试（React, Vue 等）→ Gemini
+- 全栈功能测试 → 交叉验证
+
+**How to use:**
+
+```bash
+# 后端测试生成 → Codex
+codeagent-wrapper --backend codex - "$PWD" <<'EOF'
+## 待测代码
+[代码内容]
+
+## 测试要求
+- 遵循 TDD 原则
+- 覆盖正常路径、边界条件、错误处理
+- 使用项目现有的测试框架
+
+## 期望输出
+- 完整的测试代码
+- 测试用例说明
+EOF
+
+# 前端组件测试生成 → Gemini
+codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
+## 待测组件
+[组件代码]
+
+## 测试要求
+- 遵循 TDD 原则
+- 覆盖渲染、交互、状态变化
+- 包含可访问性测试
+
+## 期望输出
+- 完整的测试代码
+- 测试用例说明
+EOF
+```
+
+**Important:** 外部模型生成的测试仍需遵循 TDD 流程：
+1. 运行测试确认失败（RED）
+2. 实现代码使测试通过（GREEN）
+3. 重构（REFACTOR）
+
+**Fallback:** 如果外部模型不可用，Claude 直接生成测试。
+
 ## Final Rule
 
 ```

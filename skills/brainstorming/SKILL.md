@@ -52,3 +52,71 @@ Start by understanding the current project context, then ask questions one at a 
 - **Explore alternatives** - Always propose 2-3 approaches before settling
 - **Incremental validation** - Present design in sections, validate each
 - **Be flexible** - Go back and clarify when something doesn't make sense
+
+## Multi-Model Design Validation
+
+**Related skill:** superpowers:multi-model-core
+
+**When to trigger:** Claude 智能判断以下情况时触发多模型验证：
+- 设计涉及前后端架构决策
+- 需要评估多种技术方案
+- 关键设计需要多视角验证
+
+**How to use:**
+
+在 "Exploring approaches" 阶段，对于涉及前后端的设计方案：
+
+```bash
+# 并行获取专业视角
+
+# Codex（后端架构视角）
+codeagent-wrapper --backend codex - "$PWD" <<'EOF'
+## 设计方案
+[方案描述]
+
+## 请从后端架构角度评估
+1. 架构合理性和可扩展性
+2. 数据模型和 API 设计
+3. 性能和安全考虑
+4. 技术选型建议
+
+## 期望输出
+- 方案评估（优势/风险）
+- 改进建议
+EOF
+
+# Gemini（前端架构视角）
+codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
+## 设计方案
+[方案描述]
+
+## 请从前端架构角度评估
+1. 组件结构和状态管理
+2. 用户体验和交互设计
+3. 性能和可访问性
+4. 技术选型建议
+
+## 期望输出
+- 方案评估（优势/风险）
+- 改进建议
+EOF
+```
+
+**Result integration:**
+
+```markdown
+## 多模型设计评估
+
+### Codex 评估（后端视角）
+[Codex 的评估结果]
+
+### Gemini 评估（前端视角）
+[Gemini 的评估结果]
+
+### 综合建议
+- **一致认可**: [两者都认可的设计点]
+- **需要权衡**: [存在不同意见的地方]
+- **最终方案**: [Claude 综合后的推荐方案]
+```
+
+**Fallback:** 如果 codeagent-wrapper 不可用，继续使用 Claude 独立评估。

@@ -94,6 +94,59 @@ git commit -m "feat: add specific feature"
 - Reference relevant skills with @ syntax
 - DRY, YAGNI, TDD, frequent commits
 
+## Multi-Model Task Routing
+
+**Related skill:** superpowers:multi-model-core
+
+在编写计划时，为每个任务标注推荐的执行模型，便于后续执行时自动路由：
+
+**Task annotation format:**
+
+```markdown
+### Task N: [Component Name]
+**Model hint:** `auto` | `codex` | `gemini` | `cross-validation`
+
+**Files:**
+- Create: `exact/path/to/file.py`
+...
+```
+
+**Routing hints:**
+- `auto` - 执行时根据文件类型和任务内容自动判断（默认）
+- `codex` - 明确的后端任务（API、数据库、算法）
+- `gemini` - 明确的前端任务（组件、样式、交互）
+- `cross-validation` - 需要双模型验证的关键任务
+
+**Example:**
+
+```markdown
+### Task 1: Create API endpoint
+**Model hint:** `codex`
+
+**Files:**
+- Create: `server/api/users.go`
+- Test: `server/api/users_test.go`
+...
+
+### Task 2: Create user profile component
+**Model hint:** `gemini`
+
+**Files:**
+- Create: `src/components/UserProfile.tsx`
+- Create: `src/components/UserProfile.css`
+...
+
+### Task 3: Integrate API with component
+**Model hint:** `cross-validation`
+
+**Files:**
+- Modify: `src/components/UserProfile.tsx`
+- Modify: `server/api/users.go`
+...
+```
+
+**Note:** Model hints 是可选的，执行时 Claude 会综合判断最佳路由。
+
 ## Execution Handoff
 
 After saving the plan, offer execution choice:

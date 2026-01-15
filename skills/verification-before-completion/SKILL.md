@@ -137,3 +137,79 @@ From 24 failure memories:
 Run the command. Read the output. THEN claim the result.
 
 This is non-negotiable.
+
+## Multi-Model Cross-Verification
+
+**Related skill:** superpowers:multi-model-core
+
+对于关键功能或复杂变更，可以使用双模型交叉确认：
+
+**When to trigger:**
+- 关键功能的完成验证
+- 涉及前后端的集成验证
+- 高风险变更的最终确认
+
+**How to use:**
+
+在声明完成之前，对于关键变更：
+
+```bash
+# 并行获取双模型确认
+
+# Codex 验证（后端视角）
+codeagent-wrapper --backend codex - "$PWD" <<'EOF'
+## 验证请求
+
+### 变更摘要
+[变更描述]
+
+### 请验证
+1. 后端逻辑是否正确实现
+2. API 是否符合预期
+3. 是否有遗漏的边界情况
+4. 是否有潜在的性能或安全问题
+
+### 期望输出
+- 验证结论（通过/不通过）
+- 发现的问题（如有）
+EOF
+
+# Gemini 验证（前端视角）
+codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
+## 验证请求
+
+### 变更摘要
+[变更描述]
+
+### 请验证
+1. 前端实现是否正确
+2. 用户体验是否符合预期
+3. 是否有遗漏的交互场景
+4. 是否有可访问性问题
+
+### 期望输出
+- 验证结论（通过/不通过）
+- 发现的问题（如有）
+EOF
+```
+
+**Result integration:**
+
+```markdown
+## 交叉验证确认
+
+### Codex 验证（后端）
+- 结论: [通过/不通过]
+- 问题: [如有]
+
+### Gemini 验证（前端）
+- 结论: [通过/不通过]
+- 问题: [如有]
+
+### 最终结论
+[只有两方都通过才能声明完成]
+```
+
+**Important:** 交叉验证是额外保障，不能替代基本的验证步骤（运行测试、检查输出）。
+
+**Fallback:** 如果外部模型不可用，确保 Claude 的验证更加严格。

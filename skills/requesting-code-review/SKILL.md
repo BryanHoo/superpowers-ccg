@@ -103,3 +103,82 @@ You: [Fix progress indicators]
 - Request clarification
 
 See template at: requesting-code-review/code-reviewer.md
+
+## Multi-Model Code Review
+
+**Related skill:** superpowers:multi-model-core
+
+对于涉及前后端的代码变更，可以使用双模型交叉审查：
+
+**When to trigger:**
+- 变更同时涉及前端和后端代码
+- 关键功能的代码审查
+- 需要多视角验证的复杂变更
+
+**How to use:**
+
+```bash
+# 获取变更范围
+BASE_SHA=$(git rev-parse HEAD~1)
+HEAD_SHA=$(git rev-parse HEAD)
+DIFF=$(git diff $BASE_SHA $HEAD_SHA)
+
+# Codex 审查（后端视角）
+codeagent-wrapper --backend codex - "$PWD" <<EOF
+## 代码审查请求
+
+### 变更范围
+$DIFF
+
+### 请从后端角度审查
+1. API 设计和实现是否正确
+2. 数据处理和验证是否完善
+3. 性能和安全性考虑
+4. 错误处理是否充分
+
+### 输出格式
+- Critical: [必须修复的问题]
+- Important: [应该修复的问题]
+- Minor: [建议改进的地方]
+- Strengths: [做得好的地方]
+EOF
+
+# Gemini 审查（前端视角）
+codeagent-wrapper --backend gemini - "$PWD" <<EOF
+## 代码审查请求
+
+### 变更范围
+$DIFF
+
+### 请从前端角度审查
+1. 组件设计和结构是否合理
+2. 用户体验和交互是否流畅
+3. 样式和响应式是否完善
+4. 可访问性是否考虑
+
+### 输出格式
+- Critical: [必须修复的问题]
+- Important: [应该修复的问题]
+- Minor: [建议改进的地方]
+- Strengths: [做得好的地方]
+EOF
+```
+
+**Result integration:**
+
+```markdown
+## 双模型代码审查报告
+
+### Codex 审查（后端视角）
+[Codex 的审查结果]
+
+### Gemini 审查（前端视角）
+[Gemini 的审查结果]
+
+### 综合评估
+- **Critical issues**: [合并两方的 Critical 问题]
+- **Important issues**: [合并两方的 Important 问题]
+- **Overall assessment**: [综合评价]
+```
+
+**Fallback:** 如果外部模型不可用，使用 Claude subagent 进行审查。
