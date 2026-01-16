@@ -248,17 +248,6 @@ If you catch yourself thinking:
 
 **If 3+ fixes failed:** Question the architecture (see Phase 4.5)
 
-## your human partner's Signals You're Doing It Wrong
-
-**Watch for these redirections:**
-- "Is that not happening?" - You assumed without verifying
-- "Will it show us...?" - You should have added evidence gathering
-- "Stop guessing" - You're proposing fixes without understanding
-- "Ultrathink this" - Question fundamentals, not just symptoms
-- "We're stuck?" (frustrated) - Your approach isn't working
-
-**When you see these:** STOP. Return to Phase 1.
-
 ## Common Rationalizations
 
 | Excuse | Reality |
@@ -319,11 +308,3 @@ At checkpoints, apply semantic routing using `multi-model-core/routing-decision.
 See `multi-model-core/INTEGRATION.md` for invocation templates.
 
 **Fallback:** If codeagent-wrapper unavailable, continue with Claude's analysis.
-
-## Real-World Impact
-
-From debugging sessions:
-- Systematic approach: 15-30 minutes to fix
-- Random fixes approach: 2-3 hours of thrashing
-- First-time fix rate: 95% vs 40%
-- New bugs introduced: Near zero vs common
