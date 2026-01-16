@@ -37,6 +37,30 @@ digraph when_to_use {
 
 ## The Process
 
+Copy this checklist template to track overall progress:
+
+```
+Plan Execution Progress:
+- [ ] Plan read and all tasks extracted
+- [ ] TodoWrite created with all tasks
+
+Per-Task Checklist (copy for each):
+Task N: [description]
+- [ ] Checkpoint 1 (Task Analysis) applied
+- [ ] Implementer subagent dispatched
+- [ ] Questions answered (if any)
+- [ ] Implementation complete
+- [ ] Checkpoint 3 (Quality Gate) applied
+- [ ] Spec reviewer: ✅ compliant
+- [ ] Code quality reviewer: ✅ approved
+- [ ] Task marked complete
+
+Final Steps:
+- [ ] All tasks complete
+- [ ] Final code reviewer dispatched
+- [ ] finishing-a-development-branch invoked
+```
+
 ```dot
 digraph process {
     rankdir=TB;

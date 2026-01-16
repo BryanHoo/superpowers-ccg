@@ -24,6 +24,23 @@ Load plan, review critically, execute tasks in batches, report for review betwee
 ### Step 2: Execute Batch
 **Default: First 3 tasks**
 
+Copy this checklist template for each batch:
+
+```
+Batch Progress:
+- [ ] Task N: [description] - in_progress
+- [ ] Task N+1: [description] - pending
+- [ ] Task N+2: [description] - pending
+
+Current Task:
+- [ ] Checkpoint 1 (Task Analysis) applied
+- [ ] All steps followed exactly
+- [ ] Checkpoint 2 (Mid-Review) if needed
+- [ ] Verifications run
+- [ ] Checkpoint 3 (Quality Gate) applied
+- [ ] Task marked complete
+```
+
 For each task:
 1. Mark as in_progress
 2. **► Checkpoint 1 (Task Analysis):** Apply checkpoint logic from `multi-model-core/checkpoints.md`:
