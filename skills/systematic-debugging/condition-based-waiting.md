@@ -108,7 +108,7 @@ await new Promise(r => setTimeout(r, 200));   // Then: wait for timed behavior
 
 ## Real-World Impact
 
-From debugging session (2025-10-03):
+From a real debugging session:
 - Fixed 15 flaky tests across 3 files
 - Pass rate: 60% → 100%
 - Execution time: 40% faster

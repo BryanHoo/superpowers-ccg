@@ -1,6 +1,6 @@
 ---
 name: verification-before-completion
-description: Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always
+description: "Requires running verification commands and confirming output before making success claims. Use when: about to claim work is complete, fixed, or passing, before committing or creating PRs. Keywords: verify, evidence, completion check, test output, proof"
 ---
 
 # Verification Before Completion
@@ -142,88 +142,13 @@ This is non-negotiable.
 
 **Related skill:** superpowers:multi-model-core
 
-For critical features or complex changes, semantic routing can guide cross-validation strategy.
+For critical changes, apply semantic routing using `multi-model-core/routing-decision.md`:
+- Backend-only critical → CODEX verification
+- Frontend-only critical → GEMINI verification
+- Full-stack/architectural → CROSS_VALIDATION
 
-**1. Apply Semantic Routing Decision:**
+See `multi-model-core/INTEGRATION.md` for invocation templates.
 
-When considering cross-model verification, analyze using `multi-model-core/routing-decision.md`:
+**CRITICAL:** Cross-model verification is **additional** to, not a replacement for running actual commands. **Never claim success based solely on model confirmation.**
 
-- **Collect verification context:**
-  - What domains are affected by the changes (frontend, backend, or both)
-  - Criticality level of the changes
-  - Complexity and integration points
-
-- **Determine verification strategy:**
-  - Backend-only critical changes → CODEX verification
-  - Frontend-only critical changes → GEMINI verification
-  - Full-stack or architectural changes → CROSS_VALIDATION
-  - Standard changes → CLAUDE verification (with evidence from test output)
-
-**2. CRITICAL - Evidence always required:**
-
-Cross-model verification is **additional** to, not a replacement for:
-- Running actual test commands
-- Checking actual build output
-- Verifying actual command results
-
-**Never claim success based solely on model confirmation without running verification commands.**
-
-**3. For CROSS_VALIDATION of critical changes:**
-
-> **IMPORTANT**: All prompts sent to external models via codeagent-wrapper must be in English.
-
-```bash
-# Backend verification → Codex
-codeagent-wrapper --backend codex - "$PWD" <<'EOF'
-## Verification Request
-
-### Change Summary
-[Change description]
-
-### Please Verify
-1. Is backend logic correctly implemented?
-2. Does the API meet expectations?
-3. Are there any missed boundary conditions?
-4. Are there potential performance or security issues?
-
-### Expected Output
-- Verification conclusion (pass/fail)
-- Issues found (if any)
-EOF
-
-# Frontend verification → Gemini
-codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
-## Verification Request
-
-### Change Summary
-[Change description]
-
-### Please Verify
-1. Is frontend implementation correct?
-2. Does user experience meet expectations?
-3. Are there any missed interaction scenarios?
-4. Are there accessibility issues?
-
-### Expected Output
-- Verification conclusion (pass/fail)
-- Issues found (if any)
-EOF
-```
-
-**4. Result integration:**
-
-```markdown
-## Verification Results
-
-### Evidence from Commands
-[Actual test output, build results, etc.]
-
-### Cross-Validation Confirmation (if applicable)
-- [Model] verification: [pass/fail]
-- Issues found: [list any issues]
-
-### Final Determination
-[Can only claim completion if BOTH evidence AND cross-validation pass]
-```
-
-**Fallback:** If external models are not available, ensure Claude's verification is more rigorous with comprehensive evidence gathering.
+**Fallback:** If external models unavailable, ensure Claude's verification is rigorous with comprehensive evidence.

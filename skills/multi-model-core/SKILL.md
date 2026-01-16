@@ -1,6 +1,6 @@
 ---
 name: multi-model-core
-description: Multi-Model Core Module - Provides automatic routing and cross-validation for Codex/Gemini
+description: "Routes tasks to optimal AI models (Codex for backend, Gemini for frontend) and enables cross-validation. Use when: needing specialized model expertise, cross-validating critical changes, or leveraging multi-model capabilities. Keywords: Codex, Gemini, model routing, cross-validation"
 ---
 
 # Multi-Model Core Module

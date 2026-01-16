@@ -376,7 +376,7 @@ RED-GREEN-REFACTOR for documentation works exactly like RED-GREEN-REFACTOR for c
 
 ## Real-World Impact
 
-From applying TDD to TDD skill itself (2025-10-03):
+From applying TDD to TDD skill itself:
 - 6 RED-GREEN-REFACTOR iterations to bulletproof
 - Baseline testing revealed 10+ unique rationalizations
 - Each REFACTOR closed specific loopholes

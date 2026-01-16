@@ -1,6 +1,6 @@
 ---
 name: dispatching-parallel-agents
-description: Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies
+description: "Dispatches multiple agents concurrently for independent problem domains. Use when: facing 2+ independent tasks, multiple unrelated failures, or parallel investigations needed. Keywords: parallel, concurrent, multiple agents, batch processing"
 ---
 
 # Dispatching Parallel Agents
@@ -172,7 +172,7 @@ After agents return:
 
 ## Real-World Impact
 
-From debugging session (2025-10-03):
+From a real debugging session:
 - 6 failures across 3 files
 - 3 agents dispatched in parallel
 - All investigations completed concurrently

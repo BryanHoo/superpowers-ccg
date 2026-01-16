@@ -1,6 +1,6 @@
 ---
 name: writing-plans
-description: Use when you have a spec or requirements for a multi-step task, before touching code
+description: "Creates comprehensive implementation plans with bite-sized tasks, exact file paths, and TDD steps. Use when: having a spec or requirements for multi-step tasks, before writing code. Keywords: implementation plan, task breakdown, planning, roadmap"
 ---
 
 # Writing Plans

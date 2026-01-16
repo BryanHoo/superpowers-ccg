@@ -1,6 +1,6 @@
 ---
 name: using-superpowers
-description: Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions
+description: "Establishes how to find and use skills, requiring Skill tool invocation before any response. Use when: starting conversations, needing skill guidance. Keywords: skills, superpowers, skill discovery, getting started"
 ---
 
 <EXTREMELY-IMPORTANT>

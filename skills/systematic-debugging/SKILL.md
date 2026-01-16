@@ -1,9 +1,18 @@
 ---
 name: systematic-debugging
-description: Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes
+description: "Find root cause before attempting fixes through four-phase investigation. Use when: encountering bugs, test failures, unexpected behavior, build errors, or performance issues. Keywords: debug, root cause, error, failure, investigate, diagnose"
 ---
 
 # Systematic Debugging
+
+## Contents
+- [Overview](#overview)
+- [The Iron Law](#the-iron-law)
+- [The Four Phases](#the-four-phases)
+- [Red Flags](#red-flags---stop-and-follow-process)
+- [Common Rationalizations](#common-rationalizations)
+- [Supporting Techniques](#supporting-techniques)
+- [Multi-Model Cross-Validation](#multi-model-cross-validation)
 
 ## Overview
 
@@ -290,89 +299,16 @@ These techniques are part of systematic debugging and available in this director
 
 ## Multi-Model Cross-Validation
 
-**When to use:** During Phase 1 (Root Cause Investigation) or Phase 2 (Pattern Analysis), when diagnostic complexity requires specialized expertise.
+**When to use:** During Phase 1 or Phase 2, when diagnostic complexity requires specialized expertise.
 
-**1. Apply Semantic Routing Decision:**
+Apply semantic routing using `multi-model-core/routing-decision.md`:
+- Clear backend issue → CODEX
+- Clear frontend issue → GEMINI
+- Uncertain root cause → CROSS_VALIDATION
 
-Before invoking external models, analyze the debugging scenario using `multi-model-core/routing-decision.md`:
+See `multi-model-core/INTEGRATION.md` for invocation templates and result integration patterns.
 
-- **Collect diagnostic information:**
-  - What component(s) are exhibiting the issue (frontend, backend, or both)?
-  - Is the root cause clearly isolated to one domain?
-  - How many possible causes exist?
-
-- **Determine routing:**
-  - Clear backend issue (API, database, server logic) → CODEX
-  - Clear frontend issue (UI, rendering, client state) → GEMINI
-  - Full-stack issue or uncertain root cause → CROSS_VALIDATION
-  - Simple environment/config issue → CLAUDE
-
-**2. Notify user:**
-```
-我将使用 [model] 来诊断这个问题
-```
-
-**3. Invoke external model(s):**
-
-> **IMPORTANT**: All prompts sent to external models (Codex/Gemini) via codeagent-wrapper must be in English, regardless of your configured output language.
-
-```bash
-# Backend perspective → Codex
-codeagent-wrapper --backend codex - "$PWD" <<'EOF'
-## Problem Description
-[Problem description]
-
-## Please analyze from backend/logic perspective
-1. Is the API implementation correct?
-2. Is the data flow normal?
-3. Are there performance or security issues?
-4. Is error handling adequate?
-
-## Expected Output
-- Possible root causes (ranked by likelihood)
-- Recommended verification steps
-EOF
-
-# Frontend perspective → Gemini
-codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
-## Problem Description
-[Problem description]
-
-## Please analyze from frontend/UI perspective
-1. Is component rendering correct?
-2. Is state management working properly?
-3. Are there issues with user interaction?
-4. Are there compatibility issues?
-
-## Expected Output
-- Possible root causes (ranked by likelihood)
-- Recommended verification steps
-EOF
-
-# For CROSS_VALIDATION → Invoke both in parallel
-```
-
-**4. Result integration:**
-
-```markdown
-## Cross-Validation Diagnosis Results
-
-### [Model] Analysis
-[Analysis results with root cause hypotheses]
-
-### Comprehensive Conclusion
-- **Points of Agreement**: [Consistent findings]
-- **Points of Divergence**: [Areas of disagreement]
-- **Final Determination**: [Claude's integrated root cause determination]
-- **Verification Plan**: [Next verification steps]
-```
-
-**Fallback:** If codeagent-wrapper is not available, continue with Claude's independent analysis.
-
-**Related skills:**
-- **superpowers:test-driven-development** - For creating failing test case (Phase 4, Step 1)
-- **superpowers:verification-before-completion** - Verify fix worked before claiming success
-- **superpowers:multi-model-core** - For semantic routing and cross-validation
+**Fallback:** If codeagent-wrapper unavailable, continue with Claude's analysis.
 
 ## Real-World Impact
 

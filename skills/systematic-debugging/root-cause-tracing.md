@@ -162,7 +162,7 @@ digraph principle {
 
 ## Real-World Impact
 
-From debugging session (2025-10-03):
+From a real debugging session:
 - Found root cause through 5-level trace
 - Fixed at source (getter validation)
 - Added 4 layers of defense
