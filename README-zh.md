@@ -83,25 +83,25 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 
 | Skill                          | 多模型能力     |
 | ------------------------------ | -------------- |
-| systematic-debugging           | 交叉验证诊断   |
-| brainstorming                  | 多模型设计评估 |
-| writing-plans                  | 任务路由标注   |
-| executing-plans                | 自动路由执行   |
-| subagent-driven-development    | 多模型任务分发 |
-| requesting-code-review         | 双模型代码审查 |
-| test-driven-development        | 测试生成路由   |
-| verification-before-completion | 交叉验证确认   |
+| systematic-debugging           | 交叉验证诊断及嵌入检查点 |
+| brainstorming                  | 多模型设计评估及 CP1/CP2 检查点 |
+| writing-plans                  | 任务路由标注及 CP1/CP3 检查点 |
+| executing-plans                | 自动路由执行及 CP1/CP2/CP3 检查点 |
+| subagent-driven-development    | 多模型任务分发及 CP1/CP2/CP3 检查点 |
+| requesting-code-review         | 双模型代码审查及 CP3 检查点 |
+| test-driven-development        | 测试生成路由及 CP1/CP3 检查点 |
+| verification-before-completion | 交叉验证确认及 CP3 检查点 |
 
 ## Skills 库
 
 ### 测试
 
-- **test-driven-development** - RED-GREEN-REFACTOR 循环（包含测试反模式参考）
+- **test-driven-development** - 精简的 RED-GREEN-REFACTOR 循环，含主动多模型检查点（包含测试反模式参考）
 
 ### 调试
 
-- **systematic-debugging** - 4 阶段根因分析流程（包含 root-cause-tracing、defense-in-depth、condition-based-waiting 技术）
-- **verification-before-completion** - 确保问题真正修复
+- **systematic-debugging** - 精简的 4 阶段根因分析流程，含主动多模型检查点（包含 root-cause-tracing、defense-in-depth、condition-based-waiting 技术）
+- **verification-before-completion** - 确保问题真正修复（含 CP3 检查点）
 
 ### 协作
 
@@ -117,12 +117,13 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 
 ### 多模型
 
-- **multi-model-core** - 多模型调用核心（路由规则、交叉验证、提示词模板）
+- **multi-model-core** - 多模型调用核心（路由规则、交叉验证、提示词模板、主动协作检查点）
 
 ### 元技能
 
-- **writing-skills** - 按最佳实践创建新 skills
+- **writing-skills** - 按最佳实践创建新 skills（现已模块化，包含 STRUCTURE.md、TESTING.md 和 CHECKLIST.md）
 - **using-superpowers** - skills 系统介绍
+- **multi-model-core** - 统一调用模板和集成模式（从内联文档移动到集中的 INTEGRATION.md）
 
 ## 设计理念
 
@@ -131,6 +132,8 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 - **降低复杂度** - 简单性是首要目标
 - **证据优于声明** - 验证后再宣布成功
 - **多模型协作** - 专业模型处理专业任务
+- **简化文档** - 遵循 Anthropic 最佳实践，删除 Claude 已知的冗余解释内容
+- **主动协作** - 嵌入自主决策检查点用于多模型协作
 
 更多阅读: [Superpowers for Claude Code](https://blog.fsck.com/2025/10/09/superpowers/)
 
@@ -152,6 +155,32 @@ Skills 直接存放在此仓库中。贡献方式：
 ```bash
 /plugin update superpowers-ccg
 ```
+
+## 评估和检查清单
+
+Superpowers-CCG 框架包括系统性评估场景和工作流检查清单，以确保一致的进度跟踪：
+
+- **评估场景** - 关键技能的综合测试场景，记录在 `EVALUATION.md` 中
+- **工作流检查清单** - 适用于 executing-plans 和 subagent-driven-development 的可复制检查清单模板
+- **多模型检查点** - 主动协作检查点，使 Claude 能够自主决定在关键阶段何时调用 Codex/Gemini
+
+### 多模型协作检查点
+
+该框架现在在 8 个关键技能中嵌入了协作检查点：
+
+- **CP1（任务分析）** - 任务开始前评估
+- **CP2（中期审查）** - 在关键决策点调用
+- **CP3（质量门）** - 完成前审查
+
+这些检查点集成到：
+- brainstorming: CP1（想法分析），CP2（方法探索）
+- writing-plans: CP1（计划开始），CP3（执行交接）
+- executing-plans: CP1/CP2/CP3（每项任务检查点）
+- subagent-driven-development: CP1/CP2/CP3（分派/执行/审查）
+- test-driven-development: CP1（RED 阶段），CP3（GREEN 阶段）
+- systematic-debugging: CP1（调查），CP2（假设测试）
+- requesting-code-review: CP3（审查调用）
+- verification-before-completion: CP3（最终验证）
 
 ## 架构
 
