@@ -26,9 +26,18 @@ Load plan, review critically, execute tasks in batches, report for review betwee
 
 For each task:
 1. Mark as in_progress
-2. Follow each step exactly (plan has bite-sized steps)
-3. Run verifications as specified
-4. Mark as completed
+2. **► Checkpoint 1 (Task Analysis):** Apply checkpoint logic from `multi-model-core/checkpoints.md`:
+   - Collect: task files, description, tech stack from plan
+   - Check critical task conditions → Match: invoke expert model
+   - Evaluate general task signals → Positive: invoke
+3. Follow each step exactly (plan has bite-sized steps)
+4. **► Checkpoint 2 (Mid-Review):** If blocked or uncertain:
+   - Multiple approaches possible → invoke cross-validation
+   - Debugging stalled → invoke domain expert
+5. Run verifications as specified
+6. **► Checkpoint 3 (Quality Gate):** Before marking complete:
+   - Code generation complete → invoke domain expert for review
+7. Mark as completed
 
 ### Step 3: Report
 When batch complete:
@@ -79,58 +88,20 @@ After all tasks complete and verified:
 
 **Related skill:** superpowers:multi-model-core
 
-When executing plan tasks, apply semantic routing to determine the optimal execution model.
+At checkpoints, apply semantic routing from `multi-model-core/routing-decision.md`:
 
-**1. Apply Semantic Routing Decision:**
-
-For each task, analyze using `multi-model-core/routing-decision.md`:
-
-- **Collect task information:**
-  - File paths and extensions involved
-  - Task description and objectives
-  - Tech stack context from the plan
-
-- **Determine routing:**
+- **Routing decision:**
   - Backend task (API, database, algorithms) → CODEX
   - Frontend task (UI, components, styles) → GEMINI
   - Full-stack task or integration → CROSS_VALIDATION
   - Simple config/docs → CLAUDE
 
-**2. Check for Model Hint:**
+- **Check for Model Hint:** If plan includes `Model hint`, respect explicit hints
 
-If the plan includes a `Model hint` annotation:
-- Respect explicit hints (`codex`, `gemini`, `cross-validation`)
-- For `auto` or no hint: proceed with semantic analysis
+- **Notify user:** "我将使用 [model] 来执行 [task description]"
 
-**3. Notify user:**
-```
-我将使用 [model] 来执行 [task description]
-```
+- **Invoke model** with English prompts (see `multi-model-core/INTEGRATION.md` for templates)
 
-**4. Execute with external model:**
-
-> **IMPORTANT**: All prompts sent to external models (Codex/Gemini) via codeagent-wrapper must be in English.
-
-```bash
-# Route to appropriate model based on analysis
-codeagent-wrapper --backend <codex|gemini> - "$PWD" <<'EOF'
-## Task Background
-[Context extracted from plan]
-
-## Specific Task
-[Detailed steps of the task]
-
-## Verification Requirements
-[Expected verification commands and output]
-EOF
-```
-
-**5. For CROSS_VALIDATION tasks:**
-
-When task spans both domains or requires multi-perspective validation:
-
-1. Invoke Codex and Gemini in parallel
-2. Integrate results from both
-3. Resolve any divergences before proceeding
+**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
 
 **Fallback:** If external models are not available, Claude executes the task directly.

@@ -88,6 +88,22 @@ digraph process {
 - `./spec-reviewer-prompt.md` - Dispatch spec compliance reviewer subagent
 - `./code-quality-reviewer-prompt.md` - Dispatch code quality reviewer subagent
 
+## Collaboration Checkpoints
+
+Apply checkpoint logic from `multi-model-core/checkpoints.md` at these stages:
+
+**► Checkpoint 1 (Task Analysis):** Before dispatching implementer subagent:
+- Collect: task files, description, complexity
+- Check critical task conditions → Match: invoke expert model
+- Evaluate general task signals → Positive: invoke
+
+**► Checkpoint 2 (Mid-Review):** During subagent execution:
+- Subagent asks question requiring external expertise → invoke domain expert
+- Multiple implementation approaches debated → invoke cross-validation
+
+**► Checkpoint 3 (Quality Gate):** After subagent completes, before spec review:
+- Implementation complete → invoke domain expert for pre-review assessment
+
 ## Example Workflow
 
 ```
@@ -244,76 +260,20 @@ Done!
 
 **Related skill:** superpowers:multi-model-core
 
-When dispatching tasks to implementer subagents, apply semantic routing to determine the optimal execution method.
+At checkpoints, apply semantic routing from `multi-model-core/routing-decision.md`:
 
-**1. Apply Semantic Routing Decision:**
-
-For each task before dispatch, analyze using `multi-model-core/routing-decision.md`:
-
-- **Collect task information:**
-  - File types and paths from task specification
-  - Task description and implementation requirements
-  - Overall architecture context
-
-- **Determine dispatch strategy:**
+- **Routing decision:**
   - Clear backend task (API, database, server logic) → CODEX
   - Clear frontend task (UI, components, styles) → GEMINI
   - Full-stack integration or critical task → CROSS_VALIDATION
   - General task requiring complete context → CLAUDE subagent
 
-**2. Check for Model Hint:**
+- **Check for Model Hint:** If task includes hint, use as guidance
 
-If the task includes a `Model hint` annotation from the plan:
-- Use explicit hints as guidance
-- Validate hint against semantic analysis
-- For `auto` or missing hint: rely on semantic analysis
+- **Notify user:** "我将使用 [model/subagent] 来实现 [task name]"
 
-**3. Notify user:**
-```
-我将使用 [model/subagent] 来实现 [task name]
-```
+- **Invoke model** with English prompts (see `multi-model-core/INTEGRATION.md` for templates)
 
-**4. Dispatch to external model (for clear domain tasks):**
+**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
 
-> **IMPORTANT**: All prompts sent to external models via codeagent-wrapper must be in English.
-
-```bash
-# Backend task → Codex
-codeagent-wrapper --backend codex - "$PWD" <<'EOF'
-## Task
-[Complete task description]
-
-## Context
-[Related code and dependencies]
-
-## Requirements
-- Follow TDD (write tests first)
-- Commit code after completion
-- Output implementation summary
-EOF
-
-# Frontend task → Gemini
-codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
-## Task
-[Complete task description]
-
-## Context
-[Related code and dependencies]
-
-## Requirements
-- Follow TDD (write tests first)
-- Commit code after completion
-- Output implementation summary
-EOF
-```
-
-**5. For CROSS_VALIDATION (critical tasks):**
-
-For tasks requiring multi-perspective validation:
-
-1. Have Codex and Gemini analyze the task separately
-2. Integrate recommendations from both
-3. Claude subagent executes final implementation
-4. Two-stage review proceeds as normal
-
-**Note:** External model invocation is an optimization; Claude subagent is always available as fallback and can handle any task with full context.
+**Fallback:** Claude subagent is always available as fallback and can handle any task with full context.

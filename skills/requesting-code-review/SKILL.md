@@ -23,6 +23,10 @@ Dispatch superpowers:code-reviewer subagent to catch issues before they cascade.
 
 ## How to Request
 
+**► Checkpoint 3 (Quality Gate):** Before requesting review, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+- Code changes complete → invoke domain expert for specialized review
+- Critical business logic changes → invoke cross-validation for comprehensive assessment
+
 **1. Get git SHAs:**
 ```bash
 BASE_SHA=$(git rev-parse HEAD~1)  # or origin/main
@@ -108,93 +112,18 @@ See template at: requesting-code-review/code-reviewer.md
 
 **Related skill:** superpowers:multi-model-core
 
-For code reviews requiring specialized domain expertise, apply semantic routing to determine review strategy.
+At checkpoint, apply semantic routing from `multi-model-core/routing-decision.md`:
 
-**1. Apply Semantic Routing Decision:**
-
-Before requesting external model review, analyze using `multi-model-core/routing-decision.md`:
-
-- **Collect change information:**
-  - Files changed (extensions, directories)
-  - Nature of changes (new feature, bug fix, refactor)
-  - Technical domains affected (frontend, backend, or both)
-
-- **Determine review strategy:**
+- **Routing decision:**
   - Backend changes only (API, database, algorithms) → CODEX
   - Frontend changes only (UI, components, styles) → GEMINI
   - Full-stack changes or architectural impact → CROSS_VALIDATION
   - Simple changes or documentation → CLAUDE subagent
 
-**2. Notify user:**
-```
-我将使用 [model] 来评审这些代码更改
-```
+- **Notify user:** "我将使用 [model] 来评审这些代码更改"
 
-**3. Invoke external model(s):**
+- **Invoke model** with English prompts (see `multi-model-core/INTEGRATION.md` for templates)
 
-> **IMPORTANT**: All prompts sent to external models (Codex/Gemini) via codeagent-wrapper must be in English.
-
-```bash
-# Get change scope
-BASE_SHA=$(git rev-parse HEAD~1)
-HEAD_SHA=$(git rev-parse HEAD)
-DIFF=$(git diff $BASE_SHA $HEAD_SHA)
-
-# Backend review → Codex
-codeagent-wrapper --backend codex - "$PWD" <<EOF
-## Code Review Request
-
-### Change Scope
-$DIFF
-
-### Please review from backend perspective
-1. Are API design and implementation correct
-2. Is data processing and validation comprehensive
-3. Performance and security considerations
-4. Is error handling sufficient
-
-### Output Format
-- Critical: [Issues that must be fixed]
-- Important: [Issues that should be fixed]
-- Minor: [Suggested improvements]
-- Strengths: [Things done well]
-EOF
-
-# Frontend review → Gemini
-codeagent-wrapper --backend gemini - "$PWD" <<EOF
-## Code Review Request
-
-### Change Scope
-$DIFF
-
-### Please review from frontend perspective
-1. Are component design and structure reasonable
-2. Is user experience and interaction smooth
-3. Are styles and responsiveness complete
-4. Is accessibility considered
-
-### Output Format
-- Critical: [Issues that must be fixed]
-- Important: [Issues that should be fixed]
-- Minor: [Suggested improvements]
-- Strengths: [Things done well]
-EOF
-
-# For CROSS_VALIDATION → Invoke both in parallel
-```
-
-**4. Result integration:**
-
-```markdown
-## Code Review Report
-
-### [Model] Review Results
-[Review findings]
-
-### Comprehensive Assessment
-- **Critical issues**: [Must-fix items]
-- **Important issues**: [Should-fix items]
-- **Overall assessment**: [Integrated evaluation]
-```
+**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
 
 **Fallback:** If external models are not available, use Claude subagent (superpowers:code-reviewer) for review.

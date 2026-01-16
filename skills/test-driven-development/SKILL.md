@@ -83,6 +83,10 @@ digraph tdd_cycle {
 
 Write one minimal test showing what should happen.
 
+**► Checkpoint 1 (Task Analysis):** Before writing test, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+- Check critical task conditions → Match: invoke domain expert for test design
+- Complex testing scenario → invoke cross-validation for comprehensive test coverage
+
 <Good>
 ```typescript
 test('retries failed operations 3 times', async () => {
@@ -141,6 +145,10 @@ Confirm:
 ### GREEN - Minimal Code
 
 Write simplest code to pass the test.
+
+**► Checkpoint 3 (Quality Gate):** After implementation passes, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+- Implementation complete → invoke domain expert for code review
+- Critical business logic → invoke cross-validation for security/performance review
 
 <Good>
 ```typescript
@@ -376,10 +384,12 @@ When adding mocks or test utilities, read @testing-anti-patterns.md to avoid com
 
 **Related skill:** superpowers:multi-model-core
 
-For test generation, apply semantic routing using `multi-model-core/routing-decision.md`:
+At checkpoints, apply semantic routing using `multi-model-core/routing-decision.md`:
 - Frontend component tests → GEMINI
 - Backend logic tests → CODEX
 - Full-stack tests → CROSS_VALIDATION
+
+**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
 
 See `multi-model-core/INTEGRATION.md` for invocation templates.
 

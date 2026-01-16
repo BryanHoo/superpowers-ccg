@@ -13,6 +13,11 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
+**► Checkpoint 1 (Task Analysis):** Before writing the plan, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+- Collect: overall scope, files involved, tech stack, complexity
+- Check critical task conditions → Match: invoke expert model for architecture review
+- Evaluate general task signals → Positive: invoke for plan quality assessment
+
 **Context:** This should be run in a dedicated worktree (created by brainstorming skill).
 
 **Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
@@ -172,6 +177,10 @@ During plan execution (via `executing-plans` or `subagent-driven-development`):
 - Focus on clear task descriptions and file paths; routing is handled automatically
 
 ## Execution Handoff
+
+**► Checkpoint 3 (Quality Gate):** Before handoff, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+- Plan complete and ready for execution → invoke domain expert for final review
+- Critical tasks identified in plan → invoke cross-validation for architecture verification
 
 After saving the plan, offer execution choice:
 

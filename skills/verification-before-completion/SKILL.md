@@ -23,6 +23,10 @@ If you haven't run the verification command in this message, you cannot claim it
 
 ## The Gate Function
 
+**► Checkpoint 3 (Quality Gate):** Before claiming completion, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+- Critical changes complete → invoke domain expert for independent verification
+- Full-stack changes → invoke cross-validation for comprehensive check
+
 ```
 BEFORE claiming any status or expressing satisfaction:
 
@@ -142,10 +146,12 @@ This is non-negotiable.
 
 **Related skill:** superpowers:multi-model-core
 
-For critical changes, apply semantic routing using `multi-model-core/routing-decision.md`:
+At checkpoint, apply semantic routing using `multi-model-core/routing-decision.md`:
 - Backend-only critical → CODEX verification
 - Frontend-only critical → GEMINI verification
 - Full-stack/architectural → CROSS_VALIDATION
+
+**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
 
 See `multi-model-core/INTEGRATION.md` for invocation templates.
 

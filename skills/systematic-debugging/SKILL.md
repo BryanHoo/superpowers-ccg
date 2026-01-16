@@ -58,6 +58,10 @@ You MUST complete each phase before proceeding to the next.
 
 ### Phase 1: Root Cause Investigation
 
+**► Checkpoint 1 (Task Analysis):** Before investigation, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+- Unclear error messages → invoke domain expert for interpretation
+- Involves async/concurrency/state management → invoke cross-validation for multi-perspective analysis
+
 **BEFORE attempting ANY fix:**
 
 1. **Read Error Messages Carefully**
@@ -152,6 +156,10 @@ You MUST complete each phase before proceeding to the next.
    - What assumptions does it make?
 
 ### Phase 3: Hypothesis and Testing
+
+**► Checkpoint 2 (Mid-Review):** When testing hypothesis, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+- 2+ failed fix attempts → invoke cross-validation for fresh perspective
+- Debugging stalled → invoke domain expert for specialized analysis
 
 **Scientific method:**
 
@@ -299,14 +307,16 @@ These techniques are part of systematic debugging and available in this director
 
 ## Multi-Model Cross-Validation
 
-**When to use:** During Phase 1 or Phase 2, when diagnostic complexity requires specialized expertise.
+**Related skill:** superpowers:multi-model-core
 
-Apply semantic routing using `multi-model-core/routing-decision.md`:
+At checkpoints, apply semantic routing using `multi-model-core/routing-decision.md`:
 - Clear backend issue → CODEX
 - Clear frontend issue → GEMINI
 - Uncertain root cause → CROSS_VALIDATION
 
-See `multi-model-core/INTEGRATION.md` for invocation templates and result integration patterns.
+**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
+
+See `multi-model-core/INTEGRATION.md` for invocation templates.
 
 **Fallback:** If codeagent-wrapper unavailable, continue with Claude's analysis.
 

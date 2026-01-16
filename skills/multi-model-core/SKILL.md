@@ -12,7 +12,18 @@ This module provides multi-model invocation capabilities for superpowers skills,
 **Core Features**:
 - **Automatic Routing** - Intelligently selects models based on task characteristics
 - **Cross-Validation** - Dual-model verification for complex scenarios
+- **Collaboration Checkpoints** - Embedded triggers at key skill stages
 - **Seamless Integration** - Other skills can reference on demand
+
+## Module Files
+
+| File | Purpose |
+|------|---------|
+| `SKILL.md` | This file - core module documentation |
+| `INTEGRATION.md` | Invocation templates for external models |
+| `routing-decision.md` | Semantic routing decision framework |
+| `routing-rules.md` | Reference patterns for categorization |
+| `checkpoints.md` | **NEW** - Collaboration checkpoint logic for autonomous triggering |
 
 ## Prerequisites
 
@@ -186,18 +197,25 @@ If codeagent-wrapper is not available or invocation fails:
 
 ## Integration with Other Skills
 
-This module is referenced by the following skills:
+This module is referenced by the following skills, each with embedded collaboration checkpoints:
 
-| Skill | Usage Scenario |
-|-------|----------------|
-| `systematic-debugging` | Dual-model cross-diagnosis during root cause analysis |
-| `brainstorming` | Multi-perspective validation during solution evaluation |
-| `writing-plans` | Professional model assistance during technical proposal design |
-| `executing-plans` | Routing by task type during implementation phase |
-| `subagent-driven-development` | Distributing subtasks by frontend/backend |
-| `requesting-code-review` | Dual-model cross-review |
-| `test-driven-development` | Test generation routing by tech stack |
-| `verification-before-completion` | Cross-confirmation during verification phase |
+| Skill | Checkpoints | Usage Scenario |
+|-------|-------------|----------------|
+| `brainstorming` | CP1, CP2 | Design evaluation and approach validation |
+| `writing-plans` | CP1, CP3 | Plan complexity assessment and quality gate |
+| `executing-plans` | CP1, CP2, CP3 | Before/during/after each task |
+| `subagent-driven-development` | CP1, CP2, CP3 | Subtask dispatch, execution, and review |
+| `test-driven-development` | CP1, CP3 | Test generation and implementation review |
+| `systematic-debugging` | CP1, CP2 | Root cause investigation and hypothesis testing |
+| `requesting-code-review` | CP3 | Code review invocation |
+| `verification-before-completion` | CP3 | Final verification |
+
+**Checkpoint Types:**
+- **CP1 (Task Analysis)** - Evaluate at task start
+- **CP2 (Mid-Review)** - Invoke at key decision points
+- **CP3 (Quality Gate)** - Review before completion
+
+**See `checkpoints.md` for full checkpoint logic and trigger conditions.**
 
 ## Quick Reference
 

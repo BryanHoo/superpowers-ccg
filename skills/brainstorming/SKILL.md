@@ -20,10 +20,20 @@ Start by understanding the current project context, then ask questions one at a 
 - Only one question per message - if a topic needs more exploration, break it into multiple questions
 - Focus on understanding: purpose, constraints, success criteria
 
+**► Checkpoint 1 (Task Analysis):** After understanding the idea, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+- Collect: task description, files involved, tech stack
+- Check critical task conditions → Match: invoke directly
+- Evaluate general task signals → Positive: invoke
+- Neither: Claude handles independently
+
 **Exploring approaches:**
 - Propose 2-3 different approaches with trade-offs
 - Present options conversationally with your recommendation and reasoning
 - Lead with your recommended option and explain why
+
+**► Checkpoint 2 (Mid-Review):** When multiple approaches have significant trade-offs, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+- Multiple implementation approaches to choose from → invoke cross-validation
+- Potential performance/security issues discovered → invoke domain expert
 
 **Presenting the design:**
 - Once you believe you understand what you're building, present the design
@@ -57,11 +67,13 @@ Start by understanding the current project context, then ask questions one at a 
 
 **Related skill:** superpowers:multi-model-core
 
-During the "Exploring approaches" phase, when design decisions require specialized expertise:
+At checkpoints, when invoking external models:
 
 1. **Apply semantic routing** using `multi-model-core/routing-decision.md`
 2. **Notify user**: "我将使用 [model] 来评估这个设计方案"
 3. **Invoke model** with English prompts (see `multi-model-core/INTEGRATION.md` for templates)
 4. **Integrate results** into design recommendation
+
+**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
 
 **Fallback:** If codeagent-wrapper unavailable, continue with Claude's assessment.
