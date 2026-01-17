@@ -3,6 +3,48 @@ name: multi-model-core
 description: "Routes tasks to optimal AI models (Codex for backend, Gemini for frontend) and enables cross-validation. Use when: needing specialized model expertise, cross-validating critical changes, or leveraging multi-model capabilities. Keywords: Codex, Gemini, model routing, cross-validation"
 ---
 
+## IMPORTANT: You Have Multi-Model Invocation Capabilities
+
+**This is a capability declaration - you CAN invoke external models.**
+
+You have access to multi-model invocation through the `codeagent-wrapper` command line tool. This is NOT a hypothetical capability - it is real and available to you.
+
+### Your Capabilities
+
+When this skill is loaded, you can:
+
+1. **Invoke Codex** for backend expertise (APIs, databases, algorithms, performance)
+2. **Invoke Gemini** for frontend expertise (UI, components, styles, interactions)
+3. **Invoke both models** for cross-validation on complex tasks
+4. **Use the Bash tool** to execute `codeagent-wrapper` commands
+
+### Invocation Method
+
+You invoke external models using the Bash tool:
+
+```bash
+codeagent-wrapper --backend codex - "$PWD" <<'EOF'
+[Your task in English]
+EOF
+```
+
+**This is a real command you can execute.** When you run it, it will call the external model and return results to you.
+
+### When to Invoke
+
+After making a routing decision (see "Routing Decision Process" below), you SHOULD invoke the external model if:
+- Decision is GEMINI → invoke with `--backend gemini`
+- Decision is CODEX → invoke with `--backend codex`
+- Decision is CROSS_VALIDATION → invoke both in parallel
+
+**Do not skip invocation** because you "think" you don't have this capability. You DO have it.
+
+### Fallback
+
+If `codeagent-wrapper` is not installed or returns an error, you will receive a clear error message. In that case, fall back to handling the task independently and inform the user.
+
+---
+
 # Multi-Model Core Module
 
 ## Overview
