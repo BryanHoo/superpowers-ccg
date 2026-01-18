@@ -23,7 +23,7 @@ Dispatch superpowers:code-reviewer subagent to catch issues before they cascade.
 
 ## How to Request
 
-**► Checkpoint 3 (Quality Gate):** Before requesting review, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+**► Checkpoint 3 (Quality Gate):** Before requesting review, apply checkpoint logic from `coordinating-multi-model-work/checkpoints.md`:
 - Code changes complete → invoke domain expert for specialized review
 - Critical business logic changes → invoke cross-validation for comprehensive assessment
 
@@ -110,9 +110,9 @@ See template at: requesting-code-review/code-reviewer.md
 
 ## Multi-Model Code Review
 
-**Related skill:** superpowers:multi-model-core
+**Related skill:** superpowers:coordinating-multi-model-work
 
-At checkpoint, apply semantic routing from `multi-model-core/routing-decision.md`:
+At checkpoint, apply semantic routing from `coordinating-multi-model-work/routing-decision.md`:
 
 - **Routing decision:**
   - Backend changes only (API, database, algorithms) → CODEX
@@ -122,8 +122,8 @@ At checkpoint, apply semantic routing from `multi-model-core/routing-decision.md
 
 - **Notify user:** "我将使用 [model] 来评审这些代码更改"
 
-- **Invoke model** with English prompts (see `multi-model-core/INTEGRATION.md` for templates)
+- **Invoke model** with English prompts (see `coordinating-multi-model-work/INTEGRATION.md` for templates)
 
-**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
+**Full checkpoint logic:** See `coordinating-multi-model-work/checkpoints.md`
 
 **Fallback:** If external models are not available, use Claude subagent (superpowers:code-reviewer) for review.

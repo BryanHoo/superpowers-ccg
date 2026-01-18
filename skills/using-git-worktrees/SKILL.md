@@ -5,6 +5,14 @@ description: "Creates isolated git worktrees with smart directory selection for 
 
 # Using Git Worktrees
 
+## Contents
+- [Overview](#overview)
+- [Directory Selection Process](#directory-selection-process)
+- [Worktree Creation](#worktree-creation)
+- [Safety Verification](#safety-verification)
+- [Next Steps](#next-steps)
+- [Related Skills](#related-skills)
+
 ## Overview
 
 Git worktrees create isolated workspaces sharing the same repository, allowing work on multiple branches simultaneously without switching.
@@ -213,5 +221,5 @@ Ready to implement auth feature
 - Any skill needing isolated workspace
 
 **Pairs with:**
-- **finishing-a-development-branch** - REQUIRED for cleanup after work complete
-- **executing-plans** or **subagent-driven-development** - Work happens in this worktree
+- **finishing-development-branches** - REQUIRED for cleanup after work complete
+- **executing-plans** or **developing-with-subagents** - Work happens in this worktree

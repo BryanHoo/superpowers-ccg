@@ -1,9 +1,19 @@
 ---
-name: multi-model-core
+name: coordinating-multi-model-work
 description: "Routes tasks to optimal AI models (Codex for backend, Gemini for frontend) and enables cross-validation. Use when: needing specialized model expertise, cross-validating critical changes, or leveraging multi-model capabilities. Keywords: Codex, Gemini, model routing, cross-validation"
 ---
 
-## IMPORTANT: You Have Multi-Model Invocation Capabilities
+## Contents
+- [Capability Declaration](#capability-declaration)
+- [Overview](#overview)
+- [Checkpoint System](#checkpoint-system)
+- [Routing Decision Process](#routing-decision-process)
+- [Integration with Skills](#integration-with-skills)
+- [Reference Files](#reference-files)
+
+## Capability Declaration
+
+### IMPORTANT: You Have Multi-Model Invocation Capabilities
 
 **This is a capability declaration - you CAN invoke external models.**
 
@@ -246,11 +256,11 @@ This module is referenced by the following skills, each with embedded collaborat
 | `brainstorming` | CP1, CP2 | Design evaluation and approach validation |
 | `writing-plans` | CP1, CP3 | Plan complexity assessment and quality gate |
 | `executing-plans` | CP1, CP2, CP3 | Before/during/after each task |
-| `subagent-driven-development` | CP1, CP2, CP3 | Subtask dispatch, execution, and review |
+| `developing-with-subagents` | CP1, CP2, CP3 | Subtask dispatch, execution, and review |
 | `test-driven-development` | CP1, CP3 | Test generation and implementation review |
-| `systematic-debugging` | CP1, CP2 | Root cause investigation and hypothesis testing |
+| `debugging-systematically` | CP1, CP2 | Root cause investigation and hypothesis testing |
 | `requesting-code-review` | CP3 | Code review invocation |
-| `verification-before-completion` | CP3 | Final verification |
+| `verifying-before-completion` | CP3 | Final verification |
 
 **Checkpoint Types:**
 - **CP1 (Task Analysis)** - Evaluate at task start

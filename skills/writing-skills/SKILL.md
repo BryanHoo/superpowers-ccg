@@ -13,7 +13,7 @@ You write test cases (pressure scenarios with subagents), watch them fail (basel
 
 **Core principle:** If you didn't watch an agent fail without the skill, you don't know if the skill teaches the right thing.
 
-**REQUIRED BACKGROUND:** You MUST understand superpowers:test-driven-development before using this skill.
+**REQUIRED BACKGROUND:** You MUST understand superpowers:practicing-test-driven-development before using this skill.
 
 **Official guidance:** See anthropic-best-practices.md for Anthropic's official skill authoring best practices.
 
@@ -80,7 +80,7 @@ This applies to NEW skills AND EDITS to existing skills.
 
 Write skill before testing? Delete it. Start over.
 
-**REQUIRED BACKGROUND:** superpowers:test-driven-development explains why this matters.
+**REQUIRED BACKGROUND:** superpowers:practicing-test-driven-development explains why this matters.
 
 ## Detailed Reference
 

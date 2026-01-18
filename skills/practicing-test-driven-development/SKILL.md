@@ -1,5 +1,5 @@
 ---
-name: test-driven-development
+name: practicing-test-driven-development
 description: "Write failing tests before implementation code using red-green-refactor cycle. Use when: implementing features, fixing bugs, refactoring code, or changing behavior. Keywords: TDD, test first, unit test, red-green, failing test"
 ---
 
@@ -81,11 +81,11 @@ digraph tdd_cycle {
 
 Write one minimal test showing what should happen.
 
-**► Checkpoint 1 (Task Analysis):** Before writing test, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+**► Checkpoint 1 (Task Analysis):** Before writing test, apply checkpoint logic from `coordinating-multi-model-work/checkpoints.md`:
 - Check critical task conditions → Match: invoke domain expert for test design
 - Complex testing scenario → invoke cross-validation for comprehensive test coverage
 
-<Good>
+**✅ 好的示例：**
 ```typescript
 test('retries failed operations 3 times', async () => {
   let attempts = 0;
@@ -102,9 +102,9 @@ test('retries failed operations 3 times', async () => {
 });
 ```
 Clear name, tests real behavior, one thing
-</Good>
 
-<Bad>
+
+**❌ 不好的示例：**
 ```typescript
 test('retry works', async () => {
   const mock = jest.fn()
@@ -116,7 +116,7 @@ test('retry works', async () => {
 });
 ```
 Vague name, tests mock not code
-</Bad>
+
 
 **Requirements:**
 - One behavior
@@ -144,11 +144,11 @@ Confirm:
 
 Write simplest code to pass the test.
 
-**► Checkpoint 3 (Quality Gate):** After implementation passes, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+**► Checkpoint 3 (Quality Gate):** After implementation passes, apply checkpoint logic from `coordinating-multi-model-work/checkpoints.md`:
 - Implementation complete → invoke domain expert for code review
 - Critical business logic → invoke cross-validation for security/performance review
 
-<Good>
+**✅ 好的示例：**
 ```typescript
 async function retryOperation<T>(fn: () => Promise<T>): Promise<T> {
   for (let i = 0; i < 3; i++) {
@@ -162,9 +162,9 @@ async function retryOperation<T>(fn: () => Promise<T>): Promise<T> {
 }
 ```
 Just enough to pass
-</Good>
 
-<Bad>
+
+**❌ 不好的示例：**
 ```typescript
 async function retryOperation<T>(
   fn: () => Promise<T>,
@@ -178,7 +178,7 @@ async function retryOperation<T>(
 }
 ```
 Over-engineered
-</Bad>
+
 
 Don't add features, refactor other code, or "improve" beyond the test.
 
@@ -314,16 +314,16 @@ When adding mocks or test utilities, read @testing-anti-patterns.md to avoid com
 
 ## Multi-Model Test Generation
 
-**Related skill:** superpowers:multi-model-core
+**Related skill:** superpowers:coordinating-multi-model-work
 
-At checkpoints, apply semantic routing using `multi-model-core/routing-decision.md`:
+At checkpoints, apply semantic routing using `coordinating-multi-model-work/routing-decision.md`:
 - Frontend component tests → GEMINI
 - Backend logic tests → CODEX
 - Full-stack tests → CROSS_VALIDATION
 
-**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
+**Full checkpoint logic:** See `coordinating-multi-model-work/checkpoints.md`
 
-See `multi-model-core/INTEGRATION.md` for invocation templates.
+See `coordinating-multi-model-work/INTEGRATION.md` for invocation templates.
 
 **CRITICAL:** Generated tests **must still follow TDD cycle** - run them to confirm they fail (RED) before implementing.
 

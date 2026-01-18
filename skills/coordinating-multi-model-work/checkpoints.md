@@ -166,7 +166,7 @@ Claude 自主决策流程:
 ```markdown
 ## Collaboration Checkpoint
 
-**At this stage, apply checkpoint logic from `multi-model-core/checkpoints.md`:**
+**At this stage, apply checkpoint logic from `coordinating-multi-model-work/checkpoints.md`:**
 
 1. Collect task information (files, stack, complexity)
 2. Check critical task conditions → Match: invoke directly

@@ -5,6 +5,14 @@ description: "Creates comprehensive implementation plans with bite-sized tasks, 
 
 # Writing Plans
 
+## Contents
+- [Overview](#overview)
+- [Bite-Sized Task Granularity](#bite-sized-task-granularity)
+- [Plan Document Header](#plan-document-header)
+- [Task Structure](#task-structure)
+- [Multi-Model Task Routing](#multi-model-task-routing)
+- [Execution Handoff](#execution-handoff)
+
 ## Overview
 
 Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
@@ -13,7 +21,7 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
-**► Checkpoint 1 (Task Analysis):** Before writing the plan, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+**► Checkpoint 1 (Task Analysis):** Before writing the plan, apply checkpoint logic from `coordinating-multi-model-work/checkpoints.md`:
 - Collect: overall scope, files involved, tech stack, complexity
 - Check critical task conditions → Match: invoke expert model for architecture review
 - Evaluate general task signals → Positive: invoke for plan quality assessment
@@ -101,7 +109,7 @@ git commit -m "feat: add specific feature"
 
 ## Multi-Model Task Routing
 
-**Related skill:** superpowers:multi-model-core
+**Related skill:** superpowers:coordinating-multi-model-work
 
 When writing plans, you can optionally annotate tasks with model hints to guide execution. However, these hints are **suggestions only** - actual execution uses semantic analysis.
 
@@ -125,10 +133,10 @@ When writing plans, you can optionally annotate tasks with model hints to guide 
 
 **How execution handles hints:**
 
-During plan execution (via `executing-plans` or `subagent-driven-development`):
+During plan execution (via `executing-plans` or `developing-with-subagents`):
 
 1. Executor reads the `Model hint` if present
-2. **Applies semantic routing** using `multi-model-core/routing-decision.md`:
+2. **Applies semantic routing** using `coordinating-multi-model-work/routing-decision.md`:
    - Collects task information (files, description, tech stack)
    - Analyzes task domain, complexity, and uncertainty
    - Makes routing decision based on semantic understanding
@@ -178,7 +186,7 @@ During plan execution (via `executing-plans` or `subagent-driven-development`):
 
 ## Execution Handoff
 
-**► Checkpoint 3 (Quality Gate):** Before handoff, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+**► Checkpoint 3 (Quality Gate):** Before handoff, apply checkpoint logic from `coordinating-multi-model-work/checkpoints.md`:
 - Plan complete and ready for execution → invoke domain expert for final review
 - Critical tasks identified in plan → invoke cross-validation for architecture verification
 
@@ -193,7 +201,7 @@ After saving the plan, offer execution choice:
 **Which approach?"**
 
 **If Subagent-Driven chosen:**
-- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
+- **REQUIRED SUB-SKILL:** Use superpowers:developing-with-subagents
 - Stay in this session
 - Fresh subagent per task + code review
 

@@ -1,5 +1,5 @@
 ---
-name: verification-before-completion
+name: verifying-before-completion
 description: "Requires running verification commands and confirming output before making success claims. Use when: about to claim work is complete, fixed, or passing, before committing or creating PRs. Keywords: verify, evidence, completion check, test output, proof"
 ---
 
@@ -23,7 +23,7 @@ If you haven't run the verification command in this message, you cannot claim it
 
 ## The Gate Function
 
-**► Checkpoint 3 (Quality Gate):** Before claiming completion, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+**► Checkpoint 3 (Quality Gate):** Before claiming completion, apply checkpoint logic from `coordinating-multi-model-work/checkpoints.md`:
 - Critical changes complete → invoke domain expert for independent verification
 - Full-stack changes → invoke cross-validation for comprehensive check
 
@@ -144,16 +144,16 @@ This is non-negotiable.
 
 ## Multi-Model Cross-Verification
 
-**Related skill:** superpowers:multi-model-core
+**Related skill:** superpowers:coordinating-multi-model-work
 
-At checkpoint, apply semantic routing using `multi-model-core/routing-decision.md`:
+At checkpoint, apply semantic routing using `coordinating-multi-model-work/routing-decision.md`:
 - Backend-only critical → CODEX verification
 - Frontend-only critical → GEMINI verification
 - Full-stack/architectural → CROSS_VALIDATION
 
-**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
+**Full checkpoint logic:** See `coordinating-multi-model-work/checkpoints.md`
 
-See `multi-model-core/INTEGRATION.md` for invocation templates.
+See `coordinating-multi-model-work/INTEGRATION.md` for invocation templates.
 
 **CRITICAL:** Cross-model verification is **additional** to, not a replacement for running actual commands. **Never claim success based solely on model confirmation.**
 

@@ -43,7 +43,7 @@ Current Task:
 
 For each task:
 1. Mark as in_progress
-2. **► Checkpoint 1 (Task Analysis):** Apply checkpoint logic from `multi-model-core/checkpoints.md`:
+2. **► Checkpoint 1 (Task Analysis):** Apply checkpoint logic from `coordinating-multi-model-work/checkpoints.md`:
    - Collect: task files, description, tech stack from plan
    - Check critical task conditions → Match: invoke expert model
    - Evaluate general task signals → Positive: invoke
@@ -71,8 +71,8 @@ Based on feedback:
 ### Step 5: Complete Development
 
 After all tasks complete and verified:
-- Announce: "I'm using the finishing-a-development-branch skill to complete this work."
-- **REQUIRED SUB-SKILL:** Use superpowers:finishing-a-development-branch
+- Announce: "I'm using the finishing-development-branches skill to complete this work."
+- **REQUIRED SUB-SKILL:** Use superpowers:finishing-development-branches
 - Follow that skill to verify tests, present options, execute choice
 
 ## When to Stop and Ask for Help
@@ -103,9 +103,9 @@ After all tasks complete and verified:
 
 ## Multi-Model Task Execution
 
-**Related skill:** superpowers:multi-model-core
+**Related skill:** superpowers:coordinating-multi-model-work
 
-At checkpoints, apply semantic routing from `multi-model-core/routing-decision.md`:
+At checkpoints, apply semantic routing from `coordinating-multi-model-work/routing-decision.md`:
 
 - **Routing decision:**
   - Backend task (API, database, algorithms) → CODEX
@@ -117,8 +117,8 @@ At checkpoints, apply semantic routing from `multi-model-core/routing-decision.m
 
 - **Notify user:** "我将使用 [model] 来执行 [task description]"
 
-- **Invoke model** with English prompts (see `multi-model-core/INTEGRATION.md` for templates)
+- **Invoke model** with English prompts (see `coordinating-multi-model-work/INTEGRATION.md` for templates)
 
-**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
+**Full checkpoint logic:** See `coordinating-multi-model-work/checkpoints.md`
 
 **Fallback:** If external models are not available, Claude executes the task directly.

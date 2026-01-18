@@ -3,13 +3,13 @@ name: using-superpowers
 description: "Establishes how to find and use skills, requiring Skill tool invocation before any response. Use when: starting conversations, needing skill guidance. Keywords: skills, superpowers, skill discovery, getting started"
 ---
 
-<EXTREMELY-IMPORTANT>
-If you think there is even a 1% chance a skill might apply to what you are doing, you ABSOLUTELY MUST invoke the skill.
-
-IF A SKILL APPLIES TO YOUR TASK, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.
-
-This is not negotiable. This is not optional. You cannot rationalize your way out of this.
-</EXTREMELY-IMPORTANT>
+> **⚠️ 极其重要：**
+>
+> 如果你认为有哪怕 1% 的可能性某个 skill 适用于你正在做的事情，你**必须**调用该 skill。
+>
+> **如果一个 skill 适用于你的任务，你没有选择。你必须使用它。**
+>
+> 这不是可协商的。这不是可选的。你不能为自己找理由逃避。
 
 ## How to Access Skills
 

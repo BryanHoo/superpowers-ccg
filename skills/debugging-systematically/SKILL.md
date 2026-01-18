@@ -1,5 +1,5 @@
 ---
-name: systematic-debugging
+name: debugging-systematically
 description: "Find root cause before attempting fixes through four-phase investigation. Use when: encountering bugs, test failures, unexpected behavior, build errors, or performance issues. Keywords: debug, root cause, error, failure, investigate, diagnose"
 ---
 
@@ -58,7 +58,7 @@ You MUST complete each phase before proceeding to the next.
 
 ### Phase 1: Root Cause Investigation
 
-**► Checkpoint 1 (Task Analysis):** Before investigation, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+**► Checkpoint 1 (Task Analysis):** Before investigation, apply checkpoint logic from `coordinating-multi-model-work/checkpoints.md`:
 - Unclear error messages → invoke domain expert for interpretation
 - Involves async/concurrency/state management → invoke cross-validation for multi-perspective analysis
 
@@ -157,7 +157,7 @@ You MUST complete each phase before proceeding to the next.
 
 ### Phase 3: Hypothesis and Testing
 
-**► Checkpoint 2 (Mid-Review):** When testing hypothesis, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+**► Checkpoint 2 (Mid-Review):** When testing hypothesis, apply checkpoint logic from `coordinating-multi-model-work/checkpoints.md`:
 - 2+ failed fix attempts → invoke cross-validation for fresh perspective
 - Debugging stalled → invoke domain expert for specialized analysis
 
@@ -193,7 +193,7 @@ You MUST complete each phase before proceeding to the next.
    - Automated test if possible
    - One-off test script if no framework
    - MUST have before fixing
-   - Use the `superpowers:test-driven-development` skill for writing proper failing tests
+   - Use the `superpowers:practicing-test-driven-development` skill for writing proper failing tests
 
 2. **Implement Single Fix**
    - Address the root cause identified
@@ -290,21 +290,21 @@ These techniques are part of systematic debugging and available in this director
 - **`condition-based-waiting.md`** - Replace arbitrary timeouts with condition polling
 
 **Related skills:**
-- **superpowers:test-driven-development** - For creating failing test case (Phase 4, Step 1)
-- **superpowers:verification-before-completion** - Verify fix worked before claiming success
-- **superpowers:multi-model-core** - For multi-model cross-validation diagnosis
+- **superpowers:practicing-test-driven-development** - For creating failing test case (Phase 4, Step 1)
+- **superpowers:verifying-before-completion** - Verify fix worked before claiming success
+- **superpowers:coordinating-multi-model-work** - For multi-model cross-validation diagnosis
 
 ## Multi-Model Cross-Validation
 
-**Related skill:** superpowers:multi-model-core
+**Related skill:** superpowers:coordinating-multi-model-work
 
-At checkpoints, apply semantic routing using `multi-model-core/routing-decision.md`:
+At checkpoints, apply semantic routing using `coordinating-multi-model-work/routing-decision.md`:
 - Clear backend issue → CODEX
 - Clear frontend issue → GEMINI
 - Uncertain root cause → CROSS_VALIDATION
 
-**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
+**Full checkpoint logic:** See `coordinating-multi-model-work/checkpoints.md`
 
-See `multi-model-core/INTEGRATION.md` for invocation templates.
+See `coordinating-multi-model-work/INTEGRATION.md` for invocation templates.
 
 **Fallback:** If codeagent-wrapper unavailable, continue with Claude's analysis.

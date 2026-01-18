@@ -19,11 +19,11 @@ Copy this section to your skill and customize the prompts:
 ```markdown
 ## Multi-Model Integration
 
-**Related skill:** superpowers:multi-model-core
+**Related skill:** superpowers:coordinating-multi-model-work
 
 For tasks requiring specialized expertise, apply semantic routing:
 
-1. **Analyze task domain** using `multi-model-core/routing-decision.md`
+1. **Analyze task domain** using `coordinating-multi-model-work/routing-decision.md`
 2. **Notify user**: "我将使用 [model] 来 [task purpose]"
 3. **Invoke model** with English prompts via codeagent-wrapper
 4. **Integrate results** before proceeding

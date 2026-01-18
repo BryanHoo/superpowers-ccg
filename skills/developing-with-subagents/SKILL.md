@@ -1,9 +1,18 @@
 ---
-name: subagent-driven-development
+name: developing-with-subagents
 description: "Executes plans by dispatching fresh subagent per task with two-stage review (spec then quality). Use when: executing implementation plans in current session with independent tasks. Keywords: subagent, task execution, fresh context, iterative development"
 ---
 
 # Subagent-Driven Development
+
+## Contents
+- [Overview](#overview)
+- [When to Use](#when-to-use)
+- [The Process](#the-process)
+- [Checkpoint Integration](#checkpoint-integration)
+- [Related Skills](#related-skills)
+
+## Overview
 
 Execute plan by dispatching fresh subagent per task, with two-stage review after each: spec compliance review first, then code quality review.
 
@@ -16,7 +25,7 @@ digraph when_to_use {
     "Have implementation plan?" [shape=diamond];
     "Tasks mostly independent?" [shape=diamond];
     "Stay in this session?" [shape=diamond];
-    "subagent-driven-development" [shape=box];
+    "developing-with-subagents" [shape=box];
     "executing-plans" [shape=box];
     "Manual execution or brainstorm first" [shape=box];
 
@@ -24,7 +33,7 @@ digraph when_to_use {
     "Have implementation plan?" -> "Manual execution or brainstorm first" [label="no"];
     "Tasks mostly independent?" -> "Stay in this session?" [label="yes"];
     "Tasks mostly independent?" -> "Manual execution or brainstorm first" [label="no - tightly coupled"];
-    "Stay in this session?" -> "subagent-driven-development" [label="yes"];
+    "Stay in this session?" -> "developing-with-subagents" [label="yes"];
     "Stay in this session?" -> "executing-plans" [label="no - parallel session"];
 }
 ```
@@ -58,7 +67,7 @@ Task N: [description]
 Final Steps:
 - [ ] All tasks complete
 - [ ] Final code reviewer dispatched
-- [ ] finishing-a-development-branch invoked
+- [ ] finishing-development-branches invoked
 ```
 
 ```dot
@@ -83,7 +92,7 @@ digraph process {
     "Read plan, extract all tasks with full text, note context, create TodoWrite" [shape=box];
     "More tasks remain?" [shape=diamond];
     "Dispatch final code reviewer subagent for entire implementation" [shape=box];
-    "Use superpowers:finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
+    "Use superpowers:finishing-development-branches" [shape=box style=filled fillcolor=lightgreen];
 
     "Read plan, extract all tasks with full text, note context, create TodoWrite" -> "Dispatch implementer subagent (./implementer-prompt.md)";
     "Dispatch implementer subagent (./implementer-prompt.md)" -> "Implementer subagent asks questions?";
@@ -102,7 +111,7 @@ digraph process {
     "Mark task complete in TodoWrite" -> "More tasks remain?";
     "More tasks remain?" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="yes"];
     "More tasks remain?" -> "Dispatch final code reviewer subagent for entire implementation" [label="no"];
-    "Dispatch final code reviewer subagent for entire implementation" -> "Use superpowers:finishing-a-development-branch";
+    "Dispatch final code reviewer subagent for entire implementation" -> "Use superpowers:finishing-development-branches";
 }
 ```
 
@@ -114,7 +123,7 @@ digraph process {
 
 ## Collaboration Checkpoints
 
-Apply checkpoint logic from `multi-model-core/checkpoints.md` at these stages:
+Apply checkpoint logic from `coordinating-multi-model-work/checkpoints.md` at these stages:
 
 **► Checkpoint 1 (Task Analysis):** Before dispatching implementer subagent:
 - Collect: task files, description, complexity
@@ -271,20 +280,20 @@ Done!
 **Required workflow skills:**
 - **superpowers:writing-plans** - Creates the plan this skill executes
 - **superpowers:requesting-code-review** - Code review template for reviewer subagents
-- **superpowers:finishing-a-development-branch** - Complete development after all tasks
-- **superpowers:multi-model-core** - Multi-model routing for task execution
+- **superpowers:finishing-development-branches** - Complete development after all tasks
+- **superpowers:coordinating-multi-model-work** - Multi-model routing for task execution
 
 **Subagents should use:**
-- **superpowers:test-driven-development** - Subagents follow TDD for each task
+- **superpowers:practicing-test-driven-development** - Subagents follow TDD for each task
 
 **Alternative workflow:**
 - **superpowers:executing-plans** - Use for parallel session instead of same-session execution
 
 ## Multi-Model Task Dispatch
 
-**Related skill:** superpowers:multi-model-core
+**Related skill:** superpowers:coordinating-multi-model-work
 
-At checkpoints, apply semantic routing from `multi-model-core/routing-decision.md`:
+At checkpoints, apply semantic routing from `coordinating-multi-model-work/routing-decision.md`:
 
 - **Routing decision:**
   - Clear backend task (API, database, server logic) → CODEX
@@ -296,8 +305,8 @@ At checkpoints, apply semantic routing from `multi-model-core/routing-decision.m
 
 - **Notify user:** "我将使用 [model/subagent] 来实现 [task name]"
 
-- **Invoke model** with English prompts (see `multi-model-core/INTEGRATION.md` for templates)
+- **Invoke model** with English prompts (see `coordinating-multi-model-work/INTEGRATION.md` for templates)
 
-**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
+**Full checkpoint logic:** See `coordinating-multi-model-work/checkpoints.md`
 
 **Fallback:** Claude subagent is always available as fallback and can handle any task with full context.

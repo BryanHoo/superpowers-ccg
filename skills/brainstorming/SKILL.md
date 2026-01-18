@@ -20,7 +20,7 @@ Start by understanding the current project context, then ask questions one at a 
 - Only one question per message - if a topic needs more exploration, break it into multiple questions
 - Focus on understanding: purpose, constraints, success criteria
 
-**► Checkpoint 1 (Task Analysis):** After understanding the idea, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+**► Checkpoint 1 (Task Analysis):** After understanding the idea, apply checkpoint logic from `coordinating-multi-model-work/checkpoints.md`:
 - Collect: task description, files involved, tech stack
 - Check critical task conditions → Match: invoke directly
 - Evaluate general task signals → Positive: invoke
@@ -31,7 +31,7 @@ Start by understanding the current project context, then ask questions one at a 
 - Present options conversationally with your recommendation and reasoning
 - Lead with your recommended option and explain why
 
-**► Checkpoint 2 (Mid-Review):** When multiple approaches have significant trade-offs, apply checkpoint logic from `multi-model-core/checkpoints.md`:
+**► Checkpoint 2 (Mid-Review):** When multiple approaches have significant trade-offs, apply checkpoint logic from `coordinating-multi-model-work/checkpoints.md`:
 - Multiple implementation approaches to choose from → invoke cross-validation
 - Potential performance/security issues discovered → invoke domain expert
 
@@ -65,15 +65,15 @@ Start by understanding the current project context, then ask questions one at a 
 
 ## Multi-Model Design Validation
 
-**Related skill:** superpowers:multi-model-core
+**Related skill:** superpowers:coordinating-multi-model-work
 
 At checkpoints, when invoking external models:
 
-1. **Apply semantic routing** using `multi-model-core/routing-decision.md`
+1. **Apply semantic routing** using `coordinating-multi-model-work/routing-decision.md`
 2. **Notify user**: "我将使用 [model] 来评估这个设计方案"
-3. **Invoke model** with English prompts (see `multi-model-core/INTEGRATION.md` for templates)
+3. **Invoke model** with English prompts (see `coordinating-multi-model-work/INTEGRATION.md` for templates)
 4. **Integrate results** into design recommendation
 
-**Full checkpoint logic:** See `multi-model-core/checkpoints.md`
+**Full checkpoint logic:** See `coordinating-multi-model-work/checkpoints.md`
 
 **Fallback:** If codeagent-wrapper unavailable, continue with Claude's assessment.

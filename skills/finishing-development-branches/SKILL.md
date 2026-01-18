@@ -1,9 +1,17 @@
 ---
-name: finishing-a-development-branch
+name: finishing-development-branches
 description: "Guides completion of development work by presenting structured options for merge, PR, or cleanup. Use when: implementation is complete, all tests pass, ready to integrate work. Keywords: merge, PR, pull request, branch completion, integration"
 ---
 
 # Finishing a Development Branch
+
+## Contents
+- [Overview](#overview)
+- [The Process](#the-process)
+- [Option 1: Direct Merge](#option-1-direct-merge)
+- [Option 2: Pull Request](#option-2-pull-request)
+- [Option 3: Cleanup Only](#option-3-cleanup-only)
+- [Related Skills](#related-skills)
 
 ## Overview
 
@@ -11,7 +19,7 @@ Guide completion of development work by presenting clear options and handling ch
 
 **Core principle:** Verify tests → Present options → Execute choice → Clean up.
 
-**Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work."
+**Announce at start:** "I'm using the finishing-development-branches skill to complete this work."
 
 ## The Process
 
@@ -193,7 +201,7 @@ git worktree remove <worktree-path>
 ## Integration
 
 **Called by:**
-- **subagent-driven-development** (Step 7) - After all tasks complete
+- **developing-with-subagents** (Step 7) - After all tasks complete
 - **executing-plans** (Step 5) - After all batches complete
 
 **Pairs with:**

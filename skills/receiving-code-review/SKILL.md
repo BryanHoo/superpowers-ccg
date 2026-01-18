@@ -5,6 +5,14 @@ description: "Evaluates code review feedback with technical rigor before impleme
 
 # Code Review Reception
 
+## Contents
+- [Overview](#overview)
+- [The Response Pattern](#the-response-pattern)
+- [Forbidden Responses](#forbidden-responses)
+- [Handling Unclear Feedback](#handling-unclear-feedback)
+- [Technical Evaluation](#technical-evaluation)
+- [Implementation Process](#implementation-process)
+
 ## Overview
 
 Code review requires technical evaluation, not emotional performance.

@@ -401,14 +401,14 @@ However, these are **reference knowledge** only, not strict rules. Your semantic
 
 Skills that reference this framework:
 
-- `systematic-debugging` - Root cause analysis and multi-perspective debugging
+- `debugging-systematically` - Root cause analysis and multi-perspective debugging
 - `brainstorming` - Design evaluation and solution exploration
 - `writing-plans` - Technical proposal design and task planning
 - `executing-plans` - Implementation routing for plan tasks
-- `subagent-driven-development` - Subtask distribution to specialized agents
+- `developing-with-subagents` - Subtask distribution to specialized agents
 - `requesting-code-review` - Cross-review and validation strategy
 - `test-driven-development` - Test generation routing
-- `verification-before-completion` - Verification strategy routing
+- `verifying-before-completion` - Verification strategy routing
 
 Each skill should:
 1. Collect the standard information set

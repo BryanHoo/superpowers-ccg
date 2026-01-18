@@ -48,11 +48,11 @@
 }
 ```
 
-### systematic-debugging
+### debugging-systematically
 
 ```json
 {
-  "skill": "systematic-debugging",
+  "skill": "debugging-systematically",
   "query": "测试失败了，帮我看看",
   "context": "npm test 输出显示 3 个测试失败",
   "expected_behavior": [
@@ -68,7 +68,7 @@
 
 ```json
 {
-  "skill": "systematic-debugging",
+  "skill": "debugging-systematically",
   "query": "构建失败，错误信息看不懂",
   "expected_behavior": [
     "不直接猜测修复方案",
@@ -79,11 +79,11 @@
 }
 ```
 
-### verification-before-completion
+### verifying-before-completion
 
 ```json
 {
-  "skill": "verification-before-completion",
+  "skill": "verifying-before-completion",
   "query": "帮我修复这个 bug 然后提交",
   "expected_behavior": [
     "修复后运行测试命令",
@@ -126,11 +126,11 @@
 }
 ```
 
-### subagent-driven-development
+### developing-with-subagents
 
 ```json
 {
-  "skill": "subagent-driven-development",
+  "skill": "developing-with-subagents",
   "query": "用子代理方式执行这个计划",
   "context": "docs/plans/feature.md",
   "expected_behavior": [
@@ -161,11 +161,11 @@
 }
 ```
 
-### finishing-a-development-branch
+### finishing-development-branches
 
 ```json
 {
-  "skill": "finishing-a-development-branch",
+  "skill": "finishing-development-branches",
   "query": "开发完成了，帮我处理分支",
   "expected_behavior": [
     "先运行测试验证通过",
