@@ -48,19 +48,19 @@ After installation, `codeagent-wrapper` will be automatically configured in the 
 
 3. **writing-plans** - Activate with approved design. Break work into small tasks (2-5 minutes each). Each task has exact file paths, complete code, and verification steps. **Supports Model hint annotations** to specify which model to route tasks to.
 
-4. **subagent-driven-development** or **executing-plans** - Activate with plan ready. Dispatch each task to a new subagent with two-stage review (spec compliance + code quality), or execute in batches with manual checkpoints. **Automatically routes tasks to Codex/Gemini**.
+4. **developing-with-subagents** or **executing-plans** - Activate with plan ready. Dispatch each task to a new subagent with two-stage review (spec compliance + code quality), or execute in batches with manual checkpoints. **Automatically routes tasks to Codex/Gemini**.
 
-5. **test-driven-development** - Activate during implementation. Enforce RED-GREEN-REFACTOR: write failing test, see it fail, write minimal code, see it pass, commit. **Supports test generation routing by tech stack**.
+5. **practicing-test-driven-development** - Activate during implementation. Enforce RED-GREEN-REFACTOR: write failing test, see it fail, write minimal code, see it pass, commit. **Supports test generation routing by tech stack**.
 
 6. **requesting-code-review** - Activate between tasks. Review according to plan, report issues by severity. **Supports dual-model cross-review**.
 
-7. **finishing-a-development-branch** - Activate when tasks complete. Verify tests, present options (merge/PR/keep/discard), cleanup worktree.
+7. **finishing-development-branches** - Activate when tasks complete. Verify tests, present options (merge/PR/keep/discard), cleanup worktree.
 
 **The agent checks relevant skills before any task.** This is a mandatory workflow, not a suggestion.
 
 ## Multi-Model Capabilities
 
-### multi-model-core
+### coordinating-multi-model-work
 
 Core module providing automatic routing and cross-validation:
 
@@ -83,25 +83,25 @@ Core module providing automatic routing and cross-validation:
 
 | Skill                          | Multi-Model Capability     |
 | ------------------------------ | -------------------------- |
-| systematic-debugging           | Cross-validation diagnosis with embedded checkpoints |
+| debugging-systematically       | Cross-validation diagnosis with embedded checkpoints |
 | brainstorming                  | Multi-model design evaluation with CP1/CP2 checkpoints |
 | writing-plans                  | Task routing annotation with CP1/CP3 checkpoints |
 | executing-plans                | Automatic routing execution with CP1/CP2/CP3 checkpoints |
-| subagent-driven-development    | Multi-model task distribution with CP1/CP2/CP3 checkpoints |
+| developing-with-subagents      | Multi-model task distribution with CP1/CP2/CP3 checkpoints |
 | requesting-code-review         | Dual-model code review with CP3 checkpoint |
-| test-driven-development        | Test generation routing with CP1/CP3 checkpoints |
-| verification-before-completion | Cross-validation confirmation with CP3 checkpoint |
+| practicing-test-driven-development | Test generation routing with CP1/CP3 checkpoints |
+| verifying-before-completion    | Cross-validation confirmation with CP3 checkpoint |
 
 ## Skills Library
 
 ### Testing
 
-- **test-driven-development** - Streamlined RED-GREEN-REFACTOR cycle with proactive multi-model checkpoints (includes testing anti-patterns reference)
+- **practicing-test-driven-development** - Streamlined RED-GREEN-REFACTOR cycle with proactive multi-model checkpoints (includes testing anti-patterns reference)
 
 ### Debugging
 
-- **systematic-debugging** - Streamlined 4-phase root cause analysis workflow with proactive multi-model checkpoints (includes root-cause-tracing, defense-in-depth, condition-based-waiting techniques)
-- **verification-before-completion** - Ensure issues are truly fixed with CP3 checkpoint
+- **debugging-systematically** - Streamlined 4-phase root cause analysis workflow with proactive multi-model checkpoints (includes root-cause-tracing, defense-in-depth, condition-based-waiting techniques)
+- **verifying-before-completion** - Ensure issues are truly fixed with CP3 checkpoint
 
 ### Collaboration
 
@@ -112,18 +112,18 @@ Core module providing automatic routing and cross-validation:
 - **requesting-code-review** - Pre-review checklist
 - **receiving-code-review** - Respond to feedback
 - **using-git-worktrees** - Parallel development branches
-- **finishing-a-development-branch** - Merge/PR decision workflow
-- **subagent-driven-development** - Fast iteration with two-stage review
+- **finishing-development-branches** - Merge/PR decision workflow
+- **developing-with-subagents** - Fast iteration with two-stage review
 
 ### Multi-Model
 
-- **multi-model-core** - Multi-model invocation core (routing rules, cross-validation, prompt templates, proactive collaboration checkpoints)
+- **coordinating-multi-model-work** - Multi-model invocation core (routing rules, cross-validation, prompt templates, proactive collaboration checkpoints)
 
 ### Meta-Skills
 
 - **writing-skills** - Create new skills following best practices (now modularized with STRUCTURE.md, TESTING.md, and CHECKLIST.md)
 - **using-superpowers** - Skills system introduction
-- **multi-model-core** - Unified invocation templates and integration patterns (moved from inline documentation to centralized INTEGRATION.md)
+- **coordinating-multi-model-work** - Unified invocation templates and integration patterns (moved from inline documentation to centralized INTEGRATION.md)
 
 ## Design Philosophy
 
@@ -161,7 +161,7 @@ Update skills by updating the plugin:
 The Superpowers-CCG framework includes systematic evaluation scenarios and workflow checklists to ensure consistent progress tracking:
 
 - **Evaluation Scenarios** - Comprehensive test scenarios for key skills documented in `EVALUATION.md`
-- **Workflow Checklists** - Copyable checklist templates for executing-plans and subagent-driven-development
+- **Workflow Checklists** - Copyable checklist templates for executing-plans and developing-with-subagents
 - **Multi-Model Checkpoints** - Proactive collaboration checkpoints enabling Claude to autonomously decide when to invoke Codex/Gemini at key stages
 
 ### Multi-Model Collaboration Checkpoints
@@ -176,11 +176,11 @@ These checkpoints are integrated into:
 - brainstorming: CP1 (idea analysis), CP2 (approach exploration)
 - writing-plans: CP1 (plan start), CP3 (execution handoff)
 - executing-plans: CP1/CP2/CP3 (per-task checkpoints)
-- subagent-driven-development: CP1/CP2/CP3 (dispatch/execution/review)
-- test-driven-development: CP1 (RED phase), CP3 (GREEN phase)
-- systematic-debugging: CP1 (investigation), CP2 (hypothesis testing)
+- developing-with-subagents: CP1/CP2/CP3 (dispatch/execution/review)
+- practicing-test-driven-development: CP1 (RED phase), CP3 (GREEN phase)
+- debugging-systematically: CP1 (investigation), CP2 (hypothesis testing)
 - requesting-code-review: CP3 (review invocation)
-- verification-before-completion: CP3 (final verification)
+- verifying-before-completion: CP3 (final verification)
 
 ## Architecture
 

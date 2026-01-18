@@ -48,19 +48,19 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 
 3. **writing-plans** - 有了批准的设计后激活。将工作分解为小任务（每个 2-5 分钟）。每个任务都有精确的文件路径、完整代码和验证步骤。**支持 Model hint 标注**，指定任务路由到哪个模型。
 
-4. **subagent-driven-development** 或 **executing-plans** - 有了计划后激活。每个任务分发给新的 subagent，进行两阶段审查（规格合规性 + 代码质量），或分批执行并设置人工检查点。**自动路由任务到 Codex/Gemini**。
+4. **developing-with-subagents** 或 **executing-plans** - 有了计划后激活。每个任务分发给新的 subagent，进行两阶段审查（规格合规性 + 代码质量），或分批执行并设置人工检查点。**自动路由任务到 Codex/Gemini**。
 
-5. **test-driven-development** - 实施期间激活。强制执行 RED-GREEN-REFACTOR：写失败的测试，看它失败，写最小代码，看它通过，提交。**支持按技术栈路由测试生成**。
+5. **practicing-test-driven-development** - 实施期间激活。强制执行 RED-GREEN-REFACTOR：写失败的测试，看它失败，写最小代码，看它通过，提交。**支持按技术栈路由测试生成**。
 
 6. **requesting-code-review** - 任务之间激活。根据计划审查，按严重程度报告问题。**支持双模型交叉审查**。
 
-7. **finishing-a-development-branch** - 任务完成时激活。验证测试，展示选项（合并/PR/保留/丢弃），清理 worktree。
+7. **finishing-development-branches** - 任务完成时激活。验证测试，展示选项（合并/PR/保留/丢弃），清理 worktree。
 
 **Agent 在任何任务前都会检查相关 skills。** 这是强制性工作流，不是建议。
 
 ## 多模型能力
 
-### multi-model-core
+### coordinating-multi-model-work
 
 核心模块，提供自动路由和交叉验证能力：
 
@@ -83,25 +83,25 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 
 | Skill                          | 多模型能力     |
 | ------------------------------ | -------------- |
-| systematic-debugging           | 交叉验证诊断及嵌入检查点 |
+| debugging-systematically       | 交叉验证诊断及嵌入检查点 |
 | brainstorming                  | 多模型设计评估及 CP1/CP2 检查点 |
 | writing-plans                  | 任务路由标注及 CP1/CP3 检查点 |
 | executing-plans                | 自动路由执行及 CP1/CP2/CP3 检查点 |
-| subagent-driven-development    | 多模型任务分发及 CP1/CP2/CP3 检查点 |
+| developing-with-subagents      | 多模型任务分发及 CP1/CP2/CP3 检查点 |
 | requesting-code-review         | 双模型代码审查及 CP3 检查点 |
-| test-driven-development        | 测试生成路由及 CP1/CP3 检查点 |
-| verification-before-completion | 交叉验证确认及 CP3 检查点 |
+| practicing-test-driven-development | 测试生成路由及 CP1/CP3 检查点 |
+| verifying-before-completion    | 交叉验证确认及 CP3 检查点 |
 
 ## Skills 库
 
 ### 测试
 
-- **test-driven-development** - 精简的 RED-GREEN-REFACTOR 循环，含主动多模型检查点（包含测试反模式参考）
+- **practicing-test-driven-development** - 精简的 RED-GREEN-REFACTOR 循环，含主动多模型检查点（包含测试反模式参考）
 
 ### 调试
 
-- **systematic-debugging** - 精简的 4 阶段根因分析流程，含主动多模型检查点（包含 root-cause-tracing、defense-in-depth、condition-based-waiting 技术）
-- **verification-before-completion** - 确保问题真正修复（含 CP3 检查点）
+- **debugging-systematically** - 精简的 4 阶段根因分析流程，含主动多模型检查点（包含 root-cause-tracing、defense-in-depth、condition-based-waiting 技术）
+- **verifying-before-completion** - 确保问题真正修复（含 CP3 检查点）
 
 ### 协作
 
@@ -112,18 +112,18 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 - **requesting-code-review** - 预审查清单
 - **receiving-code-review** - 响应反馈
 - **using-git-worktrees** - 并行开发分支
-- **finishing-a-development-branch** - 合并/PR 决策工作流
-- **subagent-driven-development** - 快速迭代带两阶段审查
+- **finishing-development-branches** - 合并/PR 决策工作流
+- **developing-with-subagents** - 快速迭代带两阶段审查
 
 ### 多模型
 
-- **multi-model-core** - 多模型调用核心（路由规则、交叉验证、提示词模板、主动协作检查点）
+- **coordinating-multi-model-work** - 多模型调用核心（路由规则、交叉验证、提示词模板、主动协作检查点）
 
 ### 元技能
 
 - **writing-skills** - 按最佳实践创建新 skills（现已模块化，包含 STRUCTURE.md、TESTING.md 和 CHECKLIST.md）
 - **using-superpowers** - skills 系统介绍
-- **multi-model-core** - 统一调用模板和集成模式（从内联文档移动到集中的 INTEGRATION.md）
+- **coordinating-multi-model-work** - 统一调用模板和集成模式（从内联文档移动到集中的 INTEGRATION.md）
 
 ## 设计理念
 
@@ -161,7 +161,7 @@ Skills 直接存放在此仓库中。贡献方式：
 Superpowers-CCG 框架包括系统性评估场景和工作流检查清单，以确保一致的进度跟踪：
 
 - **评估场景** - 关键技能的综合测试场景，记录在 `EVALUATION.md` 中
-- **工作流检查清单** - 适用于 executing-plans 和 subagent-driven-development 的可复制检查清单模板
+- **工作流检查清单** - 适用于 executing-plans 和 developing-with-subagents 的可复制检查清单模板
 - **多模型检查点** - 主动协作检查点，使 Claude 能够自主决定在关键阶段何时调用 Codex/Gemini
 
 ### 多模型协作检查点
@@ -176,11 +176,11 @@ Superpowers-CCG 框架包括系统性评估场景和工作流检查清单，以�
 - brainstorming: CP1（想法分析），CP2（方法探索）
 - writing-plans: CP1（计划开始），CP3（执行交接）
 - executing-plans: CP1/CP2/CP3（每项任务检查点）
-- subagent-driven-development: CP1/CP2/CP3（分派/执行/审查）
-- test-driven-development: CP1（RED 阶段），CP3（GREEN 阶段）
-- systematic-debugging: CP1（调查），CP2（假设测试）
+- developing-with-subagents: CP1/CP2/CP3（分派/执行/审查）
+- practicing-test-driven-development: CP1（RED 阶段），CP3（GREEN 阶段）
+- debugging-systematically: CP1（调查），CP2（假设测试）
 - requesting-code-review: CP3（审查调用）
-- verification-before-completion: CP3（最终验证）
+- verifying-before-completion: CP3（最终验证）
 
 ## 架构
 
