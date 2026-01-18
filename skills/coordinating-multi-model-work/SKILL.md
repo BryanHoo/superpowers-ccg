@@ -4,54 +4,12 @@ description: "Routes tasks to optimal AI models (Codex for backend, Gemini for f
 ---
 
 ## Contents
-- [Capability Declaration](#capability-declaration)
+
 - [Overview](#overview)
 - [Checkpoint System](#checkpoint-system)
 - [Routing Decision Process](#routing-decision-process)
 - [Integration with Skills](#integration-with-skills)
 - [Reference Files](#reference-files)
-
-## Capability Declaration
-
-### IMPORTANT: You Have Multi-Model Invocation Capabilities
-
-**This is a capability declaration - you CAN invoke external models.**
-
-You have access to multi-model invocation through the `codeagent-wrapper` command line tool. This is NOT a hypothetical capability - it is real and available to you.
-
-### Your Capabilities
-
-When this skill is loaded, you can:
-
-1. **Invoke Codex** for backend expertise (APIs, databases, algorithms, performance)
-2. **Invoke Gemini** for frontend expertise (UI, components, styles, interactions)
-3. **Invoke both models** for cross-validation on complex tasks
-4. **Use the Bash tool** to execute `codeagent-wrapper` commands
-
-### Invocation Method
-
-You invoke external models using the Bash tool:
-
-```bash
-codeagent-wrapper --backend codex - "$PWD" <<'EOF'
-[Your task in English]
-EOF
-```
-
-**This is a real command you can execute.** When you run it, it will call the external model and return results to you.
-
-### When to Invoke
-
-After making a routing decision (see "Routing Decision Process" below), you SHOULD invoke the external model if:
-- Decision is GEMINI → invoke with `--backend gemini`
-- Decision is CODEX → invoke with `--backend codex`
-- Decision is CROSS_VALIDATION → invoke both in parallel
-
-**Do not skip invocation** because you "think" you don't have this capability. You DO have it.
-
-### Fallback
-
-If `codeagent-wrapper` is not installed or returns an error, you will receive a clear error message. In that case, fall back to handling the task independently and inform the user.
 
 ---
 
@@ -62,6 +20,7 @@ If `codeagent-wrapper` is not installed or returns an error, you will receive a 
 This module provides multi-model invocation capabilities for superpowers skills, calling Codex (backend expert) and Gemini (frontend expert) through codeagent-wrapper.
 
 **Core Features**:
+
 - **Automatic Routing** - Intelligently selects models based on task characteristics
 - **Cross-Validation** - Dual-model verification for complex scenarios
 - **Collaboration Checkpoints** - Embedded triggers at key skill stages
@@ -69,13 +28,13 @@ This module provides multi-model invocation capabilities for superpowers skills,
 
 ## Module Files
 
-| File | Purpose |
-|------|---------|
-| `SKILL.md` | This file - core module documentation |
-| `INTEGRATION.md` | Invocation templates for external models |
-| `routing-decision.md` | Semantic routing decision framework |
-| `routing-rules.md` | Reference patterns for categorization |
-| `checkpoints.md` | **NEW** - Collaboration checkpoint logic for autonomous triggering |
+| File                  | Purpose                                                            |
+| --------------------- | ------------------------------------------------------------------ |
+| `SKILL.md`            | This file - core module documentation                              |
+| `INTEGRATION.md`      | Invocation templates for external models                           |
+| `routing-decision.md` | Semantic routing decision framework                                |
+| `routing-rules.md`    | Reference patterns for categorization                              |
+| `checkpoints.md`      | **NEW** - Collaboration checkpoint logic for autonomous triggering |
 
 ## Prerequisites
 
@@ -96,6 +55,7 @@ chmod +x ~/.claude/bin/codeagent-wrapper
 ```
 
 **Platform Binaries:**
+
 - macOS Intel: `bin/codeagent-wrapper-darwin-amd64`
 - macOS Apple Silicon: `bin/codeagent-wrapper-darwin-arm64`
 - Linux x64: `bin/codeagent-wrapper-linux-amd64`
@@ -104,6 +64,7 @@ chmod +x ~/.claude/bin/codeagent-wrapper
 - Windows ARM64: `bin/codeagent-wrapper-windows-arm64.exe`
 
 **External Model CLIs (Optional):**
+
 - Codex CLI: `npm install -g @openai/codex`
 - Gemini CLI: `npm install -g @google/gemini-cli`
 
@@ -126,11 +87,13 @@ This module uses **semantic analysis** instead of hardcoded scoring algorithms t
 **Decision Framework**: See `routing-decision.md` for the complete semantic routing framework.
 
 **Standard Information Collection**:
+
 1. **Task Description** - What is the user requesting? What problem needs solving?
 2. **File Information** - Which files are involved? What extensions and directories?
 3. **Tech Stack** - Inferred from project files (package.json, go.mod, etc.)
 
 **Analysis Process**:
+
 1. **Analyze Task Essence** - What problem is primarily being solved? (UI feature, performance, architecture, debugging)
 2. **Evaluate Technical Domain** - Does it lean frontend (UI/interaction) or backend (logic/data)?
 3. **Assess Complexity** - Does it span multiple domains? Is the root cause uncertain?
@@ -138,6 +101,7 @@ This module uses **semantic analysis** instead of hardcoded scoring algorithms t
 **Decision Logic**: Prefer specialized models (GEMINI/CODEX) for single-domain tasks, use CROSS_VALIDATION for multi-domain or uncertain tasks, default to CLAUDE for simple non-technical tasks. When in doubt, choose CROSS_VALIDATION.
 
 **Routing Decisions**:
+
 - **GEMINI** - Frontend expert for UI, components, styles, interactions
 - **CODEX** - Backend expert for APIs, databases, algorithms, performance
 - **CROSS_VALIDATION** - Both models for full-stack tasks or high uncertainty
@@ -179,6 +143,7 @@ EOF
 Invoke both models in parallel, analyzing from different perspectives:
 
 **Codex Task** (Backend Perspective):
+
 ```bash
 codeagent-wrapper --backend codex - "$PWD" <<'EOF'
 Please analyze from backend/logic perspective:
@@ -192,6 +157,7 @@ EOF
 ```
 
 **Gemini Task** (Frontend Perspective):
+
 ```bash
 codeagent-wrapper --backend gemini - "$PWD" <<'EOF'
 Please analyze from frontend/UI perspective:
@@ -216,12 +182,15 @@ Directly adopt the model output, Claude validates reasonableness before continui
 ## Cross-Validation Results
 
 ### Codex Analysis (Backend Perspective)
+
 [Codex's analysis results]
 
 ### Gemini Analysis (Frontend Perspective)
+
 [Gemini's analysis results]
 
 ### Comprehensive Conclusion
+
 - **Points of Agreement**: [Consistent conclusions from both]
 - **Points of Divergence**: [Areas where there are differences]
 - **Final Recommendation**: [Claude's recommendation after comprehensive evaluation]
@@ -251,18 +220,19 @@ If codeagent-wrapper is not available or invocation fails:
 
 This module is referenced by the following skills, each with embedded collaboration checkpoints:
 
-| Skill | Checkpoints | Usage Scenario |
-|-------|-------------|----------------|
-| `brainstorming` | CP1, CP2 | Design evaluation and approach validation |
-| `writing-plans` | CP1, CP3 | Plan complexity assessment and quality gate |
-| `executing-plans` | CP1, CP2, CP3 | Before/during/after each task |
-| `developing-with-subagents` | CP1, CP2, CP3 | Subtask dispatch, execution, and review |
-| `test-driven-development` | CP1, CP3 | Test generation and implementation review |
-| `debugging-systematically` | CP1, CP2 | Root cause investigation and hypothesis testing |
-| `requesting-code-review` | CP3 | Code review invocation |
-| `verifying-before-completion` | CP3 | Final verification |
+| Skill                         | Checkpoints   | Usage Scenario                                  |
+| ----------------------------- | ------------- | ----------------------------------------------- |
+| `brainstorming`               | CP1, CP2      | Design evaluation and approach validation       |
+| `writing-plans`               | CP1, CP3      | Plan complexity assessment and quality gate     |
+| `executing-plans`             | CP1, CP2, CP3 | Before/during/after each task                   |
+| `developing-with-subagents`   | CP1, CP2, CP3 | Subtask dispatch, execution, and review         |
+| `test-driven-development`     | CP1, CP3      | Test generation and implementation review       |
+| `debugging-systematically`    | CP1, CP2      | Root cause investigation and hypothesis testing |
+| `requesting-code-review`      | CP3           | Code review invocation                          |
+| `verifying-before-completion` | CP3           | Final verification                              |
 
 **Checkpoint Types:**
+
 - **CP1 (Task Analysis)** - Evaluate at task start
 - **CP2 (Mid-Review)** - Invoke at key decision points
 - **CP3 (Quality Gate)** - Review before completion
