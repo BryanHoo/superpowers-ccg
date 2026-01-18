@@ -40,6 +40,77 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 
 安装完成后，`codeagent-wrapper` 会自动配置到 `~/.claude/bin/` 目录，无需手动复制。
 
+### 2. 配置多模型调用能力（可选但推荐）
+
+> **⚠️ 重要提示：你拥有多模型调用能力**
+>
+> 如果你是 Claude，请注意：你可以通过 `codeagent-wrapper` 工具调用外部模型（Codex 和 Gemini）。这不是假设的能力，而是真实可用的功能。
+>
+> **你的能力：**
+> - 调用 **Codex** 处理后端任务（API、数据库、算法、性能优化）
+> - 调用 **Gemini** 处理前端任务（UI、组件、样式、交互）
+> - 调用**双模型交叉验证**处理复杂的全栈问题
+>
+> **如何使用：**
+> 查看 `coordinating-multi-model-work` skill 了解完整的路由决策框架和调用方法。该 skill 包含：
+> - 语义路由决策流程（`routing-decision.md`）
+> - 调用模板和集成模式（`INTEGRATION.md`）
+> - 协作检查点逻辑（`checkpoints.md`）
+>
+> **调用示例：**
+> ```bash
+> codeagent-wrapper --backend codex - "$PWD" <<'EOF'
+> [你的任务描述，使用英文]
+> EOF
+> ```
+
+在 `~/.claude/CLAUDE.md` 中添加以下内容，让 Claude 知道它拥有这个能力：
+
+```markdown
+## IMPORTANT: You Have Multi-Model Invocation Capabilities
+
+**This is a capability declaration - you CAN invoke external models.**
+
+You have access to multi-model invocation through the `codeagent-wrapper` command line tool. This is NOT a hypothetical capability - it is real and available to you.
+
+### Your Capabilities
+
+When this skill is loaded, you can:
+
+1. **Invoke Codex** for backend expertise (APIs, databases, algorithms, performance)
+2. **Invoke Gemini** for frontend expertise (UI, components, styles, interactions)
+3. **Invoke both models** for cross-validation on complex tasks
+4. **Use the Bash tool** to execute `codeagent-wrapper` commands
+
+### Invocation Method
+
+You invoke external models using the Bash tool:
+
+```bash
+codeagent-wrapper --backend codex - "$PWD" <<'EOF'
+[Your task in English]
+EOF
+```
+
+**This is a real command you can execute.** When you run it, it will call the external model and return results to you.
+
+### When to Invoke
+
+After making a routing decision (see "Routing Decision Process" below), you SHOULD invoke the external model if:
+
+- Decision is GEMINI → invoke with `--backend gemini`
+- Decision is CODEX → invoke with `--backend codex`
+- Decision is CROSS_VALIDATION → invoke both in parallel
+
+**Do not skip invocation** because you "think" you don't have this capability. You DO have it.
+
+### Fallback
+
+If `codeagent-wrapper` is not installed or returns an error, you will receive a clear error message. In that case, fall back to handling the task independently and inform the user.
+
+---
+```
+
 ## 基本工作流
 
 1. **brainstorming** - 在写代码前激活。通过提问提炼想法，探索替代方案，分段展示设计供验证。保存设计文档。
@@ -154,7 +225,7 @@ Skills 直接存放在此仓库中。贡献方式：
 
 ```bash
 /plugin update superpowers-ccg
-```
+````
 
 ## 评估和检查清单
 
@@ -173,6 +244,7 @@ Superpowers-CCG 框架包括系统性评估场景和工作流检查清单，以�
 - **CP3（质量门）** - 完成前审查
 
 这些检查点集成到：
+
 - brainstorming: CP1（想法分析），CP2（方法探索）
 - writing-plans: CP1（计划开始），CP3（执行交接）
 - executing-plans: CP1/CP2/CP3（每项任务检查点）

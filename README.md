@@ -40,6 +40,77 @@ Throughout the process, Claude orchestrates decisions and code reviews to ensure
 
 After installation, `codeagent-wrapper` will be automatically configured in the `~/.claude/bin/` directory, no manual copying required.
 
+### 2. Configure Multi-Model Invocation Capability (Optional but Recommended)
+
+> **⚠️ Important Notice: You Have Multi-Model Invocation Capabilities**
+>
+> If you are Claude, please note: You can invoke external models (Codex and Gemini) through the `codeagent-wrapper` tool. This is NOT a hypothetical capability - it is a real and available feature.
+>
+> **Your Capabilities:**
+> - Invoke **Codex** for backend tasks (APIs, databases, algorithms, performance optimization)
+> - Invoke **Gemini** for frontend tasks (UI, components, styles, interactions)
+> - Invoke **dual-model cross-validation** for complex full-stack problems
+>
+> **How to Use:**
+> Check the `coordinating-multi-model-work` skill for the complete routing decision framework and invocation methods. This skill includes:
+> - Semantic routing decision process (`routing-decision.md`)
+> - Invocation templates and integration patterns (`INTEGRATION.md`)
+> - Collaboration checkpoint logic (`checkpoints.md`)
+>
+> **Invocation Example:**
+> ```bash
+> codeagent-wrapper --backend codex - "$PWD" <<'EOF'
+> [Your task description in English]
+> EOF
+> ```
+
+Add the following content to `~/.claude/CLAUDE.md` to let Claude know it has this capability:
+
+```markdown
+## IMPORTANT: You Have Multi-Model Invocation Capabilities
+
+**This is a capability declaration - you CAN invoke external models.**
+
+You have access to multi-model invocation through the `codeagent-wrapper` command line tool. This is NOT a hypothetical capability - it is real and available to you.
+
+### Your Capabilities
+
+When this skill is loaded, you can:
+
+1. **Invoke Codex** for backend expertise (APIs, databases, algorithms, performance)
+2. **Invoke Gemini** for frontend expertise (UI, components, styles, interactions)
+3. **Invoke both models** for cross-validation on complex tasks
+4. **Use the Bash tool** to execute `codeagent-wrapper` commands
+
+### Invocation Method
+
+You invoke external models using the Bash tool:
+
+```bash
+codeagent-wrapper --backend codex - "$PWD" <<'EOF'
+[Your task in English]
+EOF
+```
+
+**This is a real command you can execute.** When you run it, it will call the external model and return results to you.
+
+### When to Invoke
+
+After making a routing decision (see "Routing Decision Process" below), you SHOULD invoke the external model if:
+
+- Decision is GEMINI → invoke with `--backend gemini`
+- Decision is CODEX → invoke with `--backend codex`
+- Decision is CROSS_VALIDATION → invoke both in parallel
+
+**Do not skip invocation** because you "think" you don't have this capability. You DO have it.
+
+### Fallback
+
+If `codeagent-wrapper` is not installed or returns an error, you will receive a clear error message. In that case, fall back to handling the task independently and inform the user.
+
+---
+```
+
 ## Basic Workflow
 
 1. **brainstorming** - Activate before writing code. Refine ideas through questions, explore alternatives, present design in sections for validation. Save design document.
