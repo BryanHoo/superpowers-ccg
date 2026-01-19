@@ -32,7 +32,7 @@ Throughout the process, Claude orchestrates decisions and code reviews to ensure
 
 ```bash
 # Add marketplace
-/plugin marketplace add BryanHoo/superpowers-ccg
+/plugin marketplace add https://github.com/BryanHoo/superpowers-ccg
 
 # Install plugin
 /plugin install superpowers-ccg@BryanHoo-superpowers-ccg

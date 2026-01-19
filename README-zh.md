@@ -32,7 +32,7 @@ Superpowers-CCG 是基于 [Superpowers](https://github.com/obra/superpowers) 的
 
 ```bash
 # 添加 marketplace
-/plugin marketplace add BryanHoo/superpowers-ccg
+/plugin marketplace add https://github.com/BryanHoo/superpowers-ccg
 
 # 安装插件
 /plugin install superpowers-ccg@BryanHoo-superpowers-ccg
@@ -89,7 +89,7 @@ Check the `coordinating-multi-model-work` skill for the complete routing decisio
 
 核心模块，提供自动路由和交叉验证能力：
 
-> **重要提示**：模型间通信必须使用英语。所有发送给 Codex/Gemini 的提示词、任务描述必须使用英语，这确保了多模型协作的标准化和高效性。与用户的交互仍然遵循用户的语言配置。
+> **重要提示**：模型间通信使用英语。所有发送给 Codex/Gemini 的提示词、任务描述必须使用英语，这确保了多模型协作的标准化和高效性。与用户的交互仍然遵循用户的语言配置。
 
 **路由机制：**
 
@@ -143,12 +143,6 @@ Check the `coordinating-multi-model-work` skill for the complete routing decisio
 ### 多模型
 
 - **coordinating-multi-model-work** - 多模型调用核心（路由规则、交叉验证、提示词模板、主动协作检查点）
-
-### 元技能
-
-- **writing-skills** - 按最佳实践创建新 skills（现已模块化，包含 STRUCTURE.md、TESTING.md 和 CHECKLIST.md）
-- **using-superpowers** - skills 系统介绍
-- **coordinating-multi-model-work** - 统一调用模板和集成模式（从内联文档移动到集中的 INTEGRATION.md）
 
 ## 设计理念
 
