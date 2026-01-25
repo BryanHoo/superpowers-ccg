@@ -15,3 +15,10 @@ fi
 bash -n "$REPO_ROOT/install-opencode.sh"
 
 echo "  [PASS] install-opencode.sh exists and parses"
+
+if [ ! -f "$REPO_ROOT/install-opencode.ps1" ]; then
+  echo "  [FAIL] install-opencode.ps1 missing"
+  exit 1
+fi
+
+echo "  [PASS] install-opencode.ps1 exists"
