@@ -113,7 +113,7 @@ main() {
   echo "Backups:       *.bak-${TIMESTAMP}"
   echo ""
   echo "Note: This installer does not create or install any hooks directory."
-  echo "Next: restart OpenCode and try /brainstorm or load a skill by name."
+  echo "Next: restart OpenCode and try /superpowers-ccg-brainstorm or load a skill by name."
 }
 
 main "$@"

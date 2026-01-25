@@ -52,36 +52,22 @@ PowerShell -ExecutionPolicy Bypass -File .\install-opencode.ps1
 
 ### Repo 路径 vs 安装后路径
 
-| 类型 | Repo 路径 | 安装后路径 |
-|---|---|---|
-| Skills | `skills/` | `~/.config/opencode/skills/` |
+| 类型     | Repo 路径   | 安装后路径                     |
+| -------- | ----------- | ------------------------------ |
+| Skills   | `skills/`   | `~/.config/opencode/skills/`   |
 | Commands | `commands/` | `~/.config/opencode/commands/` |
-| Agents | `agents/` | `~/.config/opencode/agents/` |
-
-### 文档
-
-完整的 OpenCode 文档请参阅 `opencode-doc/`。
-
-## 如何调用 Codex / Gemini 能力
-
-通常不需要你手动调用 MCP tools；你只要明确需求，Claude 会在工作流里决定是否调用外部模型。
-
-- 后端任务："后端/API/数据库部分用 Codex MCP，返回 patch 即可。"
-- 前端任务："UI/组件/样式用 Gemini MCP，返回 patch 即可。"
-- 交叉验证："请用 CROSS_VALIDATION（Codex + Gemini）复核方案并对冲遗漏。"
-
-注意：发送给 Codex/Gemini 的提示词通常要求使用**英文**以保持一致性（你与 Claude 的对话仍可用中文）。
+| Agents   | `agents/`   | `~/.config/opencode/agents/`   |
 
 ## 按任务选择模型（建议）
 
-| 任务类型 | 推荐路由 | 原因 |
-|---|---|---|
-| 后端（API、DB、鉴权、性能） | CODEX | 更擅长后端 patch 建议 |
-| 前端（UI、组件、样式） | GEMINI | 更擅长 UI 细节与组件化 |
-| 全栈/不确定/高影响改动 | CROSS_VALIDATION | 双模型复核，提高覆盖率 |
-| 文档/小改动 | CLAUDE | 成本更低且足够 |
+| 任务类型                    | 推荐路由         | 原因                   |
+| --------------------------- | ---------------- | ---------------------- |
+| 后端（API、DB、鉴权、性能） | CODEX            | 更擅长后端 patch 建议  |
+| 前端（UI、组件、样式）      | GEMINI           | 更擅长 UI 细节与组件化 |
+| 全栈/不确定/高影响改动      | CROSS_VALIDATION | 双模型复核，提高覆盖率 |
+| 文档/小改动                 | CLAUDE           | 成本更低且足够         |
 
-路由与检查点规则参考：`skills/coordinating-multi-model-work/`。
+路由与检查点规则参考：`skills/superpowers-ccg-coordinating-multi-model-work/`。
 
 ## 与原版 Superpowers（obra/superpowers）的差异
 
@@ -98,20 +84,6 @@ PowerShell -ExecutionPolicy Bypass -File .\install-opencode.ps1
 git pull origin main
 ```
 
-## 测试
-
-运行 OpenCode 测试套件：
-
-```bash
-bash tests/opencode/run-tests.sh
-```
-
-如需集成测试（需要本地安装 OpenCode），使用：
-
-```bash
-bash tests/opencode/run-tests.sh --integration
-```
-
 ## 许可证
 
 MIT License - 详见 `LICENSE`。
@@ -124,5 +96,3 @@ MIT License - 详见 `LICENSE`。
 
 - [obra/superpowers](https://github.com/obra/superpowers) - 原始 Superpowers 项目
 - [fengshao1227/ccg-workflow](https://github.com/fengshao1227/ccg-workflow) - CCG 工作流
-- [GuDaStudio/geminimcp](https://github.com/GuDaStudio/geminimcp) - Gemini MCP
-- [GuDaStudio/codexmcp](https://github.com/GuDaStudio/codexmcp) - Codex MCP

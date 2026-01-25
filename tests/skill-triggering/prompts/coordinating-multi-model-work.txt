@@ -1,7 +1,0 @@
-I'm working on a change that touches both backend API logic and a React component UI.
-
-Please decide whether you need to invoke Codex MCP and/or Gemini MCP using the MCP tools (`mcp__codex__codex`, `mcp__gemini__gemini`), then proceed.
-
-Constraints:
-- If you decide an external MCP tool is required, you MUST invoke it via the appropriate MCP tool (Codex MCP: PROMPT+cd, optional sandbox/SESSION_ID/return_all_messages/model; Gemini MCP: PROMPT with optional extras).
-- If the MCP call is unavailable or times out, you must stop and report BLOCKED.

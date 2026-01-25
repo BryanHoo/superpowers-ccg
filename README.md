@@ -18,14 +18,14 @@ Superpowers-CCG is a fork/enhanced variant of [obra/superpowers](https://github.
 
 ### Install
 
-1) Clone this repository
+1. Clone this repository
 
 ```bash
 git clone https://github.com/BryanHoo/superpowers-ccg.git
 cd superpowers-ccg
 ```
 
-2) One-click install
+2. One-click install
 
 macOS/Linux/WSL:
 
@@ -41,47 +41,33 @@ PowerShell -ExecutionPolicy Bypass -File .\install-opencode.ps1
 
 Note: This repository documents OpenCode-only setup. MCP configuration is not required for installation.
 
-3) What this repository is (and is not)
+3. What this repository is (and is not)
 
 This repository is the installer source bundle for OpenCode, not a per-project `.opencode/*` auto-discovery example. To use it, run `install-opencode.sh` or `install-opencode.ps1`, which copies files into `~/.config/opencode`.
 
-4) Skills location
+4. Skills location
 
 In the repo: `skills/`.
 After install: `~/.config/opencode/skills/`.
 
 ### Repo paths vs Installed paths
 
-| Type | Repo path | Installed path |
-|---|---|---|
-| Skills | `skills/` | `~/.config/opencode/skills/` |
+| Type     | Repo path   | Installed path                 |
+| -------- | ----------- | ------------------------------ |
+| Skills   | `skills/`   | `~/.config/opencode/skills/`   |
 | Commands | `commands/` | `~/.config/opencode/commands/` |
-| Agents | `agents/` | `~/.config/opencode/agents/` |
-
-### Documentation
-
-For complete OpenCode documentation, see `opencode-doc/`.
-
-## Using Codex / Gemini
-
-You typically do **not** call MCP tools manually. Instead, tell Claude what you want, and the workflow will decide when to invoke external models.
-
-- Ask for backend help: "Use Codex MCP for the API/database parts, return a patch only."
-- Ask for frontend help: "Use Gemini MCP for UI/components/styles, return a patch only."
-- Ask for extra confidence: "Do CROSS_VALIDATION (Codex + Gemini) for this design, and reconcile conflicts."
-
-Note: prompts sent to Codex/Gemini are expected to be **English** for consistency (you can still chat with Claude in any language).
+| Agents   | `agents/`   | `~/.config/opencode/agents/`   |
 
 ## Model Selection (Recommended)
 
-| Task type | Recommended routing | Why |
-|---|---|---|
-| Backend (APIs, DB, auth, perf) | CODEX | strongest backend patch suggestions |
-| Frontend (UI/components/styles) | GEMINI | strongest UI-centric patch suggestions |
-| Full-stack / unclear / high impact | CROSS_VALIDATION | catch misses via dual review |
-| Docs / simple edits | CLAUDE | fastest and sufficient |
+| Task type                          | Recommended routing | Why                                    |
+| ---------------------------------- | ------------------- | -------------------------------------- |
+| Backend (APIs, DB, auth, perf)     | CODEX               | strongest backend patch suggestions    |
+| Frontend (UI/components/styles)    | GEMINI              | strongest UI-centric patch suggestions |
+| Full-stack / unclear / high impact | CROSS_VALIDATION    | catch misses via dual review           |
+| Docs / simple edits                | CLAUDE              | fastest and sufficient                 |
 
-The routing/checkpoint rules live in `skills/coordinating-multi-model-work/`.
+The routing/checkpoint rules live in `skills/superpowers-ccg-coordinating-multi-model-work/`.
 
 ## Differences vs Superpowers (obra/superpowers)
 
@@ -96,20 +82,6 @@ Update by pulling the latest changes from the repository:
 
 ```bash
 git pull origin main
-```
-
-## Testing
-
-Run the OpenCode test suite:
-
-```bash
-bash tests/opencode/run-tests.sh
-```
-
-For integration tests that require a local OpenCode installation, use:
-
-```bash
-bash tests/opencode/run-tests.sh --integration
 ```
 
 ## License
