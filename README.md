@@ -15,7 +15,6 @@ Superpowers-CCG is a fork/enhanced variant of [obra/superpowers](https://github.
 ### Prerequisites
 
 - OpenCode installed
-- This repository provides the plugin configuration (`opencode.json`) and skills (`.opencode/skills/`)
 
 ### Install
 
@@ -42,13 +41,22 @@ PowerShell -ExecutionPolicy Bypass -File .\install-opencode.ps1
 
 Note: This repository documents OpenCode-only setup. MCP configuration is not required for installation.
 
-3) OpenCode configuration
+3) What this repository is (and is not)
 
-The `opencode.json` in the repository root is pre-configured with skills for OpenCode. Place it in your OpenCode workspace if you want to customize setup steps.
+This repository is the installer source bundle for OpenCode, not a per-project `.opencode/*` auto-discovery example. To use it, run `install-opencode.sh` or `install-opencode.ps1`, which copies files into `~/.config/opencode`.
 
 4) Skills location
 
-Skills are available in `.opencode/skills/` - they are ready to use with OpenCode.
+In the repo: `skills/`.
+After install: `~/.config/opencode/skills/`.
+
+### Repo paths vs Installed paths
+
+| Type | Repo path | Installed path |
+|---|---|---|
+| Skills | `skills/` | `~/.config/opencode/skills/` |
+| Commands | `commands/` | `~/.config/opencode/commands/` |
+| Agents | `agents/` | `~/.config/opencode/agents/` |
 
 ### Documentation
 

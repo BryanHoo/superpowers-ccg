@@ -15,7 +15,6 @@ Superpowers-CCG 是 [obra/superpowers](https://github.com/obra/superpowers) 的�
 ### 前置条件
 
 - 已安装 OpenCode
-- 本仓库已提供插件配置（`opencode.json`）和 skills（`.opencode/skills/`）
 
 ### 安装
 
@@ -42,13 +41,22 @@ PowerShell -ExecutionPolicy Bypass -File .\install-opencode.ps1
 
 说明：本仓库只覆盖 OpenCode 安装与使用，MCP 配置不是安装所必需。
 
-3）OpenCode 配置
+3）本仓库是什么（以及不是什么）
 
-仓库根目录的 `opencode.json` 已预配置 OpenCode 所需 skills，如需自定义请放入你的 OpenCode 工作空间。
+本仓库是 OpenCode 的 installer 源码包，并不是 per-project `.opencode/*` 自动发现的示例。要使用它，请运行 `install-opencode.sh` 或 `install-opencode.ps1`，它们会把文件复制到 `~/.config/opencode`。
 
 4）Skills 位置
 
-Skills 位于 `.opencode/skills/` - 已准备好与 OpenCode 一起使用。
+仓库内：`skills/`。
+安装后：`~/.config/opencode/skills/`。
+
+### Repo 路径 vs 安装后路径
+
+| 类型 | Repo 路径 | 安装后路径 |
+|---|---|---|
+| Skills | `skills/` | `~/.config/opencode/skills/` |
+| Commands | `commands/` | `~/.config/opencode/commands/` |
+| Agents | `agents/` | `~/.config/opencode/agents/` |
 
 ### 文档
 
