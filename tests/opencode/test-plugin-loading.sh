@@ -1,81 +1,103 @@
 #!/usr/bin/env bash
-# Test: Plugin Loading
-# Verifies that the superpowers plugin loads correctly in OpenCode
+# Test: OpenCode-only config checks
+# Verifies that opencode.json and required skills exist in the repo
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
-echo "=== Test: Plugin Loading ==="
+echo "=== Test: OpenCode-only config checks ==="
 
-# Source setup to create isolated environment
-source "$SCRIPT_DIR/setup.sh"
-
-# Trap to cleanup on exit
-trap cleanup_test_env EXIT
-
-# Test 1: Verify plugin file exists and is registered
-echo "Test 1: Checking plugin registration..."
-if [ -L "$HOME/.config/opencode/plugin/superpowers.js" ]; then
-    echo "  [PASS] Plugin symlink exists"
+# Test 0: Verify repo root has opencode.json
+echo "Test 0: Checking opencode.json in repo root..."
+if [ -f "$REPO_ROOT/opencode.json" ]; then
+    echo "  [PASS] opencode.json exists in repo root"
 else
-    echo "  [FAIL] Plugin symlink not found at $HOME/.config/opencode/plugin/superpowers.js"
+    echo "  [FAIL] opencode.json not found in repo root: $REPO_ROOT/opencode.json"
     exit 1
 fi
 
-# Verify symlink target exists
-if [ -f "$(readlink -f "$HOME/.config/opencode/plugin/superpowers.js")" ]; then
-    echo "  [PASS] Plugin symlink target exists"
+# Test 1: Verify using-superpowers skill exists in repo
+echo "Test 1: Checking using-superpowers skill exists in repo..."
+if [ -f "$REPO_ROOT/skills/using-superpowers/SKILL.md" ]; then
+    echo "  [PASS] using-superpowers skill exists in repo"
 else
-    echo "  [FAIL] Plugin symlink target does not exist"
+    echo "  [FAIL] using-superpowers skill not found in repo: $REPO_ROOT/skills/using-superpowers/SKILL.md"
     exit 1
 fi
 
-# Test 2: Verify lib/skills-core.js is in place
-echo "Test 2: Checking skills-core.js..."
-if [ -f "$HOME/.config/opencode/superpowers/lib/skills-core.js" ]; then
-    echo "  [PASS] skills-core.js exists"
+# Test 2: Verify OpenCode skills path exists in repo
+echo "Test 2: Checking OpenCode skills path exists in repo..."
+if [ -f "$REPO_ROOT/.opencode/skills/using-superpowers/SKILL.md" ]; then
+    echo "  [PASS] OpenCode skills path exists in repo"
 else
-    echo "  [FAIL] skills-core.js not found"
+    echo "  [FAIL] OpenCode skills path not found in repo: $REPO_ROOT/.opencode/skills/using-superpowers/SKILL.md"
     exit 1
 fi
 
-# Test 3: Verify skills directory is populated
-echo "Test 3: Checking skills directory..."
-skill_count=$(find "$HOME/.config/opencode/superpowers/skills" -name "SKILL.md" | wc -l)
-if [ "$skill_count" -gt 0 ]; then
-    echo "  [PASS] Found $skill_count skills installed"
-else
-    echo "  [FAIL] No skills found in installed location"
+# Test 3: Compliance scan for forbidden strings in README and skills
+echo "Test 3: Checking forbidden strings in README and skills..."
+forbidden_strings=(
+    "mcp__codex__codex"
+    "mcp__gemini__gemini"
+    "model: sonnet"
+    "model: haiku"
+)
+scan_paths=(
+    "$REPO_ROOT/README.md"
+    "$REPO_ROOT/README-zh.md"
+    "$REPO_ROOT/skills"
+)
+for forbidden in "${forbidden_strings[@]}"; do
+    match=$(grep -R -n -m 1 "$forbidden" "${scan_paths[@]}" || true)
+    if [ -n "$match" ]; then
+        echo "  [FAIL] Forbidden string found: $forbidden"
+        echo "         $match"
+        exit 1
+    fi
+done
+
+echo "  [PASS] No forbidden strings found"
+
+# Test 4: Compliance scan for Claude Code references in README files
+echo "Test 4: Checking Claude Code references in README files..."
+forbidden_readme_strings=(
+    "Claude Code"
+    "claude --version"
+    "/plugin"
+    "claude mcp add"
+    "tests/claude-code"
+)
+readme_files=(
+    "$REPO_ROOT/README.md"
+    "$REPO_ROOT/README-zh.md"
+)
+for forbidden in "${forbidden_readme_strings[@]}"; do
+    for readme_file in "${readme_files[@]}"; do
+        match=$(grep -n -m 1 "$forbidden" "$readme_file" || true)
+        if [ -n "$match" ]; then
+            echo "  [FAIL] Forbidden string found in README: $forbidden"
+            echo "         $readme_file:$match"
+            exit 1
+        fi
+    done
+done
+
+echo "  [PASS] No Claude Code references found in README files"
+
+# Test 5: Compliance scan for superpowers-ccg references in commands
+echo "Test 5: Checking commands for superpowers-ccg references..."
+commands_scan_paths=(
+    "$REPO_ROOT/commands"
+)
+match=$(grep -R -n -m 1 "superpowers-ccg:" "${commands_scan_paths[@]}" || true)
+if [ -n "$match" ]; then
+    echo "  [FAIL] Forbidden string found in commands: superpowers-ccg:"
+    echo "         $match"
     exit 1
 fi
 
-# Test 4: Check using-superpowers skill exists (critical for bootstrap)
-echo "Test 4: Checking using-superpowers skill (required for bootstrap)..."
-if [ -f "$HOME/.config/opencode/superpowers/skills/using-superpowers/SKILL.md" ]; then
-    echo "  [PASS] using-superpowers skill exists"
-else
-    echo "  [FAIL] using-superpowers skill not found (required for bootstrap)"
-    exit 1
-fi
-
-# Test 5: Verify plugin JavaScript syntax (basic check)
-echo "Test 5: Checking plugin JavaScript syntax..."
-plugin_file="$HOME/.config/opencode/superpowers/.opencode/plugin/superpowers.js"
-if node --check "$plugin_file" 2>/dev/null; then
-    echo "  [PASS] Plugin JavaScript syntax is valid"
-else
-    echo "  [FAIL] Plugin has JavaScript syntax errors"
-    exit 1
-fi
-
-# Test 6: Verify personal test skill was created
-echo "Test 6: Checking test fixtures..."
-if [ -f "$HOME/.config/opencode/skills/personal-test/SKILL.md" ]; then
-    echo "  [PASS] Personal test skill fixture created"
-else
-    echo "  [FAIL] Personal test skill fixture not found"
-    exit 1
-fi
+echo "  [PASS] No superpowers-ccg references found in commands"
 
 echo ""
-echo "=== All plugin loading tests passed ==="
+echo "=== All OpenCode-only checks passed ==="
