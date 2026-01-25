@@ -105,53 +105,7 @@ main() {
   done
 
   echo "Installing agents..."
-  mkdir -p "$OPENCODE_CONFIG_DIR/agents"
-
-  backup_path_if_exists "$OPENCODE_CONFIG_DIR/agents/backend.md"
-  cat > "$OPENCODE_CONFIG_DIR/agents/backend.md" <<'EOF'
----
-description: Backend specialist. Analyze API/DB/auth/perf. Suggestions only; no edits.
-mode: subagent
-tools:
-  edit: false
-  write: false
-  bash: false
----
-
-You are a backend specialist. Provide analysis and patch suggestions only.
-EOF
-
-  backup_path_if_exists "$OPENCODE_CONFIG_DIR/agents/frontend.md"
-  cat > "$OPENCODE_CONFIG_DIR/agents/frontend.md" <<'EOF'
----
-description: Frontend specialist. Analyze UI/components/styles. Suggestions only; no edits.
-mode: subagent
-tools:
-  edit: false
-  write: false
-  bash: false
----
-
-You are a frontend specialist. Provide analysis and patch suggestions only.
-EOF
-
-  backup_path_if_exists "$OPENCODE_CONFIG_DIR/agents/coder.md"
-  cat > "$OPENCODE_CONFIG_DIR/agents/coder.md" <<'EOF'
----
-description: Implementation agent. May edit files and run commands.
-mode: subagent
-tools:
-  edit: true
-  write: true
-  bash: true
----
-
-You are an implementation agent. Make real code changes when requested.
-EOF
-
-  if [ -f "$SRC_DIR/agents/code-reviewer.md" ]; then
-    copy_file_overwrite "$SRC_DIR/agents/code-reviewer.md" "$OPENCODE_CONFIG_DIR/agents/code-reviewer.md"
-  fi
+  copy_dir_overwrite "$SRC_DIR/agents" "$OPENCODE_CONFIG_DIR/agents"
 
   echo ""
   echo "Installed to: $OPENCODE_CONFIG_DIR"

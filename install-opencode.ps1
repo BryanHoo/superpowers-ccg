@@ -117,58 +117,7 @@ if (Test-Path -LiteralPath $commandsSrc) {
 }
 
 Write-Host "Installing agents..."
-$agentsDir = Join-Path $opencodeConfigDir "agents"
-New-Item -ItemType Directory -Force -Path $agentsDir | Out-Null
-
-$backendPath = Join-Path $agentsDir "backend.md"
-Backup-PathIfExists -Path $backendPath -Timestamp $timestamp
-Set-Content -LiteralPath $backendPath -Encoding ascii -Value @'
----
-description: Backend specialist. Analyze API/DB/auth/perf. Suggestions only; no edits.
-mode: subagent
-tools:
-  edit: false
-  write: false
-  bash: false
----
-
-You are a backend specialist. Provide analysis and patch suggestions only.
-'@
-
-$frontendPath = Join-Path $agentsDir "frontend.md"
-Backup-PathIfExists -Path $frontendPath -Timestamp $timestamp
-Set-Content -LiteralPath $frontendPath -Encoding ascii -Value @'
----
-description: Frontend specialist. Analyze UI/components/styles. Suggestions only; no edits.
-mode: subagent
-tools:
-  edit: false
-  write: false
-  bash: false
----
-
-You are a frontend specialist. Provide analysis and patch suggestions only.
-'@
-
-$coderPath = Join-Path $agentsDir "coder.md"
-Backup-PathIfExists -Path $coderPath -Timestamp $timestamp
-Set-Content -LiteralPath $coderPath -Encoding ascii -Value @'
----
-description: Implementation agent. May edit files and run commands.
-mode: subagent
-tools:
-  edit: true
-  write: true
-  bash: true
----
-
-You are an implementation agent. Make real code changes when requested.
-'@
-
-$codeReviewerSource = Join-Path $srcDir "agents\code-reviewer.md"
-if (Test-Path -LiteralPath $codeReviewerSource) {
-  Copy-FileOverwrite -Source $codeReviewerSource -Destination (Join-Path $agentsDir "code-reviewer.md") -Timestamp $timestamp
-}
+Copy-DirOverwrite -Source (Join-Path $srcDir "agents") -Destination (Join-Path $opencodeConfigDir "agents") -Timestamp $timestamp
 
 Write-Host ""
 Write-Host "Installed to: $opencodeConfigDir"
