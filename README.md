@@ -7,38 +7,52 @@ Superpowers-CCG is a fork/enhanced variant of [obra/superpowers](https://github.
 ## What You Get
 
 - **Multi-model routing (CCG)**: route tasks to Codex (backend) / Gemini (frontend), or use **CROSS_VALIDATION** when uncertain.
-- **MCP tool integration**: external calls go through MCP tools: `mcp__codex__codex`, `mcp__gemini__gemini`.
+- **MCP tool integration**: external calls go through MCP tools: `@backend`, `@frontend`.
 - **Collaboration checkpoints**: CP1/CP2/CP3 checkpoints embedded in key skills to decide when to call external models.
 
-## Quick Start (Claude Code)
+## Quick Start (OpenCode)
 
 ### Prerequisites
 
-- Claude Code CLI installed (`claude --version`)
-- `uvx` available (used by the MCP server install commands below)
+- OpenCode installed
+- This repository provides the plugin configuration (`opencode.json`) and skills (`.opencode/skills/`)
 
 ### Install
 
-1) Add marketplace
+1) Clone this repository
 
 ```bash
-/plugin marketplace add https://github.com/BryanHoo/superpowers-ccg
+git clone https://github.com/BryanHoo/superpowers-ccg.git
+cd superpowers-ccg
 ```
 
-2) Install plugin
+2) One-click install
+
+macOS/Linux/WSL:
 
 ```bash
-/plugin install superpowers-ccg@BryanHoo-superpowers-ccg
+bash ./install-opencode.sh
 ```
 
-### MCP Setup (required)
+Windows:
 
-After installation, configure Codex MCP and Gemini MCP so the orchestrator can route work to them.
-
-```bash
-claude mcp add gemini -s user --transport stdio -- uvx --from git+https://github.com/GuDaStudio/geminimcp.git geminimcp
-claude mcp add codex -s user --transport stdio -- uvx --from git+https://github.com/GuDaStudio/codexmcp.git codexmcp
+```powershell
+PowerShell -ExecutionPolicy Bypass -File .\install-opencode.ps1
 ```
+
+Note: This repository documents OpenCode-only setup. MCP configuration is not required for installation.
+
+3) OpenCode configuration
+
+The `opencode.json` in the repository root is pre-configured with skills for OpenCode. Place it in your OpenCode workspace if you want to customize setup steps.
+
+4) Skills location
+
+Skills are available in `.opencode/skills/` - they are ready to use with OpenCode.
+
+### Documentation
+
+For complete OpenCode documentation, see `opencode-doc/`.
 
 ## Using Codex / Gemini
 
@@ -63,20 +77,32 @@ The routing/checkpoint rules live in `skills/coordinating-multi-model-work/`.
 
 ## Differences vs Superpowers (obra/superpowers)
 
-- **Built-in multi-model routing** via MCP tools (`mcp__codex__codex`, `mcp__gemini__gemini`).
+- **Built-in multi-model routing** via MCP tools (`@backend`, `@frontend`).
 - **CP checkpoints** (CP1/CP2/CP3) added to enforce evidence-driven collaboration.
 - **Skill set changes** (additions/renames) for the CCG workflow.
 - **Different marketplace source**: install from `https://github.com/BryanHoo/superpowers-ccg`.
 
 ## Update
 
+Update by pulling the latest changes from the repository:
+
 ```bash
-/plugin update superpowers-ccg
+git pull origin main
 ```
 
 ## Testing
 
-See `tests/claude-code/README.md` for the Claude Code skills test suite.
+Run the OpenCode test suite:
+
+```bash
+bash tests/opencode/run-tests.sh
+```
+
+For integration tests that require a local OpenCode installation, use:
+
+```bash
+bash tests/opencode/run-tests.sh --integration
+```
 
 ## License
 

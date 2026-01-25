@@ -7,38 +7,52 @@ Superpowers-CCG 是 [obra/superpowers](https://github.com/obra/superpowers) 的�
 ## 你会得到什么
 
 - **CCG 多模型路由**：后端交给 Codex、前端交给 Gemini；不确定/高影响场景可用 **CROSS_VALIDATION**。
-- **MCP 工具集成**：外部模型调用通过 MCP tools 完成：`mcp__codex__codex`、`mcp__gemini__gemini`。
+- **MCP 工具集成**：外部模型调用通过 MCP tools 完成：`@backend`、`@frontend`。
 - **协作检查点**：在关键 skills 中嵌入 CP1/CP2/CP3 检查点，用于决定何时调用外部模型并沉淀证据。
 
-## 快速开始（Claude Code）
+## 快速开始（OpenCode）
 
 ### 前置条件
 
-- 已安装 Claude Code CLI（`claude --version` 可用）
-- 本机可用 `uvx`（下方 MCP 安装命令会用到）
+- 已安装 OpenCode
+- 本仓库已提供插件配置（`opencode.json`）和 skills（`.opencode/skills/`）
 
 ### 安装
 
-1）添加 marketplace
+1）克隆本仓库
 
 ```bash
-/plugin marketplace add https://github.com/BryanHoo/superpowers-ccg
+git clone https://github.com/BryanHoo/superpowers-ccg.git
+cd superpowers-ccg
 ```
 
-2）安装插件
+2）一键安装
+
+macOS/Linux/WSL：
 
 ```bash
-/plugin install superpowers-ccg@BryanHoo-superpowers-ccg
+bash ./install-opencode.sh
 ```
 
-### MCP 安装（必需）
+Windows：
 
-安装完成后，需要配置 Codex MCP 和 Gemini MCP，编排器才能进行外部模型路由。
-
-```bash
-claude mcp add gemini -s user --transport stdio -- uvx --from git+https://github.com/GuDaStudio/geminimcp.git geminimcp
-claude mcp add codex -s user --transport stdio -- uvx --from git+https://github.com/GuDaStudio/codexmcp.git codexmcp
+```powershell
+PowerShell -ExecutionPolicy Bypass -File .\install-opencode.ps1
 ```
+
+说明：本仓库只覆盖 OpenCode 安装与使用，MCP 配置不是安装所必需。
+
+3）OpenCode 配置
+
+仓库根目录的 `opencode.json` 已预配置 OpenCode 所需 skills，如需自定义请放入你的 OpenCode 工作空间。
+
+4）Skills 位置
+
+Skills 位于 `.opencode/skills/` - 已准备好与 OpenCode 一起使用。
+
+### 文档
+
+完整的 OpenCode 文档请参阅 `opencode-doc/`。
 
 ## 如何调用 Codex / Gemini 能力
 
@@ -63,20 +77,32 @@ claude mcp add codex -s user --transport stdio -- uvx --from git+https://github.
 
 ## 与原版 Superpowers（obra/superpowers）的差异
 
-- **内置多模型路由**：通过 MCP tools（`mcp__codex__codex`、`mcp__gemini__gemini`）调用外部模型。
+- **内置多模型路由**：通过 MCP tools（`@backend`、`@frontend`）调用外部模型。
 - **CP 检查点机制**：CP1/CP2/CP3 用于证据驱动协作与 Fail-Closed 约束。
 - **Skills 集合调整**：新增/改名以适配 CCG 协作流程。
 - **安装源不同**：从 `https://github.com/BryanHoo/superpowers-ccg` 安装。
 
 ## 更新
 
+通过拉取仓库最新更新：
+
 ```bash
-/plugin update superpowers-ccg
+git pull origin main
 ```
 
 ## 测试
 
-Claude Code skills 测试说明见：`tests/claude-code/README.md`。
+运行 OpenCode 测试套件：
+
+```bash
+bash tests/opencode/run-tests.sh
+```
+
+如需集成测试（需要本地安装 OpenCode），使用：
+
+```bash
+bash tests/opencode/run-tests.sh --integration
+```
 
 ## 许可证
 

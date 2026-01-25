@@ -85,8 +85,29 @@ done
 
 echo "  [PASS] No Claude Code references found in README files"
 
-# Test 5: Compliance scan for superpowers-ccg references in commands
-echo "Test 5: Checking commands for superpowers-ccg references..."
+# Test 5: README files must mention install-opencode
+echo "Test 5: Checking README files mention install-opencode..."
+required_readme_strings=(
+    "install-opencode"
+)
+readme_files=(
+    "$REPO_ROOT/README.md"
+    "$REPO_ROOT/README-zh.md"
+)
+for required in "${required_readme_strings[@]}"; do
+    for readme_file in "${readme_files[@]}"; do
+        match=$(grep -n -m 1 "$required" "$readme_file" || true)
+        if [ -z "$match" ]; then
+            echo "  [FAIL] Required string missing in README: $required"
+            echo "         $readme_file"
+            exit 1
+        fi
+    done
+done
+echo "  [PASS] README files mention install-opencode"
+
+# Test 6: Compliance scan for superpowers-ccg references in commands
+echo "Test 6: Checking commands for superpowers-ccg references..."
 commands_scan_paths=(
     "$REPO_ROOT/commands"
 )
